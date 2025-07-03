@@ -73,71 +73,72 @@ const Pricing = () => {
       buttonVariant: "outline",
       popular: false,
       features: [
-        { name: "1 Active Project", included: true, highlight: true },
-        { name: "Basic AI Business Plan Generator", included: true, limit: "5 plans/month" },
-        { name: "Core Template Library", included: true, limit: "10 templates" },
-        { name: "Simple Roadmap Generator", included: true },
-        { name: "Basic Project Dashboard", included: true, limit: "Read-only" },
-        { name: "Community Support", included: true },
+        { name: "3 Active Projects", included: true, highlight: true },
+        { name: "AI Business Plan Generator", included: true, limit: "5 plans/month" },
+        { name: "Basic Template Library", included: true, limit: "10 templates" },
+        { name: "Project Roadmap Generator", included: true, limit: "Basic timelines" },
+        { name: "Tech Stack Recommender", included: true, limit: "3 recommendations" },
+        { name: "Feature Prioritization Tool", included: true, limit: "1 project" },
         { name: "PDF Exports", included: true },
-        { name: "Team Collaboration", included: false },
+        { name: "Community Support", included: true },
+        { name: "Cloud Terminal Access", included: false },
         { name: "Advanced AI Features", included: false },
-        { name: "Development Environment", included: false },
-        { name: "Priority Support", included: false }
+        { name: "Priority Support", included: false },
+        { name: "Custom Integrations", included: false }
       ]
     },
     {
-      name: "Professional",
+      name: "Builder",
       subtitle: "Complete toolkit for serious entrepreneurs",
-      price: 79,
-      annualPrice: 63,
+      price: 29,
+      annualPrice: 24,
       badge: "Most Popular",
       badgeColor: "bg-blue-100 text-blue-700",
       icon: <Brain className="w-6 h-6" />,
-      description: "Everything you need to build and launch your startup successfully",
-      buttonText: "Start Professional",
+      description: "Everything you need to build and launch your MVP successfully",
+      buttonText: "Start Building",
       buttonVariant: "primary",
       popular: true,
       features: [
         { name: "Unlimited Projects", included: true, highlight: true },
-        { name: "Full AI Business Plan Generator", included: true },
-        { name: "Complete Template Library", included: true, limit: "50+ templates" },
-        { name: "Advanced Roadmap Generator", included: true },
-        { name: "Tech Stack Recommender", included: true },
-        { name: "MVP Feature Prioritizer", included: true },
-        { name: "Cloud Development Environment", included: true },
-        { name: "Team Collaboration", included: true, limit: "Up to 5 members" },
-        { name: "Market Research Engine", included: true },
-        { name: "Financial Modeling & Projections", included: true },
-        { name: "AI Content Assistant", included: true },
-        { name: "Priority Email Support", included: true }
+        { name: "AI Business Plan Generator", included: true, limit: "Unlimited" },
+        { name: "Complete Template Library", included: true, limit: "25+ templates" },
+        { name: "Advanced Project Roadmaps", included: true, limit: "12-18 month timelines" },
+        { name: "Smart Tech Stack Recommender", included: true, limit: "Budget-aware suggestions" },
+        { name: "MVP Feature Prioritization", included: true, limit: "RICE & MoSCoW scoring" },
+        { name: "Cloud-Based Terminal", included: true, limit: "Full development environment" },
+        { name: "Multi-format Exports", included: true, limit: "PDF, Word, PPT" },
+        { name: "Email Support", included: true },
+        { name: "Version Control", included: true },
+        { name: "Basic Analytics", included: true },
+        { name: "API Access", included: false }
       ]
     },
     {
-      name: "Enterprise",
-      subtitle: "Advanced features for teams and accelerators",
-      price: 299,
-      annualPrice: 239,
+      name: "Pro",
+      subtitle: "Advanced features for teams and agencies",
+      price: 79,
+      annualPrice: 63,
       badge: "Full Power",
       badgeColor: "bg-purple-100 text-purple-700",
       icon: <Crown className="w-6 h-6" />,
-      description: "Enterprise-grade platform with advanced AI and global capabilities",
-      buttonText: "Contact Sales",
+      description: "Professional-grade platform with team collaboration and advanced AI",
+      buttonText: "Go Pro",
       buttonVariant: "primary",
       popular: false,
       features: [
-        { name: "Everything in Professional", included: true, highlight: true },
-        { name: "Unlimited Team Members", included: true },
-        { name: "Marketplace & Community Platform", included: true },
-        { name: "Advanced Analytics & BI", included: true },
-        { name: "Legal & Compliance Management", included: true },
-        { name: "Funding & Investment Tools", included: true },
-        { name: "Enterprise SSO & Integration", included: true },
-        { name: "White-label & Custom Branding", included: true },
-        { name: "Autonomous Business Operations", included: true },
-        { name: "Global Expansion Features", included: true },
-        { name: "Dedicated Success Manager", included: true },
-        { name: "Priority Phone Support", included: true }
+        { name: "Everything in Builder", included: true, highlight: true },
+        { name: "Team Collaboration", included: true, limit: "Up to 10 members" },
+        { name: "Advanced AI Models", included: true, limit: "GPT-4 & Claude access" },
+        { name: "Custom Templates", included: true, limit: "Create & share templates" },
+        { name: "Advanced Analytics", included: true, limit: "Project insights & metrics" },
+        { name: "API Access", included: true, limit: "Full API integration" },
+        { name: "White-label Options", included: true, limit: "Custom branding" },
+        { name: "Priority Support", included: true, limit: "24/7 chat support" },
+        { name: "Advanced Integrations", included: true, limit: "Slack, GitHub, etc." },
+        { name: "Custom Workflows", included: true },
+        { name: "Data Export", included: true },
+        { name: "Advanced Security", included: true }
       ]
     }
   ]
@@ -148,19 +149,19 @@ const Pricing = () => {
   
   const keyFeatures = [
     {
-      icon: <Zap className="w-8 h-8" />,
-      title: "10x Faster Development",
-      description: "AI-powered tools accelerate every step of your startup journey"
+      icon: <Brain className="w-8 h-8" />,
+      title: "AI Business Plan Generator",
+      description: "Generate 15-20 page professional business plans with market analysis and financial projections in minutes"
     },
     {
       icon: <Target className="w-8 h-8" />,
-      title: "98% Market Accuracy",
-      description: "Data-driven insights ensure your startup hits the right market"
+      title: "Smart Development Roadmaps",
+      description: "12-18 month project timelines with sprint planning and milestone tracking"
     },
     {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Enterprise Security",
-      description: "Bank-level security keeps your intellectual property safe"
+      icon: <Zap className="w-8 h-8" />,
+      title: "Cloud Development Environment",
+      description: "Browser-based terminal with one-click project scaffolding for popular frameworks"
     }
   ]
 
@@ -178,9 +179,9 @@ const Pricing = () => {
           <SectionHeader
             icon={<Sparkles className="w-6 h-6" />}
             badge="Simple, Transparent Pricing"
-            title="Choose Your Success Path"
-            highlightedWord="Success Path"
-            description="From free exploration to enterprise acceleration, we have the perfect plan to help you build your dream startup with AI-powered precision."
+            title="Start Building Your Startup Today"
+            highlightedWord="Building"
+            description="From free exploration to professional development tools, we have the perfect plan to help you transform your idea into a working MVP with AI-powered precision."
           />
 
           {/* ==========================================
@@ -332,7 +333,7 @@ const Pricing = () => {
           <SectionHeader
             title="Why Choose AI Startup Studio?"
             highlightedWord="AI Startup Studio?"
-            description="Join thousands of successful entrepreneurs who've accelerated their startup journey with our platform"
+            description="Get everything you need to go from idea to MVP with our integrated AI-powered development platform"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -373,10 +374,10 @@ const Pricing = () => {
             transition={ANIMATIONS.fadeIn.transition}
           >
             <h2 className="text-3xl font-bold text-white mb-4">
-              Ready to Build Your Startup?
+              Ready to Build Your MVP?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Join {CONTENT.stats.users} entrepreneurs who've accelerated their startup journey with AI
+              Join thousands of entrepreneurs who've transformed their ideas into working products with AI
             </p>
             
             <Button
