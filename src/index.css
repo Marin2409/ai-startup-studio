@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+@import "tailwindcss";
+
+/* ---------------------------------- */
+/* Theme & Root Settings             */
+/* ---------------------------------- */
+:root {
+    background-color: white;
+    color: black;
+  }
+  
+  body {
+    background-color: white;
+    color: black;
+  }
+
+/* ---------------------------------- */
+/* Typography                        */
+/* ---------------------------------- */
+* {
+    font-family: Outfit;
+  }
+  
+  .font-playfair {
+    font-family: Playfair !important;
+  }
+
+/* ---------------------------------- */
+/* AURORA Animations                        */
+/* ---------------------------------- */
+@theme inline {
+  --animate-aurora: aurora 8s ease-in-out infinite alternate;
+  
+  @keyframes aurora {
+    0% {
+      background-position: 0% 50%;
+      transform: rotate(-5deg) scale(0.9);
+    }
+    25% {
+      background-position: 50% 100%;
+      transform: rotate(5deg) scale(1.1);
+    }
+    50% {
+      background-position: 100% 50%;
+      transform: rotate(-3deg) scale(0.95);
+    }
+    75% {
+      background-position: 50% 0%;
+      transform: rotate(3deg) scale(1.05);
+    }
+    100% {
+      background-position: 0% 50%;
+      transform: rotate(-5deg) scale(0.9);
+    }
+  }
+}
+
+/* ---------------------------------- */
+/* Custom Utilities                  */
+/* ---------------------------------- */
+/* Invert Filter */
+.custom-invert {
+    filter: invert(1);
+  }
+  
+  /* Hover Effects */
+  .custom-hover-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Transitions */
+  .custom-transition {
+    transition: all 0.3s ease;
+  }
+  
+  /* Group Hover */
+  .group:hover .custom-hover-translate-x-1 {
+    transform: translateX(0.25rem);
+  }
+
+/* ---------------------------------- */
+/* Hero Video Mask                   */
+/* ---------------------------------- */
+/* Apply mask only to thumbnail images, not popup video */
+.hero-video-mask > div > div > img {
+  mask-image: linear-gradient(to bottom, black 5%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to bottom, black 5%, transparent 80%);
+}
