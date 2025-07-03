@@ -72,6 +72,26 @@ const Pricing = () => {
       buttonText: "Start Free",
       buttonVariant: "outline",
       popular: false,
+      payAsYouGo: {
+        available: true,
+        bundle: {
+          name: "Power Pack",
+          price: 10,
+          description: "Refill all your tools when you run out",
+          includes: [
+            "5 more AI business plans",
+            "10 more templates",
+            "5 more tech recommendations", 
+            "1 more feature prioritization"
+          ]
+        },
+        individual: [
+          { service: "AI Business Plans", price: 4, quantity: "5 more plans" },
+          { service: "Template Access", price: 3, quantity: "10 more templates" },
+          { service: "Tech Recommendations", price: 2, quantity: "5 more recommendations" },
+          { service: "Feature Prioritization", price: 5, quantity: "1 more project" }
+        ]
+      },
       features: [
         { name: "3 Active Projects", included: true, highlight: true },
         { name: "AI Business Plan Generator", included: true, limit: "5 plans/month" },
@@ -81,6 +101,7 @@ const Pricing = () => {
         { name: "Feature Prioritization Tool", included: true, limit: "1 project" },
         { name: "PDF Exports", included: true },
         { name: "Community Support", included: true },
+        { name: "💡 Pay-as-you-go top-ups available", included: true, highlight: true, payAsYouGo: true },
         { name: "Cloud Terminal Access", included: false },
         { name: "Advanced AI Features", included: false },
         { name: "Priority Support", included: false },
@@ -188,7 +209,7 @@ const Pricing = () => {
               BILLING TOGGLE
               ========================================== */}
           
-          <div className="flex items-center justify-center mb-12">
+          <div className="flex items-center justify-center mb-8">
             <span className={`mr-3 text-sm font-medium ${!isAnnual ? 'text-slate-900' : 'text-slate-500'}`}>
               Monthly
             </span>
@@ -212,6 +233,23 @@ const Pricing = () => {
                 Save 20%
               </span>
             )}
+          </div>
+
+          {/* ==========================================
+              PAY-AS-YOU-GO CALLOUT
+              ========================================== */}
+          
+          <div className="max-w-2xl mx-auto mb-12 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-4">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">Never Hit a Wall</h3>
+              <p className="text-slate-600 text-sm">
+                Start free and only pay for what you need. Run out of AI plans or templates? 
+                <span className="font-medium text-blue-600"><br/>Top up instantly</span> without upgrading to a full subscription.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -292,7 +330,7 @@ const Pricing = () => {
                           )}
                         </div>
                         <div className="ml-3">
-                          <span className={`text-sm ${feature.included ? 'text-slate-900' : 'text-slate-400'} ${feature.highlight ? 'font-semibold' : ''}`}>
+                          <span className={`text-sm ${feature.included ? 'text-slate-900' : 'text-slate-400'} ${feature.highlight ? 'font-semibold' : ''} ${feature.payAsYouGo ? 'text-blue-600' : ''}`}>
                             {feature.name}
                           </span>
                           {feature.limit && (
@@ -302,6 +340,44 @@ const Pricing = () => {
                       </div>
                     ))}
                   </div>
+
+                  {/* ==========================================
+                      PAY-AS-YOU-GO SECTION (STARTER ONLY)
+                      ========================================== */}
+                  
+                  {plan.payAsYouGo && (
+                    <div className="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                      <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                        <Zap className="w-4 h-4 mr-2" />
+                        When you run out, top up instantly:
+                      </h4>
+                      
+                      {/* Bundle Option */}
+                      <div className="mb-4 p-3 bg-white rounded-lg border border-blue-100">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-slate-900">{plan.payAsYouGo.bundle.name}</span>
+                          <span className="font-bold text-blue-600">${plan.payAsYouGo.bundle.price}</span>
+                        </div>
+                        <p className="text-sm text-slate-600 mb-2">{plan.payAsYouGo.bundle.description}</p>
+                        <div className="text-xs text-slate-500">
+                          {plan.payAsYouGo.bundle.includes.map((item, idx) => (
+                            <div key={idx}>• {item}</div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Individual Options */}
+                      <div className="text-xs text-slate-600">
+                        <div className="font-medium mb-1">Or buy individually:</div>
+                        {plan.payAsYouGo.individual.map((item, idx) => (
+                          <div key={idx} className="flex justify-between">
+                            <span>{item.service}</span>
+                            <span className="font-medium">${item.price} for {item.quantity}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* ==========================================
                       CTA BUTTON
