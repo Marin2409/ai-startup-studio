@@ -2,6 +2,7 @@
 // Imports                          
 // ----------------------------------
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { AuroraText } from './ui/Aurora-text'
 
@@ -58,7 +59,7 @@ const Footer = () => {
             {/* Discord icon */}
             <a href="#" className="p-2 rounded-full bg-indigo-100 hover:bg-indigo-200 transition-all duration-300 hover:scale-110">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16.942 4.558a16.3 16.3 0 0 0-4.126-1.297 12.2 12.2 0 0 0-.529.94 15.01 15.01 0 0 0-4.573 0 11.1 11.1 0 0 0-.535-.94A16.26 16.26 0 0 0 3.058 4.56c-2.4 3.61-3.058 7.13-2.73 10.582a16.46 16.46 0 0 0 5.063 2.598 12.4 12.4 0 0 0 1.092-1.84 10.62 10.62 0 0 1-1.735-.68c.145-.108.287-.22.425-.334a11.66 11.66 0 0 0 10.105 0c.138.113.28.226.425.334-.55.331-1.135.613-1.740.68a12.32 12.32 0 0 0 1.092 1.84 16.42 16.42 0 0 0 5.063-2.598c.394-3.98-.658-7.43-2.785-10.584zM6.678 13.482c-.9 0-1.63-.846-1.63-1.884s.717-1.885 1.63-1.885c.914 0 1.647.859 1.631 1.885 0 1.038-.717 1.884-1.631 1.884zm6.644 0c-.9 0-1.63-.846-1.63-1.884s.717-1.885 1.63-1.885c.914 0 1.647.859 1.631 1.885 0 1.038-.717 1.884-1.631 1.884z" fill="#4F46E5" fillRule="evenodd" clipRule="evenodd"/>
+                <path d="M16.942 4.558a16.3 16.3 0 0 0-4.126-1.297 12.2 12.2 0 0 0-.529.94 15.01 15.01 0 0 0-4.573 0 11.1 11.1 0 0 0-.535-.94A16.26 16.26 0 0 0 3.058 4.56c-2.4 3.61-3.058 7.13-2.73 10.582a16.46 16.46 0 0 0 5.063 2.598 12.4 12.4 0 0 0 1.092-1.84 10.62 10.62 0 0 1-1.735-.68c.145-.108.287-.22.425-.334a11.66 11.66 0 0 0 10.105 0c.138.113.28.226.425.334-.55.331-1.135.613-1.74.68a12.32 12.32 0 0 0 1.092 1.84 16.42 16.42 0 0 0 5.063-2.598c.394-3.98-.658-7.43-2.785-10.584zM6.678 13.482c-.9 0-1.63-.846-1.63-1.884s.717-1.885 1.63-1.885c.914 0 1.647.859 1.631 1.885 0 1.038-.717 1.884-1.631 1.884zm6.644 0c-.9 0-1.63-.846-1.63-1.884s.717-1.885 1.63-1.885c.914 0 1.647.859 1.631 1.885 0 1.038-.717 1.884-1.631 1.884z" fill="#4F46E5" fillRule="evenodd" clipRule="evenodd"/>
               </svg>
             </a>
           </div>
@@ -72,8 +73,8 @@ const Footer = () => {
             <ul className="text-sm text-slate-600 space-y-3 list-none">
               <li><a href="#" className="hover:text-blue-600 transition-colors duration-200">Documentation</a></li>
               <li><a href="#" className="hover:text-blue-600 transition-colors duration-200">Tutorials</a></li>
-              <li><a href="/community" className="hover:text-blue-600 transition-colors duration-200">Blog</a></li>
-              <li><a href="/community" className="hover:text-blue-600 transition-colors duration-200">Community</a></li>
+              <li><Link to="/community" className="hover:text-blue-600 transition-colors duration-200">Blog</Link></li>
+              <li><Link to="/community" className="hover:text-blue-600 transition-colors duration-200">Community</Link></li>
             </ul>
           </div>
           

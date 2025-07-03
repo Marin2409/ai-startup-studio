@@ -2,7 +2,7 @@
 // Imports                          
 // ----------------------------------
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { assets } from '../assets/assets'
 
 const Navbar = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
       <nav className="h-[70px] relative w-full px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-30 bg-gradient-to-r from-blue-600 to-blue-700 transition-all shadow-sm">
         
         {/* Logo Section - Company branding with logo and text */}
-        <a href="/" className="flex items-center space-x-3" onClick={closeMobileMenu}>
+        <Link to="/" className="flex items-center space-x-3" onClick={closeMobileMenu}>
           {/* Logo image container with backdrop blur effect */}
           <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center border border-white/30 p-2">
             <img 
@@ -43,15 +43,15 @@ const Navbar = () => {
           </div>
           {/* Company name */}
           <span className="text-white font-bold text-xl">AI Startup Studio</span>
-        </a>
+        </Link>
     
         {/* Desktop Navigation Links - Hidden on mobile, visible on md+ screens */}
         <ul className="text-white md:flex hidden items-center justify-center gap-8 flex-1">
-          <li><a className="hover:text-blue-200 transition-colors duration-200" href="/">Home</a></li>
-          <li><a className="hover:text-blue-200 transition-colors duration-200" href="/pricing">Pricing</a></li>
-          <li><a className="hover:text-blue-200 transition-colors duration-200" href="/features">Features</a></li>
-          <li><a className="hover:text-blue-200 transition-colors duration-200" href="/use-cases">Use Cases</a></li>
-          <li><a className="hover:text-blue-200 transition-colors duration-200" href="/community">Community</a></li>
+          <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/">Home</Link></li>
+          <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/pricing">Pricing</Link></li>
+          <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/features">Features</Link></li>
+          <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/use-cases">Use Cases</Link></li>
+          <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/community">Community</Link></li>
         </ul>
     
         {/* Desktop CTA Button - Primary action button for larger screens */} 
@@ -83,11 +83,11 @@ const Navbar = () => {
         <div className={`mobile-menu absolute top-[70px] left-0 w-full bg-gradient-to-r from-blue-600 to-blue-700 p-6 md:hidden border-t border-blue-500/30 shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'block opacity-100 translate-y-0' : 'hidden opacity-0 -translate-y-2'}`}>
           {/* Mobile navigation links */}
           <ul className="flex flex-col space-y-4 text-white text-lg">
-            <li><a href="/" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Home</a></li>
-            <li><a href="/pricing" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Pricing</a></li>
-            <li><a href="/features" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Features</a></li>
-            <li><a href="/use-cases" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Use Cases</a></li>
-            <li><a href="/community" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Community</a></li>
+            <li><Link to="/" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Home</Link></li>
+            <li><Link to="/pricing" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Pricing</Link></li>
+            <li><Link to="/features" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Features</Link></li>
+            <li><Link to="/use-cases" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Use Cases</Link></li>
+            <li><Link to="/community" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Community</Link></li>
           </ul>
           
           {/* Mobile CTA Button - Same functionality as desktop version */}
