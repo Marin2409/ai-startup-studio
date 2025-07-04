@@ -154,7 +154,7 @@ const FAQ = () => {
             Everything You Need to <AuroraText>Know</AuroraText>
           </h2>
           
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
             Get answers to the most common questions about our AI-powered startup platform. 
             Can't find what you're looking for? We're here to help!
           </p>

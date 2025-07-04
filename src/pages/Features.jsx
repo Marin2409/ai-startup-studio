@@ -148,19 +148,32 @@ const Features = () => {
         <div className="max-w-7xl mx-auto">
           
           {/* Main page header */}
-          <SectionHeader
-            icon={<Sparkles className="w-6 h-6" />}
-            badge="Complete Feature Suite"
-            title="Everything You Need to Build Your Startup"
-            highlightedWord="Build"
-            description="From AI-powered business planning to code generation, our comprehensive platform provides all the tools entrepreneurs need to transform ideas into successful businesses."
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="flex items-center justify-center mb-6">
+              <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
+              <span className="text-blue-600 font-semibold text-lg">Complete Feature Suite</span>
+            </div>
+
+            <h1 className="text-6xl lg:text-8xl md:text-9xl font-bold text-slate-900 text-center flex flex-col gap-4">
+              Everything You Need to <AuroraText>Build</AuroraText> Your Startup
+            </h1>
+            
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
+              From AI-powered business planning to code generation, our comprehensive platform provides all the tools entrepreneurs need to transform ideas into successful businesses.
+            </p>
+          </motion.div>
+
+          
 
           {/* ==========================================
               HERO STATISTICS GRID
               ========================================== */}
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-8">
             {heroStats.map((stat, index) => (
               <motion.div
                 key={index}
@@ -189,11 +202,20 @@ const Features = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           
-          <SectionHeader
-            title="Comprehensive AI-Powered Tools"
-            highlightedWord="AI-Powered"
-            description="Each tool is designed to solve specific entrepreneurial challenges with cutting-edge AI technology"
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+              Comprehensive <AuroraText>AI-Powered</AuroraText> Tools
+            </h2>
+            
+                         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+               Each tool is designed to solve specific entrepreneurial challenges with cutting-edge AI technology
+             </p>
+          </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {solutions.map((solution, index) => (
@@ -263,11 +285,20 @@ const Features = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           
-          <SectionHeader
-            title="Traditional vs. AI Startup Studio"
-            highlightedWord="AI Startup Studio"
-            description="See how our AI-powered approach revolutionizes the startup creation process"
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+              Traditional vs. <AuroraText>AI Startup Studio</AuroraText>
+            </h2>
+            
+                         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+               See how our AI-powered approach revolutionizes the startup creation process
+             </p>
+          </motion.div>
 
           <motion.div
             initial={ANIMATIONS.fadeInUp.initial}

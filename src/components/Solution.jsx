@@ -114,7 +114,7 @@ const Solution = () => {
             AI Startup Studio <AuroraText>Transforms</AuroraText> Everything
           </h2>
           
-          <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-12">
+          <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-12 font-light">
             We've reimagined the entire startup creation process with AI-powered tools that eliminate 
             traditional barriers and accelerate your journey from idea to successful business.
           </p>

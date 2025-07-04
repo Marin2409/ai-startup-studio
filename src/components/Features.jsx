@@ -128,10 +128,10 @@ const Features = () => {
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Everything You Need to <AuroraText>Launch</AuroraText>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Our comprehensive AI-powered platform provides all the tools, insights, and guidance 
-            you need to transform your startup idea into a thriving business.
-          </p>
+                  <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+          Our comprehensive AI-powered platform provides all the tools, insights, and guidance 
+          you need to transform your startup idea into a thriving business.
+        </p>
         </motion.div>
 
         {/* Main features grid */}
@@ -199,7 +199,7 @@ const Features = () => {
             <h3 className="text-3xl font-bold text-slate-900 mb-4">
               Plus Many More Features
             </h3>
-            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-600 text-lg max-w-2xl mx-auto font-light">
               Comprehensive tools and capabilities designed to support every aspect of your startup journey.
             </p>
           </div>

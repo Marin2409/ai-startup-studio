@@ -91,7 +91,7 @@ const Showcase = () => {
             <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-8">
               Your Complete <AuroraText>Startup Journey</AuroraText>
             </h2>
-            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-8">
+            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-8 font-light">
               From initial idea to successful launch - see how our integrated AI tools work together 
               to accelerate every stage of your startup development process.
             </p>

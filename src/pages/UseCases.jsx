@@ -246,7 +246,7 @@ const UseCases = () => {
             See How <AuroraText>Entrepreneurs</AuroraText> Build Success
             </h1>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8">
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
               Discover how real entrepreneurs, developers, and business owners use AI Startup Studio 
               to accelerate their journey from idea to successful business.
             </p>

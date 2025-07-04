@@ -419,7 +419,7 @@ const Community = () => {
             Join the <AuroraText>Entrepreneur</AuroraText> Community
             </h1>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8">
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
               Share your journey, learn from others, and stay updated with the latest insights, 
               success stories, and tips from fellow entrepreneurs building amazing startups.
             </p>
@@ -520,7 +520,7 @@ const Community = () => {
               Discover <AuroraText>Insights</AuroraText> & Stories
             </h2>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
               Explore our comprehensive collection of success stories, how-to guides, case studies, and expert tips. 
               Learn from real entrepreneurs who've built successful startups using our AI-powered platform.
             </p>

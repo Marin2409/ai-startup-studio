@@ -48,6 +48,12 @@ const Hero = () => {
     navigate('/login', { state: { from: '/' } })
   }
 
+  // Navigation handler for Features badge
+  const handleFeaturesClick = () => {
+    navigate('/features')
+    window.scrollTo({ top: 0 })
+  }
+
   // ==========================================
   // SOCIAL PROOF STATISTICS
   // ==========================================
@@ -93,6 +99,7 @@ const Hero = () => {
         <Badge 
           variant="secondary" 
           className="cursor-pointer mb-6 px-6 py-3 rounded-full bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 transition-all"
+          onClick={handleFeaturesClick}
         >
           <Sparkles className="w-4 h-4 mr-2" />
           Now with {CONTENT.stats.tools} Integrated AI-Powered Tools

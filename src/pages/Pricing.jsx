@@ -197,13 +197,24 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto">
           
           {/* Main page header */}
-          <SectionHeader
-            icon={<Sparkles className="w-6 h-6" />}
-            badge="Simple, Transparent Pricing"
-            title="Start Building Your Startup Today"
-            highlightedWord="Building"
-            description="From free exploration to professional development tools, we have the perfect plan to help you transform your idea into a working MVP with AI-powered precision."
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="flex items-center justify-center mb-6">
+              <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
+              <span className="text-blue-600 font-semibold text-lg">Simple, Transparent Pricing</span>
+            </div>
+
+            <h1 className="text-6xl lg:text-8xl md:text-9xl font-bold text-slate-900 text-center flex flex-col gap-4">
+              Start <AuroraText>Building</AuroraText> Your Startup Today
+            </h1>
+            
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
+              From free exploration to professional development tools, we have the perfect plan to help you transform your idea into a working MVP with AI-powered precision.
+            </p>
+          </motion.div>
 
           {/* ==========================================
               BILLING TOGGLE
@@ -406,11 +417,20 @@ const Pricing = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           
-          <SectionHeader
-            title="Why Choose AI Startup Studio?"
-            highlightedWord="AI Startup Studio?"
-            description="Get everything you need to go from idea to MVP with our integrated AI-powered development platform"
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+              Why Choose <AuroraText>AI Startup Studio?</AuroraText>
+            </h2>
+            
+                         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+               Get everything you need to go from idea to MVP with our integrated AI-powered development platform
+             </p>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {keyFeatures.map((feature, index) => (

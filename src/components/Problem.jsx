@@ -104,7 +104,7 @@ const Problem = () => {
             Why Most Startups <AuroraText>Fail</AuroraText> Before They Start
         </h2>
 
-        <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-12">
+        <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-12 font-light">
             The entrepreneurial journey is riddled with obstacles that prevent great ideas from becoming successful businesses. 
             Here's what's really holding back the next generation of innovators.
         </p>

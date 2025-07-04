@@ -119,10 +119,10 @@ const SectionHeader = ({
           ========================================== */}
       {description && (
         <p className={`
-          ${TYPOGRAPHY.sizes.body.large}
-          text-slate-600 
-          ${centered ? 'max-w-3xl mx-auto' : 'max-w-4xl'} 
-          leading-relaxed
+          ${TYPOGRAPHY.weights.light} 
+          ${TYPOGRAPHY.sizes.body.base} 
+          md:${TYPOGRAPHY.sizes.body.large} 
+          text-slate-600 py-4 text-center max-w-4xl mx-auto leading-relaxed
         `}>
           {description}
         </p>
