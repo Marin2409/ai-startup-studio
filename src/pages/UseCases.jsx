@@ -2,19 +2,25 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from "motion/react"
 import { 
+  Briefcase, 
+  Clock, 
   Users, 
-  Rocket, 
-  Code, 
-  FileText, 
-  Building, 
+  Sparkles, 
   ArrowRight,
-  Star,
-  Timer,
-  Lightbulb,
+  Rocket,
+  Code,
+  CheckCircle,
+  Building
 } from "lucide-react"
+
+// ==========================================
+// UI COMPONENTS
+// ==========================================
+import PageBackground from '../components/ui/PageBackground'
+import { AuroraText } from '../components/ui/Aurora-text'
+import { ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
 import Problem from '../components/Problem'
 import Solution from '../components/Solution'
-import { AuroraText } from '../components/ui/Aurora-text'
 
 const UseCases = () => {
   const [activeCategory, setActiveCategory] = useState('entrepreneurs')
@@ -83,7 +89,7 @@ const UseCases = () => {
       {
         id: 3,
         persona: "James, Non-Technical Founder",
-        title: "Understanding Development Timelines",
+        title: "Development Planning",
         challenge: "Needs mobile app but doesn't understand development process",
         solution: "Gets realistic milestone breakdowns and resource estimates",
         outcome: "Clear roadmap to communicate with technical co-founders or agencies",
@@ -211,61 +217,62 @@ const UseCases = () => {
 
   // Success metrics
   const successMetrics = [
-    { label: "Average Time Saved", value: "85%", icon: <Timer className="w-6 h-6" /> },
-    { label: "Business Plans Created", value: "2,500+", icon: <FileText className="w-6 h-6" /> },
+    { label: "Average Time Saved", value: "85%", icon: <Clock className="w-6 h-6" /> },
+    { label: "Business Plans Created", value: "2,500+", icon: <Briefcase className="w-6 h-6" /> },
     { label: "Successful Launches", value: "340+", icon: <Rocket className="w-6 h-6" /> },
-    { label: "User Satisfaction", value: "98%", icon: <Star className="w-6 h-6" /> }
+    { label: "User Satisfaction", value: "98%", icon: <CheckCircle className="w-6 h-6" /> }
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-grid-slate-100 opacity-30 pointer-events-none"></div>
-      <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-tr from-green-500/10 to-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute inset-0 bg-grid-white/5 opacity-20 pointer-events-none"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
+    <PageBackground variant="default">
 
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto text-center`}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
           >
             <div className="flex items-center justify-center mb-6">
-              <Lightbulb className="w-6 h-6 text-blue-600 mr-2" />
-              <span className="text-blue-600 font-semibold text-lg">Real Success Stories</span>
+              <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
+              <span className={`text-blue-600 ${TYPOGRAPHY.weights.semibold} ${TYPOGRAPHY.sizes.body.large}`}>Real Success Stories</span>
             </div>
 
-            <h1 className="text-6xl lg:text-8xl md:text-9xl font-bold text-slate-900 text-center flex flex-col gap-4">
+            <h1 className={`
+              ${TYPOGRAPHY.sizes.hero.mobile} 
+              lg:${TYPOGRAPHY.sizes.hero.desktop} 
+              md:text-9xl 
+              ${TYPOGRAPHY.weights.bold} 
+              text-slate-900 text-center flex flex-col gap-4
+            `}>
             See How <AuroraText>Entrepreneurs</AuroraText> Build Success
             </h1>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto py-8 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               Discover how real entrepreneurs, developers, and business owners use AI Startup Studio 
               to accelerate their journey from idea to successful business.
             </p>
 
             {/* Success Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <div className={`grid grid-cols-2 md:grid-cols-4 ${SPACING.gaps.large} max-w-4xl mx-auto`}>
               {successMetrics.map((metric, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  initial={ANIMATIONS.fadeInScale.initial}
+                  animate={ANIMATIONS.fadeInScale.animate}
+                  transition={{ ...ANIMATIONS.fadeInScale.transition, delay: index * 0.1 }}
                   className="text-center"
                 >
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-3">
                     {metric.icon}
                   </div>
-                  <div className="text-2xl font-bold text-slate-900">{metric.value}</div>
-                  <div className="text-sm text-slate-600">{metric.label}</div>
+                  <div className={`${TYPOGRAPHY.sizes.sectionTitle.mobile} ${TYPOGRAPHY.weights.bold} text-slate-900 mb-1`}>{metric.value}</div>
+                  <div className={`${TYPOGRAPHY.sizes.caption} text-slate-600`}>{metric.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -274,27 +281,29 @@ const UseCases = () => {
       </section>
 
       {/* Category Navigation */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className={SPACING.section.mobile}>
+        <div className={`${SPACING.container.large} mx-auto`}>
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ${SPACING.gaps.medium}`}>
             {categories.map((category, index) => (
               <motion.button
                 key={category.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                initial={ANIMATIONS.fadeInUp.initial}
+                animate={ANIMATIONS.fadeInUp.animate}
+                transition={{ ...ANIMATIONS.fadeInUp.transition, delay: index * 0.1 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`p-6 rounded-2xl text-left transition-all duration-300 transform hover:scale-105 cursor-pointer ${
-                  activeCategory === category.id
+                className={`
+                  p-6 rounded-2xl text-left ${ANIMATIONS.transition} transform hover:scale-105 cursor-pointer 
+                  ${activeCategory === category.id
                     ? 'bg-white shadow-xl ring-2 ring-blue-600'
                     : 'bg-white shadow-lg hover:shadow-xl'
-                }`}
+                  }
+                `}
               >
                 <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r ${category.color} text-white mb-4`}>
                   {category.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">{category.name}</h3>
-                <p className="text-sm text-slate-600">{category.description}</p>
+                <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2`}>{category.name}</h3>
+                <p className={`${TYPOGRAPHY.sizes.caption} text-slate-600`}>{category.description}</p>
               </motion.button>
             ))}
           </div>
@@ -302,65 +311,67 @@ const UseCases = () => {
       </section>
 
       {/* Use Cases Grid */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className={SPACING.section.mobile}>
+        <div className={`${SPACING.container.large} mx-auto`}>
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className={`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ${SPACING.gaps.large}`}>
               {useCases[activeCategory]?.map((useCase, index) => (
                 <motion.div
                   key={useCase.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                  initial={ANIMATIONS.fadeInUp.initial}
+                  animate={ANIMATIONS.fadeInUp.animate}
+                  transition={{ ...ANIMATIONS.fadeInUp.transition, delay: index * 0.1 }}
+                  className={`${COMPONENTS.cards.base} overflow-hidden cursor-pointer ${ANIMATIONS.hover}`}
                   onClick={() => setSelectedUseCase(useCase)}
                 >
                   {/* Card Header */}
                   <div className="p-6 border-b border-slate-100">
                     <div className="flex items-start justify-between mb-4">
-                      <div className="text-4xl mb-2">{useCase.avatar}</div>
-                      <div className="flex gap-2">
-                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                          useCase.complexity === 'Beginner' ? 'bg-green-100 text-green-700' :
-                          useCase.complexity === 'Intermediate' ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-red-100 text-red-700'
-                        }`}>
+                      <div className={`${TYPOGRAPHY.sizes.sectionTitle.mobile} mb-2`}>{useCase.avatar}</div>
+                      <div className={`flex ${SPACING.gaps.small}`}>
+                        <span className={`
+                          px-2 py-1 ${TYPOGRAPHY.sizes.tiny} ${TYPOGRAPHY.weights.semibold} rounded-full 
+                          ${useCase.complexity === 'Beginner' ? 'bg-green-100 text-green-700' :
+                            useCase.complexity === 'Intermediate' ? 'bg-yellow-100 text-yellow-700' :
+                            'bg-red-100 text-red-700'
+                          }
+                        `}>
                           {useCase.complexity}
                         </span>
-                        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
+                        <span className={`px-2 py-1 ${TYPOGRAPHY.sizes.tiny} ${TYPOGRAPHY.weights.semibold} rounded-full bg-blue-100 text-blue-700`}>
                           {useCase.timeframe}
                         </span>
                       </div>
                     </div>
                     
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">{useCase.title}</h3>
-                    <p className="text-blue-600 font-medium mb-3">{useCase.persona}</p>
-                    <p className="text-slate-600 text-sm">{useCase.challenge}</p>
+                    <h3 className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-slate-900 mb-2`}>{useCase.title}</h3>
+                    <p className={`text-blue-600 ${TYPOGRAPHY.weights.medium} mb-3 ${TYPOGRAPHY.sizes.body.base}`}>{useCase.persona}</p>
+                    <p className={`text-slate-600 ${TYPOGRAPHY.sizes.caption}`}>{useCase.challenge}</p>
                   </div>
 
                   {/* Card Body */}
                   <div className="p-6">
                     <div className="mb-4">
-                      <h4 className="font-semibold text-slate-900 mb-2">Solution:</h4>
-                      <p className="text-slate-600 text-sm mb-3">{useCase.solution}</p>
+                      <h4 className={`${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2 ${TYPOGRAPHY.sizes.body.base}`}>Solution:</h4>
+                      <p className={`text-slate-600 ${TYPOGRAPHY.sizes.caption} mb-3`}>{useCase.solution}</p>
                       
-                      <h4 className="font-semibold text-slate-900 mb-2">Outcome:</h4>
-                      <p className="text-slate-600 text-sm">{useCase.outcome}</p>
+                      <h4 className={`${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2 ${TYPOGRAPHY.sizes.body.base}`}>Outcome:</h4>
+                      <p className={`text-slate-600 ${TYPOGRAPHY.sizes.caption}`}>{useCase.outcome}</p>
                     </div>
 
                     {/* Features Used */}
                     <div className="mb-4">
-                      <h4 className="font-semibold text-slate-900 mb-2">Features Used:</h4>
-                      <div className="flex flex-wrap gap-2">
+                      <h4 className={`${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2 ${TYPOGRAPHY.sizes.body.base}`}>Features Used:</h4>
+                      <div className={`flex flex-wrap ${SPACING.gaps.small}`}>
                         {useCase.features.map((feature, featureIndex) => (
                           <span
                             key={featureIndex}
-                            className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full"
+                            className={`px-3 py-1 bg-blue-50 text-blue-700 ${TYPOGRAPHY.sizes.tiny} ${TYPOGRAPHY.weights.medium} rounded-full`}
                           >
                             {feature}
                           </span>
@@ -373,7 +384,11 @@ const UseCases = () => {
                         navigate('/community')
                         window.scrollTo({ top: 0 })
                       }}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center cursor-pointer"
+                      className={`
+                        w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl 
+                        ${TYPOGRAPHY.weights.semibold} hover:from-blue-700 hover:to-purple-700 
+                        ${ANIMATIONS.transition} flex items-center justify-center cursor-pointer
+                      `}
                     >
                       View Full Story
                       <ArrowRight className="w-4 h-4 ml-2" />
@@ -391,7 +406,8 @@ const UseCases = () => {
 
       {/* Solution Section */}
       <Solution />
-    </div>
+      
+    </PageBackground>
   )
 }
 

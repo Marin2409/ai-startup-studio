@@ -5,7 +5,6 @@
 // Supports multiple variants, sizes, and states
 
 import React from 'react'
-import { COMPONENTS } from '../../lib/constants'
 
 /**
  * Button Component

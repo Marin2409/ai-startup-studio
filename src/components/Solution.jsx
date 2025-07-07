@@ -8,11 +8,12 @@ import {
   CheckCircle,
   TrendingUp,
   DollarSign,
-  Clock,
-  Sparkles,
-  ArrowRight,
+  Clock, 
+  Shield,
+  ArrowRight
 } from "lucide-react"
 import { AuroraText } from './ui/Aurora-text'
+import { ANIMATIONS, TYPOGRAPHY, SPACING } from '../lib/constants'
 
 const Solution = () => {
   const navigate = useNavigate()
@@ -94,27 +95,36 @@ const Solution = () => {
   ]
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <section className={SPACING.section.desktop}>
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className={`${SPACING.container.large} mx-auto relative z-10`}>
         
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={ANIMATIONS.fadeIn.initial}
+          animate={ANIMATIONS.fadeIn.animate}
+          transition={ANIMATIONS.fadeIn.transition}
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center mb-6">
-            <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
-            <span className="text-blue-600 font-semibold text-lg">The Solution</span>
+            <Shield className="w-6 h-6 text-blue-600 mr-2" />
+            <span className={`text-blue-600 ${TYPOGRAPHY.weights.semibold} ${TYPOGRAPHY.sizes.body.large}`}>The Solution</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+          <h2 className={`
+            ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+            lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+            ${TYPOGRAPHY.weights.bold} 
+            text-gray-900 mb-6
+          `}>
             AI Startup Studio <AuroraText>Transforms</AuroraText> Everything
           </h2>
           
-          <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-12 font-light">
+          <p className={`
+            ${TYPOGRAPHY.sizes.body.large} 
+            text-slate-600 max-w-4xl mx-auto leading-relaxed mb-12 
+            ${TYPOGRAPHY.weights.light}
+          `}>
             We've reimagined the entire startup creation process with AI-powered tools that eliminate 
             traditional barriers and accelerate your journey from idea to successful business.
           </p>
@@ -122,22 +132,26 @@ const Solution = () => {
 
         {/* Before vs After Transformations */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={ANIMATIONS.fadeIn.initial}
+          animate={ANIMATIONS.fadeIn.animate}
+          transition={{ ...ANIMATIONS.fadeIn.transition, delay: 0.2 }}
           className="mb-20"
         >
-          <h3 className="text-3xl font-bold text-center text-slate-900 mb-12">
+          <h3 className={`
+            ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+            ${TYPOGRAPHY.weights.bold} 
+            text-center text-slate-900 mb-12
+          `}>
             The Transformation
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-3 ${SPACING.gaps.large}`}>
             {transformations.map((transform, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                initial={ANIMATIONS.fadeInUp.initial}
+                animate={ANIMATIONS.fadeInUp.animate}
+                transition={{ ...ANIMATIONS.fadeInUp.transition, delay: 0.4 + index * 0.1 }}
                 className="relative"
               >
                 {/* Before */}
@@ -147,8 +161,8 @@ const Solution = () => {
                       {transform.before.icon}
                     </div>
                     <div>
-                      <div className="font-bold text-red-700">{transform.before.title}</div>
-                      <div className="text-sm text-red-600">{transform.before.description}</div>
+                      <div className={`${TYPOGRAPHY.weights.bold} text-red-700`}>{transform.before.title}</div>
+                      <div className={`${TYPOGRAPHY.sizes.caption} text-red-600`}>{transform.before.description}</div>
                     </div>
                   </div>
                 </div>
@@ -167,8 +181,8 @@ const Solution = () => {
                       {transform.after.icon}
                     </div>
                     <div>
-                      <div className="font-bold text-green-700">{transform.after.title}</div>
-                      <div className="text-sm text-green-600">{transform.after.description}</div>
+                      <div className={`${TYPOGRAPHY.weights.bold} text-green-700`}>{transform.after.title}</div>
+                      <div className={`${TYPOGRAPHY.sizes.caption} text-green-600`}>{transform.after.description}</div>
                     </div>
                   </div>
                 </div>
@@ -181,30 +195,38 @@ const Solution = () => {
 
         {/* Success Metrics */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
+          initial={ANIMATIONS.fadeIn.initial}
+          animate={ANIMATIONS.fadeIn.animate}
+          transition={{ ...ANIMATIONS.fadeIn.transition, delay: 1.0 }}
           className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white text-center"
         >
-          <h3 className="text-3xl font-bold mb-4">
+          <h3 className={`
+            ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+            ${TYPOGRAPHY.weights.bold} 
+            mb-4
+          `}>
             Proven Results for Entrepreneurs
           </h3>
-          <p className="text-blue-100 text-lg mb-12 max-w-3xl mx-auto">
+          <p className={`
+            text-blue-100 
+            ${TYPOGRAPHY.sizes.body.base} 
+            mb-12 max-w-3xl mx-auto
+          `}>
             Join thousands of successful entrepreneurs who've accelerated their startup journey with our AI-powered platform
           </p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className={`grid grid-cols-2 md:grid-cols-4 ${SPACING.gaps.large}`}>
             {successMetrics.map((metric, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
+                initial={ANIMATIONS.fadeInScale.initial}
+                animate={ANIMATIONS.fadeInScale.animate}
+                transition={{ ...ANIMATIONS.fadeInScale.transition, delay: 1.2 + index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-4xl font-bold mb-2">{metric.metric}</div>
-                <div className="text-lg font-semibold mb-1">{metric.label}</div>
-                <div className="text-blue-200 text-sm">{metric.description}</div>
+                <div className={`${TYPOGRAPHY.sizes.sectionTitle.desktop} ${TYPOGRAPHY.weights.bold} mb-2`}>{metric.metric}</div>
+                <div className={`${TYPOGRAPHY.sizes.body.base} ${TYPOGRAPHY.weights.semibold} mb-1`}>{metric.label}</div>
+                <div className={`text-blue-200 ${TYPOGRAPHY.sizes.caption}`}>{metric.description}</div>
               </motion.div>
             ))}
           </div>
@@ -216,10 +238,16 @@ const Solution = () => {
             transition={{ duration: 0.8, delay: 1.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mt-12"
           >
-            <button className="group bg-white text-blue-600 h-14 px-8 text-base font-semibold transition-all duration-300 hover:bg-blue-50 flex items-center justify-center rounded-full shadow-lg hover:scale-105 transform cursor-pointer mx-auto" onClick={handleGetStarted}>
-                <Rocket className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform text-blue-600" />
+            <button className={`
+              group bg-white text-blue-600 h-14 px-8 
+              ${TYPOGRAPHY.sizes.body.base} ${TYPOGRAPHY.weights.semibold} 
+              ${ANIMATIONS.transition} hover:bg-blue-50 
+              flex items-center justify-center rounded-full 
+              shadow-lg hover:scale-105 transform cursor-pointer mx-auto
+            `} onClick={handleGetStarted}>
+                <Rocket className={`w-5 h-5 mr-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
                 Start Building Your Startup
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform text-blue-600" />
+                <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
             </button>
           </motion.div>
         </motion.div>

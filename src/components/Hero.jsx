@@ -160,18 +160,23 @@ const Hero = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 relative z-10 items-center mt-4"
+        className="flex flex-col md:flex-row gap-4 md:gap-6 relative z-10 items-center mt-4"
       >
         {/* Primary CTA */}
-        <Button
-          variant="primary"
-          size="large"
+        <button 
+          className={`
+            group bg-gradient-to-r from-blue-600 to-blue-700 text-white 
+            h-14 px-8 ${TYPOGRAPHY.sizes.body.small} ${TYPOGRAPHY.weights.semibold} 
+            ${ANIMATIONS.transition} hover:from-blue-700 hover:to-blue-800 
+            flex items-center justify-center rounded-full 
+            shadow-lg hover:scale-105 transform cursor-pointer
+          `}
           onClick={handleGetStarted}
-          leftIcon={<Rocket className="w-5 h-5" />}
-          rightIcon={<ArrowRight className="w-4 h-4" />}
-        >
-          {CONTENT.cta.primary}
-        </Button>
+          >
+            <Rocket className={`w-5 h-5 mr-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-white`} />
+            Start Building Your Startup
+            <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-white`} />
+        </button>
 
         {/* Secondary CTA */}
         <Button

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from "motion/react"
 import { 
   Search, 
-  Filter, 
   Calendar, 
   User, 
   Heart, 
@@ -22,7 +21,6 @@ import {
   Star,
   ArrowRight,
   Clock,
-  Tag,
   X,
   Send,
   Github,
@@ -30,7 +28,13 @@ import {
   Linkedin,
   ChevronDown
 } from "lucide-react"
+
+// ==========================================
+// UI COMPONENTS
+// ==========================================
 import { AuroraText } from '../components/ui/Aurora-text'
+import PageBackground from '../components/ui/PageBackground'
+
 import {
   Command,
   CommandEmpty,
@@ -44,6 +48,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '../components/ui/Popover'
+import { ANIMATIONS, TYPOGRAPHY, SPACING } from '../lib/constants'
 
 const Community = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -392,57 +397,64 @@ const Community = () => {
   const regularPosts = filteredPosts.filter(post => !post.featured)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-        
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-grid-slate-100 opacity-30 pointer-events-none"></div>
-      <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-tr from-green-500/10 to-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute inset-0 bg-grid-white/5 opacity-20 pointer-events-none"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <PageBackground variant="light">
 
       {/* Header Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto text-center`}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
           >
             <div className="flex items-center justify-center mb-6">
               <Users className="w-6 h-6 text-blue-600 mr-2" />
               <span className="text-blue-600 font-semibold text-lg">Community Hub</span>
             </div>
 
-            <h1 className="text-6xl lg:text-8xl md:text-9xl font-bold text-slate-900 text-center flex flex-col gap-4">
+            <h1 className={`
+              ${TYPOGRAPHY.sizes.hero.mobile} 
+              lg:${TYPOGRAPHY.sizes.hero.desktop} 
+              md:text-9xl 
+              ${TYPOGRAPHY.weights.bold} 
+              text-slate-900 text-center flex flex-col gap-4
+            `}>
             Join the <AuroraText>Entrepreneur</AuroraText> Community
             </h1>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto py-8 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               Share your journey, learn from others, and stay updated with the latest insights, 
               success stories, and tips from fellow entrepreneurs building amazing startups.
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-12">
+            <div className={`grid grid-cols-3 ${SPACING.gaps.large} max-w-2xl mx-auto mb-12`}>
               <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900">2,500+</div>
+                <div className={`${TYPOGRAPHY.sizes.sectionTitle.mobile} ${TYPOGRAPHY.weights.bold} text-slate-900`}>2,500+</div>
                 <div className="text-slate-600">Community Members</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900">340+</div>
+                <div className={`${TYPOGRAPHY.sizes.sectionTitle.mobile} ${TYPOGRAPHY.weights.bold} text-slate-900`}>340+</div>
                 <div className="text-slate-600">Success Stories</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900">150+</div>
+                <div className={`${TYPOGRAPHY.sizes.sectionTitle.mobile} ${TYPOGRAPHY.weights.bold} text-slate-900`}>150+</div>
                 <div className="text-slate-600">Weekly Posts</div>
               </div>
             </div>
 
             {/* Social Media Links */}
             <div className="flex flex-col items-center mb-8 mt-15">
-              <h3 className="font-light text-lg md:text-xl text-slate-600 py-4 text-center max-w-4xl mx-auto leading-relaxed"> <AuroraText>Connect with us on social media</AuroraText></h3>
+              <h3 className={`
+                ${TYPOGRAPHY.weights.light} 
+                ${TYPOGRAPHY.sizes.body.base} 
+                md:${TYPOGRAPHY.sizes.body.large} 
+                text-slate-600 py-4 text-center max-w-4xl mx-auto leading-relaxed
+              `}> <AuroraText>Connect with us on social media</AuroraText></h3>
               <div className="flex items-center gap-4 flex-wrap justify-center">
                 <a
                   href="#"
@@ -504,23 +516,32 @@ const Community = () => {
       </section>
 
       {/* Blog Section Header */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className={SPACING.section.mobile}>
+        <div className={`${SPACING.container.large} mx-auto text-center`}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
           >
             <div className="flex items-center justify-center mb-6">
               <FileText className="w-6 h-6 text-blue-600 mr-2" />
               <span className="text-blue-600 font-semibold text-lg">Blog & Articles</span>
             </div>
 
-            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+            <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-gray-900 mb-6
+            `}>
               Discover <AuroraText>Insights</AuroraText> & Stories
             </h2>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto leading-relaxed 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               Explore our comprehensive collection of success stories, how-to guides, case studies, and expert tips. 
               Learn from real entrepreneurs who've built successful startups using our AI-powered platform.
             </p>
@@ -998,7 +1019,7 @@ const Community = () => {
           </motion.div>
         </div>
       )}
-    </div>
+    </PageBackground>
   )
 }
 

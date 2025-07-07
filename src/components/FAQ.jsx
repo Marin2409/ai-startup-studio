@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from "motion/react"
 import { Plus, Minus, HelpCircle, Sparkles, Shield, Users, Target, X, Send, Mail } from 'lucide-react'
 import { AuroraText } from './ui/Aurora-text'
+import { TYPOGRAPHY, SPACING, ANIMATIONS, COMPONENTS } from '../lib/constants'
 
 const FAQ = () => {
   const navigate = useNavigate()
@@ -17,6 +18,25 @@ const FAQ = () => {
     subject: '',
     message: ''
   })
+
+  // Disable/enable body scrolling when modal opens/closes
+  useEffect(() => {
+    if (showMessageModal) {
+      // Disable scrolling
+      document.body.style.overflow = 'hidden'
+      document.body.style.paddingRight = '0px' // Prevent layout shift
+    } else {
+      // Re-enable scrolling
+      document.body.style.overflow = 'unset'
+      document.body.style.paddingRight = '0px'
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset'
+      document.body.style.paddingRight = '0px'
+    }
+  }, [showMessageModal])
 
   // Toggle function for accordion
   const toggleItem = (index) => {
@@ -53,6 +73,18 @@ const FAQ = () => {
   const closeModal = () => {
     setShowMessageModal(false)
   }
+
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showMessageModal) {
+        closeModal()
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [showMessageModal])
 
   // Comprehensive FAQ data focused on AI Startup Studio
   const faqData = [
@@ -135,26 +167,35 @@ const FAQ = () => {
   ]
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="max-w-6xl mx-auto">
+    <section className={`${SPACING.section.desktop} bg-gradient-to-br from-slate-50 to-gray-100`}>
+      <div className={`${SPACING.container.large} mx-auto`}>
         
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          initial={ANIMATIONS.fadeIn.initial}
+          animate={ANIMATIONS.fadeIn.animate}
+          transition={ANIMATIONS.fadeIn.transition}
+          className={`text-center ${SPACING.section.mobile}`}
         >
           <div className="flex items-center justify-center mb-6">
             <HelpCircle className="w-6 h-6 text-blue-600 mr-2" />
-            <span className="text-blue-600 font-semibold text-lg">Got Questions?</span>
+            <span className={`text-blue-600 ${TYPOGRAPHY.weights.semibold} ${TYPOGRAPHY.sizes.body.large}`}>Got Questions?</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+          <h2 className={`
+            ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+            lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+            ${TYPOGRAPHY.weights.bold} 
+            text-gray-900 mb-6
+          `}>
             Everything You Need to <AuroraText>Know</AuroraText>
           </h2>
           
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+          <p className={`
+            ${TYPOGRAPHY.sizes.body.large} 
+            text-slate-600 max-w-3xl mx-auto leading-relaxed 
+            ${TYPOGRAPHY.weights.light}
+          `}>
             Get answers to the most common questions about our AI-powered startup platform. 
             Can't find what you're looking for? We're here to help!
           </p>
@@ -165,17 +206,17 @@ const FAQ = () => {
           {faqData.map((category, categoryIndex) => (
             <motion.div
               key={categoryIndex}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: categoryIndex * 0.1 }}
-              className="bg-white rounded-3xl shadow-lg p-8 border border-slate-100"
+              initial={ANIMATIONS.fadeInUp.initial}
+              animate={ANIMATIONS.fadeInUp.animate}
+              transition={{ ...ANIMATIONS.fadeInUp.transition, delay: categoryIndex * 0.1 }}
+              className={`${COMPONENTS.cards.base} p-8`}
             >
               {/* Category Header */}
               <div className="flex items-center mb-8">
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${category.color} flex items-center justify-center text-white mr-4`}>
                   {category.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900">{category.category}</h3>
+                <h3 className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-slate-900`}>{category.category}</h3>
               </div>
 
               {/* FAQ Items */}
@@ -190,14 +231,18 @@ const FAQ = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: (categoryIndex * 0.1) + (faqIndex * 0.05) }}
-                      className="border border-slate-200 rounded-xl overflow-hidden hover:border-blue-300 transition-all duration-300"
+                      className={`border border-slate-200 rounded-xl overflow-hidden hover:border-blue-300 ${ANIMATIONS.transition}`}
                     >
                       {/* Question Button */}
                       <button
                         onClick={() => toggleItem(globalIndex)}
-                        className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-slate-50 transition-all duration-300 ease-in-out group"
+                        className={`w-full px-6 py-5 text-left flex items-center justify-between hover:bg-slate-50 ${ANIMATIONS.transition} group`}
                       >
-                        <span className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-300 ease-in-out">
+                        <span className={`
+                          ${TYPOGRAPHY.sizes.body.large} 
+                          ${TYPOGRAPHY.weights.semibold} 
+                          text-slate-900 group-hover:text-blue-600 ${ANIMATIONS.transition}
+                        `}>
                           {faq.question}
                         </span>
                         <motion.div
@@ -225,7 +270,7 @@ const FAQ = () => {
                             className="overflow-hidden"
                           >
                             <div className="px-6 pb-5 pt-2 border-t border-slate-100">
-                              <p className="text-slate-600 leading-relaxed">
+                              <p className={`text-slate-600 leading-relaxed ${TYPOGRAPHY.sizes.body.base}`}>
                                 {faq.answer}
                               </p>
                             </div>
@@ -242,20 +287,25 @@ const FAQ = () => {
 
         {/* Bottom CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          initial={ANIMATIONS.fadeIn.initial}
+          animate={ANIMATIONS.fadeIn.animate}
+          transition={{ ...ANIMATIONS.fadeIn.transition, delay: 0.6 }}
           className="text-center mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 text-white"
         >
-          <h3 className="text-2xl font-bold mb-4">Still Have Questions?</h3>
-          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+          <h3 className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} mb-4`}>Still Have Questions?</h3>
+          <p className={`text-blue-100 mb-6 max-w-2xl mx-auto ${TYPOGRAPHY.sizes.body.base}`}>
             Our startup success team is here to help you every step of the way. 
             Get personalized guidance for your unique situation.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className={`flex flex-col sm:flex-row ${SPACING.gaps.medium} justify-center`}>
             <button 
               onClick={() => setShowMessageModal(true)}
-              className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 transform shadow-lg hover:shadow-xl"
+              className={`
+                bg-white text-blue-600 px-6 py-3 rounded-full 
+                ${TYPOGRAPHY.weights.semibold} hover:bg-blue-50 
+                ${ANIMATIONS.transition} cursor-pointer hover:scale-105 transform 
+                shadow-lg hover:shadow-xl
+              `}
             >
               Leave us a Message
             </button>
@@ -264,15 +314,20 @@ const FAQ = () => {
                 navigate('/community')
                 window.scrollTo({ top: 0 })
               }}
-              className="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 transform shadow-lg hover:shadow-xl"
+              className={`
+                border-2 border-white text-white px-6 py-3 rounded-full 
+                ${TYPOGRAPHY.weights.semibold} hover:bg-white hover:text-blue-600 
+                ${ANIMATIONS.transition} cursor-pointer hover:scale-105 transform 
+                shadow-lg hover:shadow-xl
+              `}
             >
               Join Our Community
             </button>
           </div>
-                </motion.div>
-        </div>
+        </motion.div>
+      </div>
 
-        {/* Message Modal */}
+              {/* Message Modal */}
         <AnimatePresence>
           {showMessageModal && (
             <motion.div
@@ -280,113 +335,134 @@ const FAQ = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
               onClick={closeModal}
             >
               {/* Blurred Background Overlay */}
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-md"></div>
-              
-              {/* Modal Container */}
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-auto overflow-hidden"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Modal Header */}
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 text-white">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <Mail className="w-6 h-6" />
-                      <h3 className="text-xl font-semibold">Send us a Message</h3>
-                    </div>
-                    <button
-                      onClick={closeModal}
-                      className="p-1 hover:bg-white/20 rounded-full transition-colors duration-200 cursor-pointer"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
+              <div className="absolute inset-0 bg-black/60 backdrop-blur-lg"></div>
+            
+            {/* Modal Container */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-auto overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 text-white">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Mail className="w-6 h-6" />
+                    <h3 className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.semibold}`}>Send us a Message</h3>
                   </div>
+                  <button
+                    onClick={closeModal}
+                    className={`p-1 hover:bg-white/20 rounded-full ${ANIMATIONS.transition} cursor-pointer`}
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <form onSubmit={handleSubmitMessage} className="p-6 space-y-4">
+                {/* Email Input */}
+                <div>
+                  <label htmlFor="email" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-slate-700 mb-2`}>
+                    Your Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className={`
+                      w-full px-4 py-3 border border-slate-300 rounded-lg 
+                      focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                      ${ANIMATIONS.transition} text-slate-900
+                    `}
+                    placeholder="your.email@example.com"
+                  />
                 </div>
 
-                {/* Modal Body */}
-                <form onSubmit={handleSubmitMessage} className="p-6 space-y-4">
-                  {/* Email Input */}
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                      Your Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-slate-900"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
+                {/* Subject Input */}
+                <div>
+                  <label htmlFor="subject" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-slate-700 mb-2`}>
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    required
+                    className={`
+                      w-full px-4 py-3 border border-slate-300 rounded-lg 
+                      focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                      ${ANIMATIONS.transition} text-slate-900
+                    `}
+                    placeholder="What can we help you with?"
+                  />
+                </div>
 
-                  {/* Subject Input */}
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-2">
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-slate-900"
-                      placeholder="What can we help you with?"
-                    />
-                  </div>
+                {/* Message Textarea */}
+                <div>
+                  <label htmlFor="message" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-slate-700 mb-2`}>
+                    Your Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    rows={6}
+                    className={`
+                      w-full px-4 py-3 border border-slate-300 rounded-lg 
+                      focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                      ${ANIMATIONS.transition} text-slate-900 resize-none
+                    `}
+                    placeholder="Tell us about your question, feedback, or how we can help you with your startup journey..."
+                  />
+                </div>
 
-                  {/* Message Textarea */}
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
-                      Your Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                      rows={6}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-slate-900 resize-none"
-                      placeholder="Tell us about your question, feedback, or how we can help you with your startup journey..."
-                    />
-                  </div>
-
-                  {/* Form Actions */}
-                  <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                    <button
-                      type="submit"
-                      className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl cursor-pointer"
-                    >
-                      <Send className="w-4 h-4" />
-                      <span>Send Message</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={closeModal}
-                      className="flex-1 sm:flex-none border-2 border-slate-300 text-slate-700 px-6 py-3 rounded-lg font-semibold hover:bg-slate-50 transition-all duration-300 cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              </motion.div>
+                {/* Form Actions */}
+                <div className={`flex flex-col sm:flex-row ${SPACING.gaps.small} pt-4`}>
+                  <button
+                    type="submit"
+                    className={`
+                      flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg 
+                      ${TYPOGRAPHY.weights.semibold} hover:from-blue-700 hover:to-purple-700 
+                      ${ANIMATIONS.transition} flex items-center justify-center space-x-2 
+                      shadow-lg hover:shadow-xl cursor-pointer
+                    `}
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>Send Message</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className={`
+                      flex-1 sm:flex-none border-2 border-slate-300 text-slate-700 px-6 py-3 rounded-lg 
+                      ${TYPOGRAPHY.weights.semibold} hover:bg-slate-50 
+                      ${ANIMATIONS.transition} cursor-pointer
+                    `}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </section>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Star, Quote, ArrowLeft, ArrowRight, Zap, Target, Rocket } from 'lucide-react'
 import { AuroraText } from './ui/Aurora-text';
+import { ANIMATIONS, TYPOGRAPHY, SPACING } from '../lib/constants'
 
 const Testimonials = () => {
   // State for active testimonial carousel
@@ -64,57 +65,84 @@ const Testimonials = () => {
   }
 
   return (
-
-      // Container with responsive padding 
-        <div className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <section className={SPACING.section.desktop}>
+      <div className={`${SPACING.container.large} mx-auto relative`}>
 
         {/* Section header with compelling messaging */}
-        <div className="text-center mb-16">
+        <div className={`text-center ${SPACING.section.mobile}`}>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Star className="w-6 h-6 text-yellow-400 fill-current" />
             <Star className="w-6 h-6 text-yellow-400 fill-current" />
             <Star className="w-6 h-6 text-yellow-400 fill-current" />
             <Star className="w-6 h-6 text-yellow-400 fill-current" />
             <Star className="w-6 h-6 text-yellow-400 fill-current" />
-            <span className="ml-2 text-lg font-semibold text-gray-700">5.0 from 2,500+ founders</span>
+            <span className={`ml-2 ${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-gray-700`}>5.0 from 2,500+ founders</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className={`
+            ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+            lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+            ${TYPOGRAPHY.weights.bold} 
+            text-gray-900 mb-6
+          `}>
             Founders Love Our   <AuroraText> AI-Powered </AuroraText> Approach
           </h2>
           
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className={`
+            ${TYPOGRAPHY.sizes.body.large} 
+            text-gray-600 
+            ${TYPOGRAPHY.weights.light} 
+            max-w-3xl mx-auto leading-relaxed
+          `}>
             Join thousands of successful entrepreneurs who've accelerated their startup journey with our 
             high-quality, accurate, and lightning-fast AI guidance.
           </p>
         </div>
 
         {/* Key benefits showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 ${SPACING.section.mobile}`}>
           {/* Speed benefit */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+          <div className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl ${ANIMATIONS.transition} border border-gray-100`}>
             <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-lg flex items-center justify-center mb-4">
               <Zap className="w-6 h-6 text-white" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-green-600 transition-colors duration-300 cursor-pointer">Lightning Fast</h3>
+            <h3 className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-gray-900 mb-2 hover:text-green-600 ${ANIMATIONS.transition} cursor-pointer
+            `}>
+              Lightning Fast
+            </h3>
             <p className="text-gray-600">From idea to MVP in weeks, not months. Our AI workflow is 10x faster than traditional development.</p>
           </div>
           
           {/* Accuracy benefit */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+          <div className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl ${ANIMATIONS.transition} border border-gray-100`}>
             <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-lg flex items-center justify-center mb-4">
               <Target className="w-6 h-6 text-white" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-purple-600 transition-colors duration-300 cursor-pointer">Pinpoint Accuracy</h3>
+            <h3 className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-gray-900 mb-2 hover:text-purple-600 ${ANIMATIONS.transition} cursor-pointer
+            `}>
+              Pinpoint Accuracy
+            </h3>
             <p className="text-gray-600">98% accurate market insights and technical recommendations based on real startup data.</p>
           </div>
           
           {/* Quality benefit */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+          <div className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl ${ANIMATIONS.transition} border border-gray-100`}>
             <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg flex items-center justify-center mb-4">
               <Rocket className="w-6 h-6 text-white" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors duration-300 cursor-pointer">Premium Quality</h3>
+            <h3 className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-gray-900 mb-2 hover:text-blue-600 ${ANIMATIONS.transition} cursor-pointer
+            `}>
+              Premium Quality
+            </h3>
             <p className="text-gray-600">Production-ready code and enterprise-grade architecture from day one.</p>
           </div>
         </div>
@@ -122,24 +150,24 @@ const Testimonials = () => {
         {/* Interactive testimonial carousel */}
         <div className="relative">
           {/* Main testimonial card */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8 transform transition-all duration-500 hover:scale-105">
+          <div className={`bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8 transform ${ANIMATIONS.transition} hover:scale-105`}>
             <div className="flex flex-col md:flex-row items-center gap-8">
               
               {/* User avatar and info */}
               <div className="flex flex-col items-center text-center md:items-start md:text-left">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg mb-4">
-                  <span className="text-white text-2xl font-bold">
+                  <span className={`text-white ${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold}`}>
                     {testimonials[activeTestimonial].name.split(' ').map(n => n[0]).join('')}
                   </span>
                 </div>
-                <h4 className="text-xl font-bold text-gray-900">{testimonials[activeTestimonial].name}</h4>
-                <p className="text-gray-600 font-medium">{testimonials[activeTestimonial].role}</p>
-                <p className="text-blue-600 font-semibold">{testimonials[activeTestimonial].company}</p>
+                <h4 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.bold} text-gray-900`}>{testimonials[activeTestimonial].name}</h4>
+                <p className={`text-gray-600 ${TYPOGRAPHY.weights.medium}`}>{testimonials[activeTestimonial].role}</p>
+                <p className={`text-blue-600 ${TYPOGRAPHY.weights.semibold}`}>{testimonials[activeTestimonial].company}</p>
                 
                 {/* Star rating */}
                 <div className="flex items-center gap-1 mt-3">
                   {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current hover:text-yellow-500 transition-colors duration-200" />
+                    <Star key={i} className={`w-5 h-5 text-yellow-400 fill-current hover:text-yellow-500 ${ANIMATIONS.transition}`} />
                   ))}
                 </div>
               </div>
@@ -147,17 +175,23 @@ const Testimonials = () => {
               {/* Testimonial content */}
               <div className="flex-1">
                 <Quote className="w-12 h-12 text-blue-200 mb-4" />
-                <blockquote className="text-lg md:text-xl text-gray-800 leading-relaxed mb-6 font-medium hover:text-gray-900 transition-colors duration-300 cursor-default">
+                <blockquote className={`
+                  ${TYPOGRAPHY.sizes.body.large} 
+                  md:${TYPOGRAPHY.sizes.cardTitle} 
+                  text-gray-800 leading-relaxed mb-6 
+                  ${TYPOGRAPHY.weights.medium} 
+                  hover:text-gray-900 ${ANIMATIONS.transition} cursor-default
+                `}>
                   "{testimonials[activeTestimonial].text}"
                 </blockquote>
                 
                 {/* Highlight metrics */}
                 <div className="flex flex-wrap gap-4">
                   <div className="bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full">
-                    <span className="text-blue-800 font-bold text-sm">{testimonials[activeTestimonial].highlight}</span>
+                    <span className={`text-blue-800 ${TYPOGRAPHY.weights.bold} ${TYPOGRAPHY.sizes.body.small}`}>{testimonials[activeTestimonial].highlight}</span>
                   </div>
                   <div className="bg-gradient-to-r from-green-100 to-teal-100 px-4 py-2 rounded-full">
-                    <span className="text-green-800 font-bold text-sm">{testimonials[activeTestimonial].metric}</span>
+                    <span className={`text-green-800 ${TYPOGRAPHY.weights.bold} ${TYPOGRAPHY.sizes.body.small}`}>{testimonials[activeTestimonial].metric}</span>
                   </div>
                 </div>
               </div>
@@ -168,7 +202,7 @@ const Testimonials = () => {
           <div className="flex items-center justify-center gap-4">
             <button 
               onClick={prevTestimonial}
-              className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-50 transition-colors duration-200 group cursor-pointer"
+              className={`w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-50 ${ANIMATIONS.transition} group cursor-pointer`}
             >
               <ArrowLeft className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
             </button>
@@ -179,7 +213,7 @@ const Testimonials = () => {
                 <button
                   key={index}
                   onClick={() => setActiveTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                  className={`w-3 h-3 rounded-full ${ANIMATIONS.transition} ${
                     index === activeTestimonial 
                       ? 'bg-blue-600 w-8' 
                       : 'bg-gray-300 hover:bg-gray-400'
@@ -190,7 +224,7 @@ const Testimonials = () => {
             
             <button 
               onClick={nextTestimonial}
-              className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-50 transition-colors duration-200 group cursor-pointer"
+              className={`w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-50 ${ANIMATIONS.transition} group cursor-pointer`}
             >
               <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
             </button>
@@ -199,15 +233,16 @@ const Testimonials = () => {
 
         {/* Trust indicators */}
         <div className="mt-16 text-center">
-          <p className="text-gray-500 mb-8 text-lg hover:text-gray-700 transition-colors duration-300">Trusted by aspiring entrepreneurs worldwide</p>
+          <p className={`text-gray-500 mb-8 ${TYPOGRAPHY.sizes.body.large} hover:text-gray-700 ${ANIMATIONS.transition}`}>Trusted by aspiring entrepreneurs worldwide</p>
           <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
-            <div className="text-2xl font-bold text-gray-400 hover:text-blue-600 hover:opacity-100 transition-all duration-300">College Students</div>
-            <div className="text-2xl font-bold text-gray-400 hover:text-purple-600 hover:opacity-100 transition-all duration-300">Solo Developers</div>
-            <div className="text-2xl font-bold text-gray-400 hover:text-green-600 hover:opacity-100 transition-all duration-300">First-time Founders</div>
-            <div className="text-2xl font-bold text-gray-400 hover:text-orange-600 hover:opacity-100 transition-all duration-300">Side Hustlers</div>
+            <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-gray-400 hover:text-blue-600 hover:opacity-100 ${ANIMATIONS.transition}`}>College Students</div>
+            <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-gray-400 hover:text-purple-600 hover:opacity-100 ${ANIMATIONS.transition}`}>Solo Developers</div>
+            <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-gray-400 hover:text-green-600 hover:opacity-100 ${ANIMATIONS.transition}`}>First-time Founders</div>
+            <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-gray-400 hover:text-orange-600 hover:opacity-100 ${ANIMATIONS.transition}`}>Side Hustlers</div>
           </div>
         </div>
       </div>
+    </section>
   )
 }
 

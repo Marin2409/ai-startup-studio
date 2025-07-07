@@ -3,7 +3,6 @@ import { motion } from "motion/react";
 import { useNavigate } from 'react-router-dom'
 import { 
   Brain, 
-  TrendingUp, 
   CheckCircle,
   Zap,
   Target,
@@ -17,6 +16,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { AuroraText } from './ui/Aurora-text';
+import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants';
 
 const Features = () => {
   // Navigation hook
@@ -125,13 +125,22 @@ const Features = () => {
             <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
             <span className="text-blue-600 font-semibold text-lg">Powerful Features</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-            Everything You Need to <AuroraText>Launch</AuroraText>
-          </h2>
-                  <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
-          Our comprehensive AI-powered platform provides all the tools, insights, and guidance 
-          you need to transform your startup idea into a thriving business.
-        </p>
+
+          <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-slate-900 mb-8
+            `}>
+              Everything You Need to <AuroraText>Launch</AuroraText>
+            </h2>
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-4xl mx-auto leading-relaxed mb-8 
+              ${TYPOGRAPHY.weights.light}
+            `}>
+              Our comprehensive AI-powered platform provides all the tools, insights, and guidance you need to transform your startup idea into a thriving business.
+            </p>
         </motion.div>
 
         {/* Main features grid */}
@@ -264,13 +273,20 @@ const Features = () => {
             </div>
 
             <button 
+            className={`
+              group bg-white text-blue-600 
+              h-14 px-8 ${TYPOGRAPHY.sizes.body.small} ${TYPOGRAPHY.weights.semibold} 
+              ${ANIMATIONS.transition} hover:bg-blue-50 
+              flex items-center justify-center rounded-full 
+              shadow-lg hover:scale-105 transform cursor-pointer mx-auto
+            `}
               onClick={() => {
                 navigate('/features')
                 window.scrollTo({ top: 0 })
               }}
-              className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-400 shadow-lg hover:shadow-xl hover:scale-102 transform cursor-pointer"
-            >
+              >
               Explore All Features
+              <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
             </button>
           </div>
         </motion.div>

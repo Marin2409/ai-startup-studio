@@ -2,7 +2,12 @@ import React, { useState } from 'react'
 import { motion } from "motion/react";
 import { useNavigate } from 'react-router-dom'
 import { FileText, BarChart3, Settings, Target, Code, Users, ArrowRight, Sparkles, CheckCircle } from "lucide-react";
+
+// ==========================================
+// UI COMPONENTS
+// ==========================================
 import { AuroraText } from './ui/Aurora-text'
+import { ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
 
 const Showcase = () => {
   const [activeStep, setActiveStep] = useState(0)
@@ -74,64 +79,73 @@ const Showcase = () => {
   return (
     <div>
       {/* Integration Showcase */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto`}>
           
           {/* Section Header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
             className="text-center mb-20"
           >
             <div className="flex items-center justify-center mb-6">
               <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
               <span className="text-blue-600 font-semibold text-lg">Complete Workflow</span>
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-8">
+            <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-slate-900 mb-8
+            `}>
               Your Complete <AuroraText>Startup Journey</AuroraText>
             </h2>
-            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-8 font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-4xl mx-auto leading-relaxed mb-8 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               From initial idea to successful launch - see how our integrated AI tools work together 
               to accelerate every stage of your startup development process.
             </p>
             
             {/* Key Stats */}
-            <div className="flex flex-wrap justify-center gap-8 text-center">
+            <div className={`flex flex-wrap justify-center ${SPACING.gaps.large} text-center`}>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-slate-700 font-medium">6 Integrated Steps</span>
+                <span className={`text-slate-700 ${TYPOGRAPHY.weights.medium}`}>6 Integrated Steps</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-slate-700 font-medium">3 Hours Total Time</span>
+                <span className={`text-slate-700 ${TYPOGRAPHY.weights.medium}`}>3 Hours Total Time</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-slate-700 font-medium">95% Success Rate</span>
+                <span className={`text-slate-700 ${TYPOGRAPHY.weights.medium}`}>95% Success Rate</span>
               </div>
             </div>
           </motion.div>
 
           {/* Interactive Steps Container */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden"
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={{ ...ANIMATIONS.fadeIn.transition, delay: 0.2 }}
+            className={`${COMPONENTS.cards.base} p-8 md:p-12 relative overflow-hidden`}
           >
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -translate-y-32 translate-x-32 opacity-50 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-green-100 to-blue-100 rounded-full translate-y-24 -translate-x-24 opacity-50 pointer-events-none"></div>
             
             {/* Steps Grid */}
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className={`relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${SPACING.gaps.large} mb-12`}>
               {steps.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                  initial={ANIMATIONS.fadeInScale.initial}
+                  animate={ANIMATIONS.fadeInScale.animate}
+                  transition={{ ...ANIMATIONS.fadeInScale.transition, delay: 0.4 + index * 0.1 }}
                   className={`group relative p-6 rounded-2xl ${item.bgColor} border border-transparent hover:border-slate-200 hover:bg-white transition-all duration-500 cursor-pointer transform hover:scale-105 hover:shadow-lg`}
                   onMouseEnter={() => setActiveStep(index)}
                 >
@@ -151,10 +165,14 @@ const Showcase = () => {
                   </div>
                   
                   {/* Step Content */}
-                  <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-400">
+                  <h3 className={`
+                    ${TYPOGRAPHY.sizes.body.base} 
+                    ${TYPOGRAPHY.weights.bold} 
+                    text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-400
+                  `}>
                     {item.title}
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                  <p className={`${TYPOGRAPHY.sizes.caption} text-slate-600 leading-relaxed mb-4`}>
                     {item.description}
                   </p>
                   
@@ -171,15 +189,19 @@ const Showcase = () => {
 
             {/* Bottom CTA Section */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
+              initial={ANIMATIONS.stagger.item.initial}
+              animate={ANIMATIONS.stagger.item.animate}
+              transition={{ ...ANIMATIONS.stagger.item.transition, delay: 1.0 }}
               className="relative z-10 text-center pt-8 border-t border-slate-200"
             >
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">
+              <h3 className={`
+                ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+                ${TYPOGRAPHY.weights.bold} 
+                text-slate-900 mb-4
+              `}>
                 See What We're Used For
               </h3>
-              <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
+              <p className={`text-slate-600 mb-6 max-w-2xl mx-auto`}>
                 Discover real-world success stories and see how entrepreneurs across different industries are using our AI platform to build thriving startups.
               </p>
               <button 

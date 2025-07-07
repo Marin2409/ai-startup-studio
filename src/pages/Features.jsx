@@ -25,10 +25,9 @@ import {
 // UI COMPONENTS
 // ==========================================
 import PageBackground from '../components/ui/PageBackground'
-import SectionHeader from '../components/ui/SectionHeader'
 import Button from '../components/ui/Button'
 import { AuroraText } from '../components/ui/Aurora-text'
-import { CONTENT, ANIMATIONS } from '../lib/constants'
+import { CONTENT, ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
 
 /**
  * Features Component
@@ -80,11 +79,11 @@ const Features = () => {
     {
       icon: <Rocket className="w-8 h-8" />,
       title: "Smart Development Roadmaps",
-      description: "AI creates detailed 12-18 month roadmaps with milestone tracking, resource allocation, and automated progress monitoring.",
+      description: "AI creates detailed 12-18 month roadmaps with milestone tracking, automated progress monitoring, etc.",
       benefits: ["Sprint-based planning", "Resource optimization", "Deadline tracking", "Team coordination"],
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
-      demo: "Generate 18-month product roadmap"
+      demo: "18-month product roadmap"
     },
     {
       icon: <Target className="w-8 h-8" />,
@@ -144,51 +143,97 @@ const Features = () => {
           HERO SECTION
           ========================================== */}
       
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto`}>
           
           {/* Main page header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
           >
             <div className="flex items-center justify-center mb-6">
               <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
-              <span className="text-blue-600 font-semibold text-lg">Complete Feature Suite</span>
+              <span className={`text-blue-600 ${TYPOGRAPHY.weights.semibold} ${TYPOGRAPHY.sizes.body.large}`}>Complete Feature Suite</span>
             </div>
 
-            <h1 className="text-6xl lg:text-8xl md:text-9xl font-bold text-slate-900 text-center flex flex-col gap-4">
-              Everything You Need to <AuroraText>Build</AuroraText> Your Startup
+            <h1 className={`
+              ${TYPOGRAPHY.sizes.hero.mobile} 
+              lg:${TYPOGRAPHY.sizes.hero.desktop} 
+              md:text-9xl 
+              ${TYPOGRAPHY.weights.bold} 
+              text-slate-900 text-center flex flex-col gap-4
+            `}>
+              <span>Everything you need</span>
+              <span>to <AuroraText>build</AuroraText></span>
+              <span>your startup</span>
             </h1>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto py-8 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               From AI-powered business planning to code generation, our comprehensive platform provides all the tools entrepreneurs need to transform ideas into successful businesses.
             </p>
           </motion.div>
-
-          
 
           {/* ==========================================
               HERO STATISTICS GRID
               ========================================== */}
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-8">
+          <div className={`grid grid-cols-2 md:grid-cols-4 ${SPACING.gaps.medium} max-w-4xl mx-auto mt-12`}>
             {heroStats.map((stat, index) => (
               <motion.div
                 key={index}
                 initial={ANIMATIONS.fadeInScale.initial}
                 animate={ANIMATIONS.fadeInScale.animate}
                 transition={{ ...ANIMATIONS.fadeInScale.transition, delay: 0.2 + index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
+                className={`
+                  group relative overflow-hidden
+                  bg-white/70 backdrop-blur-sm rounded-2xl p-6 
+                  border border-white/20 shadow-xl 
+                  hover:shadow-2xl hover:scale-105 hover:bg-white/80
+                  ${ANIMATIONS.transition}
+                `}
               >
-                <div className="flex items-center justify-center mb-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white">
-                    {stat.icon}
+                {/* Subtle gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Content container with better alignment */}
+                <div className="relative z-10 text-center">
+                  {/* Icon with enhanced styling */}
+                  <div className="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-300">
+                    <div className="scale-110">
+                      {stat.icon}
+                    </div>
+                  </div>
+                  
+                  {/* Number with better typography */}
+                  <div className={`
+                    ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+                    ${TYPOGRAPHY.weights.bold} 
+                    text-slate-900 mb-1 
+                    group-hover:text-blue-600 
+                    ${ANIMATIONS.transition}
+                  `}>
+                    {stat.number}
+                  </div>
+                  
+                  {/* Label with improved styling */}
+                  <div className={`
+                    ${TYPOGRAPHY.sizes.body.base} 
+                    ${TYPOGRAPHY.weights.medium} 
+                    text-slate-600 
+                    group-hover:text-slate-700 
+                    ${ANIMATIONS.transition}
+                  `}>
+                    {stat.label}
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-slate-900 mb-1">{stat.number}</div>
-                <div className="text-sm text-slate-600">{stat.label}</div>
+                
+                {/* Subtle shine effect on hover */}
+                <div className="absolute inset-0 -top-2 -left-2 bg-gradient-to-r from-transparent via-white/10 to-transparent rotate-45 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
               </motion.div>
             ))}
           </div>
@@ -199,39 +244,48 @@ const Features = () => {
           DETAILED SOLUTION FEATURES
           ========================================== */}
       
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto`}>
           
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
+            className={`text-center ${SPACING.section.mobile}`}
           >
-            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+            <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-gray-900 mb-6
+            `}>
               Comprehensive <AuroraText>AI-Powered</AuroraText> Tools
             </h2>
             
-                         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto leading-relaxed 
+              ${TYPOGRAPHY.weights.light}
+            `}>
                Each tool is designed to solve specific entrepreneurial challenges with cutting-edge AI technology
              </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${SPACING.gaps.large}`}>
             {solutions.map((solution, index) => (
               <motion.div
                 key={index}
                 initial={ANIMATIONS.fadeInUp.initial}
                 animate={ANIMATIONS.fadeInUp.animate}
                 transition={{ ...ANIMATIONS.fadeInUp.transition, delay: index * 0.1 }}
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-slate-100 hover:border-blue-200 hover:transform hover:scale-105"
+                className={`group ${COMPONENTS.cards.base} p-8 ${ANIMATIONS.hover} hover:border-blue-200 hover:transform hover:scale-105`}
               >
                 
                 {/* ==========================================
                     SOLUTION ICON
                     ========================================== */}
                 
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${solution.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-500`}>
+                <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${solution.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 ${ANIMATIONS.transition}`}>
                   {solution.icon}
                 </div>
                 
@@ -239,10 +293,14 @@ const Features = () => {
                     SOLUTION CONTENT
                     ========================================== */}
                 
-                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-400">
+                <h3 className={`
+                  ${TYPOGRAPHY.sizes.cardTitle} 
+                  ${TYPOGRAPHY.weights.bold} 
+                  text-slate-900 mb-3 group-hover:text-blue-600 ${ANIMATIONS.transition}
+                `}>
                   {solution.title}
                 </h3>
-                <p className="text-slate-600 leading-relaxed mb-6">
+                <p className={`text-slate-600 leading-relaxed mb-6 ${TYPOGRAPHY.sizes.body.base}`}>
                   {solution.description}
                 </p>
 
@@ -250,9 +308,9 @@ const Features = () => {
                     BENEFITS LIST
                     ========================================== */}
                 
-                <ul className="space-y-3 mb-6">
+                <ul className={`space-y-3 mb-6`}>
                   {solution.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="flex items-center text-sm text-slate-600">
+                    <li key={benefitIndex} className={`flex items-center ${TYPOGRAPHY.sizes.caption} text-slate-600`}>
                       <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
                       {benefit}
                     </li>
@@ -282,20 +340,29 @@ const Features = () => {
           FEATURE COMPARISON TABLE
           ========================================== */}
       
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto`}>
           
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
+            className={`text-center ${SPACING.section.mobile}`}
           >
-            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+            <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-gray-900 mb-6
+            `}>
               Traditional vs. <AuroraText>AI Startup Studio</AuroraText>
             </h2>
             
-                         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto leading-relaxed 
+              ${TYPOGRAPHY.weights.light}
+            `}>
                See how our AI-powered approach revolutionizes the startup creation process
              </p>
           </motion.div>
@@ -304,7 +371,7 @@ const Features = () => {
             initial={ANIMATIONS.fadeInUp.initial}
             animate={ANIMATIONS.fadeInUp.animate}
             transition={{ ...ANIMATIONS.fadeInUp.transition, delay: 0.2 }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200"
+            className={`${COMPONENTS.cards.base} overflow-hidden`}
           >
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -315,10 +382,10 @@ const Features = () => {
                 
                 <thead className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
                   <tr>
-                    <th className="px-6 py-4 text-left font-semibold">Feature</th>
-                    <th className="px-6 py-4 text-center font-semibold">Traditional Method</th>
-                    <th className="px-6 py-4 text-center font-semibold">AI Startup Studio</th>
-                    <th className="px-6 py-4 text-center font-semibold">Improvement</th>
+                    <th className={`px-6 py-4 text-left ${TYPOGRAPHY.weights.semibold}`}>Feature</th>
+                    <th className={`px-6 py-4 text-center ${TYPOGRAPHY.weights.semibold}`}>Traditional Method</th>
+                    <th className={`px-6 py-4 text-center ${TYPOGRAPHY.weights.semibold}`}>AI Startup Studio</th>
+                    <th className={`px-6 py-4 text-center ${TYPOGRAPHY.weights.semibold}`}>Improvement</th>
                   </tr>
                 </thead>
                 
@@ -333,15 +400,18 @@ const Features = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                      className={`border-b border-slate-100 hover:bg-blue-50 transition-colors duration-200 ${
+                      className={`border-b border-slate-100 hover:bg-blue-50 ${ANIMATIONS.transition} ${
                         index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
                       }`}
                     >
-                      <td className="px-6 py-4 font-medium text-slate-900">{item.feature}</td>
-                      <td className="px-6 py-4 text-center text-red-600">{item.traditional}</td>
-                      <td className="px-6 py-4 text-center text-green-600 font-semibold">{item.aiStudio}</td>
+                      <td className={`px-6 py-4 ${TYPOGRAPHY.weights.medium} text-slate-900`}>{item.feature}</td>
+                      <td className={`px-6 py-4 text-center text-red-600 ${TYPOGRAPHY.sizes.body.base}`}>{item.traditional}</td>
+                      <td className={`px-6 py-4 text-center text-green-600 ${TYPOGRAPHY.weights.semibold} ${TYPOGRAPHY.sizes.body.base}`}>{item.aiStudio}</td>
                       <td className="px-6 py-4 text-center">
-                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                        <span className={`
+                          bg-green-100 text-green-800 px-3 py-1 rounded-full 
+                          ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium}
+                        `}>
                           {item.improvement}
                         </span>
                       </td>
@@ -358,30 +428,41 @@ const Features = () => {
           FINAL CTA SECTION
           ========================================== */}
       
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className={`${SPACING.section.desktop} bg-gradient-to-r from-blue-600 to-purple-600`}>
+        <div className={`${SPACING.container.medium} mx-auto text-center`}>
           <motion.div
             initial={ANIMATIONS.fadeIn.initial}
             animate={ANIMATIONS.fadeIn.animate}
             transition={ANIMATIONS.fadeIn.transition}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-white mb-6
+            `}>
               Ready to Experience the Future of Startup Creation?
             </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-blue-100 mb-8 max-w-2xl mx-auto 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               Join thousands of entrepreneurs who've accelerated their startup journey with our AI-powered platform
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                variant="secondary"
-                size="large"
-                onClick={handleGetStarted}
-                leftIcon={<Rocket className="w-5 h-5" />}
-                rightIcon={<ArrowRight className="w-4 h-4" />}
-              >
-                {CONTENT.cta.primary}
-              </Button>
+            <div className={`flex flex-col sm:flex-row ${SPACING.gaps.medium} justify-center`}>
+              <button className={`
+                group bg-white text-blue-600 h-14 px-8 
+                ${TYPOGRAPHY.sizes.body.base} ${TYPOGRAPHY.weights.semibold} 
+                ${ANIMATIONS.transition} hover:bg-blue-50 
+                flex items-center justify-center rounded-full 
+                shadow-lg hover:scale-105 transform cursor-pointer mx-auto
+              `} onClick={handleGetStarted}>
+                  <Rocket className={`w-5 h-5 mr-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
+                  Start Building Your Startup
+                  <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
+              </button>
             </div>
           </motion.div>
         </div>

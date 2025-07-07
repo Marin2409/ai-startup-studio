@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { Eye, EyeOff, Check, Zap, Users, Star, ArrowRight } from 'lucide-react'
+
+// ==========================================
+// UI COMPONENTS & ASSETS
+// ==========================================
 import { assets } from '../assets/assets'
+import PageBackground from '../components/ui/PageBackground'
+import { TYPOGRAPHY, SPACING, ANIMATIONS } from '../lib/constants'
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -90,6 +99,8 @@ const Login = () => {
 
   const toggleMode = () => {
     setIsLogin(!isLogin)
+    setShowPassword(false)
+    setShowConfirmPassword(false)
     setFormData({
       email: '',
       password: '',
@@ -105,68 +116,113 @@ const Login = () => {
     navigate('/')
   }
 
+  const features = [
+    {
+      icon: <Zap className="w-5 h-5" />,
+      title: "Lightning Fast",
+      description: "Generate business plans in minutes"
+    },
+    {
+      icon: <Users className="w-5 h-5" />,
+      title: "10,000+ Users",
+      description: "Join successful entrepreneurs"
+    },
+    {
+      icon: <Star className="w-5 h-5" />,
+      title: "AI Powered",
+      description: "Advanced AI technology"
+    }
+  ]
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGRlZnM+CjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPgo8cGF0aCBkPSJNIDEwIDAgTCAwIDAgMCAxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMDQiLz4KPC9wYXR0ZXJuPgo8L2RlZnM+CjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz4KPC9zdmc+')] opacity-30"></div>
+    <PageBackground variant="light" className="flex items-center justify-center p-4">
       
       {/* Main Container */}
       <div className="relative w-full max-w-7xl mx-auto">
-        <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
           <div className="grid lg:grid-cols-2 min-h-[700px]">
             
-            {/* Left Side - Branding */}
-            <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 p-8 lg:p-12 flex flex-col justify-center items-center text-white">
-              {/* Animated Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 animate-pulse"></div>
+            {/* Left Side - Enhanced Branding */}
+            <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 p-8 lg:p-12 flex flex-col justify-center items-center text-white overflow-hidden">
               
-              {/* Logo */}
-              <div className="relative z-10 text-center">
-                <button 
-                  onClick={handleLogoClick}
-                  className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-8 mx-auto backdrop-blur-sm border border-white/30 p-3 hover:bg-white/30 hover:scale-105 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50"
-                >
-                  <img 
-                    src={assets.logo} 
-                    alt="AI Startup Studio Logo" 
-                    className="w-full h-full object-contain"
-                  />
-                </button>
+              {/* Animated Background Elements */}
+              <div className="absolute inset-0">
+                <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+                <div className="absolute bottom-20 right-10 w-48 h-48 bg-purple-300/20 rounded-full blur-2xl animate-pulse delay-700"></div>
+                <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-blue-300/15 rounded-full blur-lg animate-pulse delay-1000"></div>
+              </div>
+              
+              {/* Main Content */}
+              <div className="relative z-10 text-center max-w-md">
                 
-                <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-                  Welcome Back
-                </h1>
-                
-                <p className="text-xl lg:text-2xl text-white/90 mb-8">
-                  {isLogin ? 'Sign in to your account' : 'Create your account'}
-                </p>
-                
-                <div className="space-y-4 text-white/80">
-                  <div className="flex items-center justify-center space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                      </svg>
-                    </div>
-                    <span>AI Powered</span>
-                  </div>
+                {/* Logo Section */}
+                <div className="mb-8">
+                  <button 
+                    onClick={handleLogoClick}
+                    className="group w-24 h-24 bg-white/10 rounded-2xl flex items-center justify-center mx-auto backdrop-blur-sm border-2 border-white/20 p-4 hover:bg-white/20 hover:scale-110 hover:border-white/40 transition-all duration-500 cursor-pointer focus:outline-none focus:ring-4 focus:ring-white/30"
+                  >
+                    <img 
+                      src={assets.logo} 
+                      alt="AI Startup Studio Logo" 
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </button>
                   
-                  <div className="flex items-center justify-center space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                      </svg>
-                    </div>
-                    <span>Lightning Fast</span>
-                  </div>
+                  <h1 className={`
+                    ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+                    lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+                    ${TYPOGRAPHY.weights.bold} 
+                    mt-6 mb-3 text-white
+                  `}>
+                    AI Startup Studio
+                  </h1>
                   
-                  <div className="flex items-center justify-center space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                      </svg>
+                  <p className={`
+                    ${TYPOGRAPHY.sizes.body.large} 
+                    text-white/90 mb-8 leading-relaxed
+                  `}>
+                    {isLogin 
+                      ? 'Welcome back to the future of startup creation' 
+                      : 'Join thousands building successful startups with AI'
+                    }
+                  </p>
+                </div>
+                
+                {/* Enhanced Features Grid */}
+                <div className="space-y-4 mb-8">
+                  {features.map((feature, index) => (
+                    <div
+                      key={index}
+                      className="group flex items-center p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+                    >
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                        {feature.icon}
+                      </div>
+                      <div className="text-left">
+                        <h3 className={`${TYPOGRAPHY.weights.semibold} text-white mb-1`}>
+                          {feature.title}
+                        </h3>
+                        <p className={`${TYPOGRAPHY.sizes.caption} text-white/80`}>
+                          {feature.description}
+                        </p>
+                      </div>
                     </div>
-                    <span>Join 10,000+ Users</span>
+                  ))}
+                </div>
+
+                {/* Success Stats */}
+                <div className="grid grid-cols-3 gap-4 p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
+                  <div className="text-center">
+                    <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-white`}>10K+</div>
+                    <div className={`${TYPOGRAPHY.sizes.tiny} text-white/80`}>Users</div>
+                  </div>
+                  <div className="text-center border-l border-r border-white/30">
+                    <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-white`}>2.5K+</div>
+                    <div className={`${TYPOGRAPHY.sizes.tiny} text-white/80`}>Plans</div>
+                  </div>
+                  <div className="text-center">
+                    <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-white`}>98%</div>
+                    <div className={`${TYPOGRAPHY.sizes.tiny} text-white/80`}>Success</div>
                   </div>
                 </div>
               </div>
@@ -178,10 +234,14 @@ const Login = () => {
                 
                 {/* Form Header */}
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                  <h2 className={`
+                    ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+                    ${TYPOGRAPHY.weights.bold} 
+                    text-gray-900 mb-2
+                  `}>
                     {isLogin ? 'Sign In' : 'Create Account'}
                   </h2>
-                  <p className="text-gray-600">
+                  <p className={`text-gray-600 ${TYPOGRAPHY.sizes.body.base}`}>
                     {isLogin 
                       ? 'Welcome back! Please enter your details.' 
                       : 'Fill in your information to get started.'
@@ -196,7 +256,7 @@ const Login = () => {
                   {!isLogin && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="firstName" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-gray-700`}>
                           First Name
                         </label>
                         <input
@@ -205,7 +265,7 @@ const Login = () => {
                           name="firstName"
                           value={formData.firstName}
                           onChange={handleInputChange}
-                          className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
+                          className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${ANIMATIONS.transition} ${
                             errors.firstName 
                               ? 'border-red-300 focus:border-red-500' 
                               : 'border-gray-200 focus:border-blue-500'
@@ -213,12 +273,12 @@ const Login = () => {
                           placeholder="Enter your first name"
                         />
                         {errors.firstName && (
-                          <p className="text-red-500 text-sm">{errors.firstName}</p>
+                          <p className={`text-red-500 ${TYPOGRAPHY.sizes.caption}`}>{errors.firstName}</p>
                         )}
                       </div>
                       
                       <div className="space-y-2">
-                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="lastName" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-gray-700`}>
                           Last Name
                         </label>
                         <input
@@ -227,7 +287,7 @@ const Login = () => {
                           name="lastName"
                           value={formData.lastName}
                           onChange={handleInputChange}
-                          className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
+                          className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${ANIMATIONS.transition} ${
                             errors.lastName 
                               ? 'border-red-300 focus:border-red-500' 
                               : 'border-gray-200 focus:border-blue-500'
@@ -235,7 +295,7 @@ const Login = () => {
                           placeholder="Enter your last name"
                         />
                         {errors.lastName && (
-                          <p className="text-red-500 text-sm">{errors.lastName}</p>
+                          <p className={`text-red-500 ${TYPOGRAPHY.sizes.caption}`}>{errors.lastName}</p>
                         )}
                       </div>
                     </div>
@@ -243,7 +303,7 @@ const Login = () => {
 
                   {/* Email */}
                   <div className="space-y-2">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="email" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-gray-700`}>
                       Email Address
                     </label>
                     <input
@@ -252,7 +312,7 @@ const Login = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
+                      className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${ANIMATIONS.transition} ${
                         errors.email 
                           ? 'border-red-300 focus:border-red-500' 
                           : 'border-gray-200 focus:border-blue-500'
@@ -260,14 +320,14 @@ const Login = () => {
                       placeholder="Enter your email"
                     />
                     {errors.email && (
-                      <p className="text-red-500 text-sm">{errors.email}</p>
+                      <p className={`text-red-500 ${TYPOGRAPHY.sizes.caption}`}>{errors.email}</p>
                     )}
                   </div>
 
                   {/* Company - Only for signup */}
                   {!isLogin && (
                     <div className="space-y-2">
-                      <label htmlFor="company" className="block text-sm font-medium text-gray-700">
+                      <label htmlFor="company" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-gray-700`}>
                         Company (Optional)
                       </label>
                       <input
@@ -276,7 +336,7 @@ const Login = () => {
                         name="company"
                         value={formData.company}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                        className={`w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 ${ANIMATIONS.transition}`}
                         placeholder="Enter your company name"
                       />
                     </div>
@@ -285,48 +345,68 @@ const Login = () => {
                   {/* Password Fields */}
                   <div className={`${!isLogin ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : ''}`}>
                     <div className="space-y-2">
-                      <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                      <label htmlFor="password" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-gray-700`}>
                         Password
                       </label>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
-                          errors.password 
-                            ? 'border-red-300 focus:border-red-500' 
-                            : 'border-gray-200 focus:border-blue-500'
-                        }`}
-                        placeholder="Enter your password"
-                      />
+                      <div className="relative">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          id="password"
+                          name="password"
+                          value={formData.password}
+                          onChange={handleInputChange}
+                          className={`w-full px-4 py-3 pr-12 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${ANIMATIONS.transition} ${
+                            errors.password 
+                              ? 'border-red-300 focus:border-red-500' 
+                              : 'border-gray-200 focus:border-blue-500'
+                          }`}
+                          placeholder="Enter your password"
+                        />
+                        {!isLogin && (
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none focus:text-blue-500 transition-colors duration-200"
+                          >
+                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          </button>
+                        )}
+                      </div>
                       {errors.password && (
-                        <p className="text-red-500 text-sm">{errors.password}</p>
+                        <p className={`text-red-500 ${TYPOGRAPHY.sizes.caption}`}>{errors.password}</p>
                       )}
                     </div>
 
                     {/* Confirm Password - Only for signup */}
                     {!isLogin && (
                       <div className="space-y-2">
-                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="confirmPassword" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-gray-700`}>
                           Confirm Password
                         </label>
-                        <input
-                          type="password"
-                          id="confirmPassword"
-                          name="confirmPassword"
-                          value={formData.confirmPassword}
-                          onChange={handleInputChange}
-                          className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
-                            errors.confirmPassword 
-                              ? 'border-red-300 focus:border-red-500' 
-                              : 'border-gray-200 focus:border-blue-500'
-                          }`}
-                          placeholder="Confirm your password"
-                        />
+                        <div className="relative">
+                          <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleInputChange}
+                            className={`w-full px-4 py-3 pr-12 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${ANIMATIONS.transition} ${
+                              errors.confirmPassword 
+                                ? 'border-red-300 focus:border-red-500' 
+                                : 'border-gray-200 focus:border-blue-500'
+                            }`}
+                            placeholder="Confirm your password"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none focus:text-blue-500 transition-colors duration-200"
+                          >
+                            {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          </button>
+                        </div>
                         {errors.confirmPassword && (
-                          <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+                          <p className={`text-red-500 ${TYPOGRAPHY.sizes.caption}`}>{errors.confirmPassword}</p>
                         )}
                       </div>
                     )}
@@ -337,7 +417,7 @@ const Login = () => {
                     <div className="text-right">
                       <button
                         type="button"
-                        className="text-sm text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
+                        className={`${TYPOGRAPHY.sizes.caption} text-blue-600 hover:text-blue-800 ${TYPOGRAPHY.weights.medium} cursor-pointer ${ANIMATIONS.transition}`}
                       >
                         Forgot password?
                       </button>
@@ -348,10 +428,10 @@ const Login = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full py-3 px-4 rounded-xl font-semibold text-white transition-all duration-200 cursor-pointer ${
+                    className={`w-full py-3 px-4 rounded-xl ${TYPOGRAPHY.weights.semibold} text-white ${ANIMATIONS.transition} cursor-pointer ${
                       isLoading
                         ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:shadow-lg transform hover:scale-105'
+                        : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl transform hover:scale-105'
                     }`}
                   >
                     {isLoading ? (
@@ -360,18 +440,21 @@ const Login = () => {
                         <span>Please wait...</span>
                       </div>
                     ) : (
-                      isLogin ? 'Sign In' : 'Create Account'
+                      <div className="flex items-center justify-center space-x-2">
+                        <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </div>
                     )}
                   </button>
 
                   {/* Toggle Mode */}
                   <div className="text-center">
-                    <p className="text-gray-600">
+                    <p className={`text-gray-600 ${TYPOGRAPHY.sizes.body.base}`}>
                       {isLogin ? "Don't have an account?" : 'Already have an account?'}
                       <button
                         type="button"
                         onClick={toggleMode}
-                        className="ml-1 text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
+                        className={`ml-1 text-blue-600 hover:text-blue-800 ${TYPOGRAPHY.weights.medium} cursor-pointer ${ANIMATIONS.transition}`}
                       >
                         {isLogin ? 'Sign up' : 'Sign in'}
                       </button>
@@ -383,7 +466,7 @@ const Login = () => {
                     <button
                       type="button"
                       onClick={() => navigate(fromPage)}
-                      className="text-sm text-gray-500 hover:text-gray-700 font-medium cursor-pointer"
+                      className={`${TYPOGRAPHY.sizes.caption} text-gray-500 hover:text-gray-700 ${TYPOGRAPHY.weights.medium} cursor-pointer ${ANIMATIONS.transition}`}
                     >
                       ← Back to {fromPage === '/' ? 'Home' : fromPage.charAt(1).toUpperCase() + fromPage.slice(2)}
                     </button>
@@ -394,7 +477,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageBackground>
   )
 }
 

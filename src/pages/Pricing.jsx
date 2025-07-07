@@ -15,7 +15,6 @@ import {
   Sparkles,
   ArrowRight,
   Zap,
-  Shield,
   Brain,
   Target,
 } from "lucide-react"
@@ -24,11 +23,10 @@ import {
 // UI COMPONENTS
 // ==========================================
 import PageBackground from '../components/ui/PageBackground'
-import SectionHeader from '../components/ui/SectionHeader'
 import Button from '../components/ui/Button'
 import { AuroraText } from '../components/ui/Aurora-text'
 import FAQ from '../components/FAQ'
-import { CONTENT, ANIMATIONS } from '../lib/constants'
+import { CONTENT, ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
 
 /**
  * Pricing Component
@@ -193,25 +191,36 @@ const Pricing = () => {
           PAGE HEADER SECTION
           ========================================== */}
       
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto`}>
           
           {/* Main page header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
           >
             <div className="flex items-center justify-center mb-6">
               <Sparkles className="w-6 h-6 text-blue-600 mr-2" />
-              <span className="text-blue-600 font-semibold text-lg">Simple, Transparent Pricing</span>
+              <span className={`text-blue-600 ${TYPOGRAPHY.weights.semibold} ${TYPOGRAPHY.sizes.body.large}`}>Simple, Transparent Pricing</span>
             </div>
 
-            <h1 className="text-6xl lg:text-8xl md:text-9xl font-bold text-slate-900 text-center flex flex-col gap-4">
-              Start <AuroraText>Building</AuroraText> Your Startup Today
+            <h1 className={`
+              ${TYPOGRAPHY.sizes.hero.mobile} 
+              lg:${TYPOGRAPHY.sizes.hero.desktop} 
+              md:text-9xl 
+              ${TYPOGRAPHY.weights.bold} 
+              text-slate-900 text-center flex flex-col gap-4
+            `}>
+              <span>Start <AuroraText>Building</AuroraText></span>
+              <span>Your Startup Today</span>
             </h1>
             
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto py-8 font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto py-8 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               From free exploration to professional development tools, we have the perfect plan to help you transform your idea into a working MVP with AI-powered precision.
             </p>
           </motion.div>
@@ -221,26 +230,26 @@ const Pricing = () => {
               ========================================== */}
           
           <div className="flex items-center justify-center mb-8">
-            <span className={`mr-3 text-sm font-medium ${!isAnnual ? 'text-slate-900' : 'text-slate-500'}`}>
+            <span className={`mr-3 ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} ${!isAnnual ? 'text-slate-900' : 'text-slate-500'}`}>
               Monthly
             </span>
             <button
               onClick={() => setIsAnnual(!isAnnual)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+              className={`relative inline-flex h-6 w-11 items-center rounded-full ${ANIMATIONS.transition} ${
                 isAnnual ? 'bg-blue-600' : 'bg-slate-200'
               }`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                className={`inline-block h-4 w-4 transform rounded-full bg-white ${ANIMATIONS.transition} ${
                   isAnnual ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
             </button>
-            <span className={`ml-3 text-sm font-medium ${isAnnual ? 'text-slate-900' : 'text-slate-500'}`}>
+            <span className={`ml-3 ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} ${isAnnual ? 'text-slate-900' : 'text-slate-500'}`}>
               Annual
             </span>
             {isAnnual && (
-              <span className="ml-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
+              <span className={`ml-2 bg-green-100 text-green-800 ${TYPOGRAPHY.sizes.tiny} ${TYPOGRAPHY.weights.semibold} px-2 py-1 rounded-full`}>
                 Save 20%
               </span>
             )}
@@ -255,10 +264,10 @@ const Pricing = () => {
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-4">
                 <Zap className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Never Hit a Wall</h3>
-              <p className="text-slate-600 text-sm">
+              <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2`}>Never Hit a Wall</h3>
+              <p className={`text-slate-600 ${TYPOGRAPHY.sizes.caption}`}>
                 Start free and only pay for what you need. Run out of AI plans or templates? 
-                <span className="font-medium text-blue-600"><br/>Top up instantly</span> without upgrading to a full subscription.
+                <span className={`${TYPOGRAPHY.weights.medium} text-blue-600`}><br/>Top up instantly</span> without upgrading to a full subscription.
               </p>
             </div>
           </div>
@@ -270,29 +279,34 @@ const Pricing = () => {
           ========================================== */}
       
       <section className="px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className={`${SPACING.container.large} mx-auto`}>
+          <div className={`grid grid-cols-1 lg:grid-cols-3 ${SPACING.gaps.large}`}>
             {plans.map((plan, index) => (
               <motion.div
                 key={plan.name}
                 initial={ANIMATIONS.fadeInUp.initial}
                 animate={ANIMATIONS.fadeInUp.animate}
                 transition={{ ...ANIMATIONS.fadeInUp.transition, delay: index * 0.1 }}
-                className={`relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ${
-                  plan.popular ? 'ring-2 ring-blue-600 scale-105' : ''
-                }`}
+                className={`
+                  relative ${COMPONENTS.cards.base} 
+                  ${plan.popular ? 'ring-2 ring-blue-600 scale-105' : ''} 
+                  flex flex-col h-full
+                `}
               >
                 
                 {/* Popular badge */}
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-semibold">
+                    <span className={`
+                      bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full 
+                      ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.semibold}
+                    `}>
                       ⭐ Most Popular
                     </span>
                   </div>
                 )}
 
-                <div className="p-8">
+                <div className="p-8 flex flex-col h-full">
                   
                   {/* ==========================================
                       PLAN HEADER
@@ -303,25 +317,25 @@ const Pricing = () => {
                       {plan.icon}
                     </div>
                     
-                    <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.name}</h3>
-                    <p className="text-slate-600 mb-4">{plan.subtitle}</p>
+                    <h3 className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-slate-900 mb-2`}>{plan.name}</h3>
+                    <p className={`text-slate-600 mb-4 ${TYPOGRAPHY.sizes.caption}`}>{plan.subtitle}</p>
                     
                     {/* Pricing display */}
                     <div className="mb-4">
-                      <span className="text-4xl font-bold text-slate-900">
+                      <span className={`${TYPOGRAPHY.sizes.pageTitle.mobile} ${TYPOGRAPHY.weights.bold} text-slate-900`}>
                         ${isAnnual ? plan.annualPrice : plan.price}
                       </span>
-                      <span className="text-slate-600 ml-1">
+                      <span className={`text-slate-600 ml-1 ${TYPOGRAPHY.sizes.body.base}`}>
                         {plan.price === 0 ? '' : '/month'}
                       </span>
                       {isAnnual && plan.price > 0 && (
-                        <div className="text-sm text-green-600 mt-1">
+                        <div className={`${TYPOGRAPHY.sizes.caption} text-green-600 mt-1`}>
                           Save ${(plan.price - plan.annualPrice) * 12}/year
                         </div>
                       )}
                     </div>
 
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${plan.badgeColor}`}>
+                    <span className={`inline-block px-3 py-1 rounded-full ${TYPOGRAPHY.sizes.tiny} ${TYPOGRAPHY.weights.semibold} ${plan.badgeColor}`}>
                       {plan.badge}
                     </span>
                   </div>
@@ -330,7 +344,7 @@ const Pricing = () => {
                       FEATURES LIST
                       ========================================== */}
                   
-                  <div className="space-y-4 mb-8">
+                  <div className={`space-y-4 mb-8`}>
                     {plan.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-start">
                         <div className="flex-shrink-0 mt-1">
@@ -341,11 +355,16 @@ const Pricing = () => {
                           )}
                         </div>
                         <div className="ml-3">
-                          <span className={`text-sm ${feature.included ? 'text-slate-900' : 'text-slate-400'} ${feature.highlight ? 'font-semibold' : ''} ${feature.payAsYouGo ? 'text-blue-600' : ''}`}>
+                          <span className={`
+                            ${TYPOGRAPHY.sizes.caption} 
+                            ${feature.included ? 'text-slate-900' : 'text-slate-400'} 
+                            ${feature.highlight ? TYPOGRAPHY.weights.semibold : ''} 
+                            ${feature.payAsYouGo ? 'text-blue-600' : ''}
+                          `}>
                             {feature.name}
                           </span>
                           {feature.limit && (
-                            <span className="text-xs text-slate-500 ml-2">({feature.limit})</span>
+                            <span className={`${TYPOGRAPHY.sizes.tiny} text-slate-500 ml-2`}>({feature.limit})</span>
                           )}
                         </div>
                       </div>
@@ -358,7 +377,7 @@ const Pricing = () => {
                   
                   {plan.payAsYouGo && (
                     <div className="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                      <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                      <h4 className={`${TYPOGRAPHY.weights.semibold} text-blue-900 mb-3 flex items-center`}>
                         <Zap className="w-4 h-4 mr-2" />
                         When you run out, top up instantly:
                       </h4>
@@ -366,11 +385,11 @@ const Pricing = () => {
                       {/* Bundle Option */}
                       <div className="mb-4 p-3 bg-white rounded-lg border border-blue-100">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-slate-900">{plan.payAsYouGo.bundle.name}</span>
-                          <span className="font-bold text-blue-600">${plan.payAsYouGo.bundle.price}</span>
+                          <span className={`${TYPOGRAPHY.weights.medium} text-slate-900`}>{plan.payAsYouGo.bundle.name}</span>
+                          <span className={`${TYPOGRAPHY.weights.bold} text-blue-600`}>${plan.payAsYouGo.bundle.price}</span>
                         </div>
-                        <p className="text-sm text-slate-600 mb-2">{plan.payAsYouGo.bundle.description}</p>
-                        <div className="text-xs text-slate-500">
+                        <p className={`${TYPOGRAPHY.sizes.caption} text-slate-600 mb-2`}>{plan.payAsYouGo.bundle.description}</p>
+                        <div className={`${TYPOGRAPHY.sizes.tiny} text-slate-500`}>
                           {plan.payAsYouGo.bundle.includes.map((item, idx) => (
                             <div key={idx}>• {item}</div>
                           ))}
@@ -378,18 +397,21 @@ const Pricing = () => {
                       </div>
 
                       {/* Individual Options */}
-                      <div className="text-xs text-slate-600">
-                        <div className="font-medium mb-1">Or buy individually:</div>
+                      <div className={`${TYPOGRAPHY.sizes.tiny} text-slate-600`}>
+                        <div className={`${TYPOGRAPHY.weights.medium} mb-1`}>Or buy individually:</div>
                         {plan.payAsYouGo.individual.map((item, idx) => (
                           <div key={idx} className="flex justify-between">
                             <span>{item.service}</span>
-                            <span className="font-medium">${item.price} for {item.quantity}</span>
+                            <span className={TYPOGRAPHY.weights.medium}>${item.price} for {item.quantity}</span>
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
 
+                  {/* Spacer to push button to bottom */}
+                  <div className="flex-grow"></div>
+                  
                   {/* ==========================================
                       CTA BUTTON
                       ========================================== */}
@@ -414,38 +436,95 @@ const Pricing = () => {
           KEY FEATURES SECTION
           ========================================== */}
       
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.large} mx-auto`}>
           
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            initial={ANIMATIONS.fadeIn.initial}
+            animate={ANIMATIONS.fadeIn.animate}
+            transition={ANIMATIONS.fadeIn.transition}
+            className={`text-center ${SPACING.section.mobile}`}
           >
-            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+            <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-gray-900 mb-6
+            `}>
               Why Choose <AuroraText>AI Startup Studio?</AuroraText>
             </h2>
             
-                         <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-slate-600 max-w-3xl mx-auto leading-relaxed 
+              ${TYPOGRAPHY.weights.light}
+            `}>
                Get everything you need to go from idea to MVP with our integrated AI-powered development platform
              </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-3 ${SPACING.gaps.large}`}>
             {keyFeatures.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={ANIMATIONS.fadeInUp.initial}
                 animate={ANIMATIONS.fadeInUp.animate}
                 transition={{ ...ANIMATIONS.fadeInUp.transition, delay: index * 0.1 }}
-                className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 hover:shadow-lg transition-all duration-300"
+                className={`
+                  group relative overflow-hidden
+                  bg-white/80 backdrop-blur-sm rounded-2xl p-8 
+                  border border-white/30 shadow-xl
+                  hover:shadow-2xl hover:scale-105 hover:bg-white/90
+                  ${ANIMATIONS.transition}
+                `}
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-4">
-                  {feature.icon}
+                {/* Subtle gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Content container */}
+                <div className="relative z-10 text-center">
+                  {/* Enhanced icon with glow effect */}
+                  <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-6 shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-300">
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-50 blur-lg group-hover:opacity-75 transition-opacity duration-300"></div>
+                    <div className="relative scale-110">
+                      {feature.icon}
+                    </div>
+                  </div>
+                  
+                  {/* Enhanced title */}
+                  <h3 className={`
+                    ${TYPOGRAPHY.sizes.cardTitle} 
+                    ${TYPOGRAPHY.weights.bold} 
+                    text-slate-900 mb-4 
+                    group-hover:text-blue-600 
+                    ${ANIMATIONS.transition}
+                  `}>
+                    {feature.title}
+                  </h3>
+                  
+                  {/* Enhanced description */}
+                  <p className={`
+                    ${TYPOGRAPHY.sizes.body.base} 
+                    ${TYPOGRAPHY.weights.light} 
+                    text-slate-600 
+                    group-hover:text-slate-700 
+                    leading-relaxed
+                    ${ANIMATIONS.transition}
+                  `}>
+                    {feature.description}
+                  </p>
+                  
+                  {/* Decorative element */}
+                  <div className="mt-6 flex justify-center">
+                    <div className="w-12 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full opacity-30 group-hover:opacity-60 group-hover:w-16 transition-all duration-300"></div>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-2">{feature.title}</h3>
-                <p className="text-slate-600">{feature.description}</p>
+                
+                {/* Subtle shine effect on hover */}
+                <div className="absolute inset-0 -top-2 -left-2 bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                
+                {/* Corner accent */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.div>
             ))}
           </div>
@@ -462,30 +541,43 @@ const Pricing = () => {
           FINAL CTA SECTION
           ========================================== */}
       
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className={`${SPACING.section.desktop} bg-gradient-to-r from-blue-600 to-purple-600`}>
+        <div className={`${SPACING.container.medium} mx-auto text-center`}>
           <motion.div
             initial={ANIMATIONS.fadeIn.initial}
             animate={ANIMATIONS.fadeIn.animate}
             transition={ANIMATIONS.fadeIn.transition}
           >
-            <h2 className="text-3xl font-bold text-white mb-4">
+            <h2 className={`
+              ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
+              lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
+              ${TYPOGRAPHY.weights.bold} 
+              text-white mb-6
+            `}>
               Ready to Build Your MVP?
             </h2>
-            <p className="text-xl text-blue-100 mb-8">
+            <p className={`
+              ${TYPOGRAPHY.sizes.body.large} 
+              text-blue-100 mb-8 
+              ${TYPOGRAPHY.weights.light}
+            `}>
               Join thousands of entrepreneurs who've transformed their ideas into working products with AI
             </p>
             
-            <Button
-              variant="secondary"
-              size="large"
-              onClick={handleGetStarted}
-              leftIcon={<Rocket className="w-5 h-5" />}
-              rightIcon={<ArrowRight className="w-4 h-4" />}
-              className="mx-auto"
-            >
-              {CONTENT.cta.primary}
-            </Button>
+            <button 
+          className={`
+            group bg-white text-blue-600 
+            h-14 px-8 ${TYPOGRAPHY.sizes.body.small} ${TYPOGRAPHY.weights.semibold} 
+            ${ANIMATIONS.transition} hover:bg-blue-50 
+            flex items-center justify-center rounded-full 
+            shadow-lg hover:scale-105 transform cursor-pointer mx-auto
+          `}
+          onClick={handleGetStarted}
+          >
+            <Rocket className={`w-5 h-5 mr-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
+            Start Building Your Startup
+            <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
+        </button>
           </motion.div>
         </div>
       </section>

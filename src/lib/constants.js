@@ -197,6 +197,9 @@ export const COMPONENTS = {
 // ANIMATION PRESETS
 // ==========================================
 export const ANIMATIONS = {
+  // Common Transitions
+  transition: 'transition-all duration-300 ease-in-out',
+  
   // Fade In Animations
   fadeIn: {
     initial: { opacity: 0, y: 30 },
