@@ -22,17 +22,19 @@ import UseCases from './pages/UseCases'
 import Features from './pages/Features'
 import Community from './pages/Community'
 import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
 
 const App = () => {
 
   const location = useLocation();
   const isOwnerPath = location.pathname.includes("owner");
   const isLoginPath = location.pathname === "/login";
+  const isDashboardPath = location.pathname === "/dashboard";
 
   return (
     <div>
       {/* Navbar */}
-      {!isOwnerPath && !isLoginPath && <Navbar />}
+      {!isOwnerPath && !isLoginPath && !isDashboardPath && <Navbar />}
 
       {/* Routes */}
       <div className='min-h-screen'>
@@ -54,11 +56,14 @@ const App = () => {
 
           {/* Login */}
           <Route path="/login" element={<Login />} />
+
+          {/* Dashboard */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
       
       {/* Footer */}
-      {!isOwnerPath && !isLoginPath && <Footer />}
+      {!isOwnerPath && !isLoginPath && !isDashboardPath && <Footer />}
     </div>
   )
 }

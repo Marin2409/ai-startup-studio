@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Eye, EyeOff, Check, Zap, Users, Star, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff, Zap, Users, Star, ArrowRight } from 'lucide-react'
 
 // ==========================================
 // UI COMPONENTS & ASSETS
 // ==========================================
 import { assets } from '../assets/assets'
 import PageBackground from '../components/ui/PageBackground'
-import { TYPOGRAPHY, SPACING, ANIMATIONS } from '../lib/constants'
+import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants'
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -26,8 +26,8 @@ const Login = () => {
   const navigate = useNavigate()
   const location = useLocation()
   
-  // Get the referring page from location state, default to home
-  const fromPage = location.state?.from || '/'
+  // Get the referring page from location state, default to dashboard after login
+  const fromPage = location.state?.from || '/dashboard'
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -92,8 +92,10 @@ const Login = () => {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false)
-      // For demo purposes, just navigate to home
-      navigate('/')
+      // For demo purposes, just navigate to dashboard
+      console.log('Navigating to dashboard')
+      navigate('/dashboard')
+      // navigate(fromPage)
     }, 2000)
   }
 
