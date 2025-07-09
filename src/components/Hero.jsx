@@ -20,7 +20,7 @@ import {
 // UI COMPONENTS
 // ==========================================
 import { Badge } from './ui/Badge-ui'
-import Button from './ui/Button'
+import Button from './ui/Button-component'
 import { HeroVideoDialog } from './ui/Hero-video-dialog'
 import { TypingAnimation } from './ui/Typing-animation'
 import { AuroraText } from './ui/Aurora-text'

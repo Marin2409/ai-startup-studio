@@ -25,7 +25,7 @@ import {
 // UI COMPONENTS
 // ==========================================
 import PageBackground from '../components/ui/PageBackground'
-import Button from '../components/ui/Button'
+import Button from '../components/ui/Button-component'
 import { AuroraText } from '../components/ui/Aurora-text'
 import { CONTENT, ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
 
@@ -165,8 +165,8 @@ const Features = () => {
               text-slate-900 text-center flex flex-col gap-4
             `}>
               <span>Everything you need</span>
-              <span>to <AuroraText>build</AuroraText></span>
-              <span>your startup</span>
+              <span>to build</span>
+              <span>your <AuroraText>Startup</AuroraText></span>
             </h1>
             
             <p className={`
@@ -465,7 +465,7 @@ const Features = () => {
               </button>
             </div>
           </motion.div>
-        </div>
+    </div>
       </section>
     </PageBackground>
   )

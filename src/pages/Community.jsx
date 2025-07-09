@@ -419,7 +419,7 @@ const Community = () => {
               ${TYPOGRAPHY.weights.bold} 
               text-slate-900 text-center flex flex-col gap-4
             `}>
-            Join the <AuroraText>Entrepreneur</AuroraText> Community
+            Join the <AuroraText>AI Startup Studio</AuroraText> Community
             </h1>
             
             <p className={`

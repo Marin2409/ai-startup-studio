@@ -27,14 +27,13 @@ import Dashboard from './pages/Dashboard'
 const App = () => {
 
   const location = useLocation();
-  const isOwnerPath = location.pathname.includes("owner");
   const isLoginPath = location.pathname === "/login";
   const isDashboardPath = location.pathname === "/dashboard";
 
   return (
     <div>
       {/* Navbar */}
-      {!isOwnerPath && !isLoginPath && !isDashboardPath && <Navbar />}
+      {!isLoginPath && !isDashboardPath && <Navbar />}
 
       {/* Routes */}
       <div className='min-h-screen'>
@@ -63,7 +62,7 @@ const App = () => {
       </div>
       
       {/* Footer */}
-      {!isOwnerPath && !isLoginPath && !isDashboardPath && <Footer />}
+      {!isLoginPath && !isDashboardPath && <Footer />}
     </div>
   )
 }

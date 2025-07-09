@@ -261,7 +261,7 @@ const FAQ = () => {
                       {/* Answer Content */}
                       <AnimatePresence mode="wait">
                         {isOpen && (
-                          <motion.div
+              <motion.div
                             key={globalIndex}
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
@@ -281,8 +281,8 @@ const FAQ = () => {
                   )
                 })}
               </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
         </div>
 
         {/* Bottom CTA */}
@@ -429,7 +429,7 @@ const FAQ = () => {
                     `}
                     placeholder="Tell us about your question, feedback, or how we can help you with your startup journey..."
                   />
-                </div>
+        </div>
 
                 {/* Form Actions */}
                 <div className={`flex flex-col sm:flex-row ${SPACING.gaps.small} pt-4`}>
@@ -456,7 +456,7 @@ const FAQ = () => {
                   >
                     Cancel
                   </button>
-                </div>
+    </div>
               </form>
             </motion.div>
           </motion.div>

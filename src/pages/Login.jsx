@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Eye, EyeOff, Zap, Users, Star, ArrowRight } from 'lucide-react'
 
-// ==========================================
+// ----------------------------------
 // UI COMPONENTS & ASSETS
-// ==========================================
+// ----------------------------------
 import { assets } from '../assets/assets'
+import { Eye, EyeOff, Zap, Users, Star, ArrowRight } from 'lucide-react'
 import PageBackground from '../components/ui/PageBackground'
 import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants'
 

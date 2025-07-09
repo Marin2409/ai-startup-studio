@@ -23,7 +23,7 @@ import {
 // UI COMPONENTS
 // ==========================================
 import PageBackground from '../components/ui/PageBackground'
-import Button from '../components/ui/Button'
+import Button from '../components/ui/Button-component'
 import { AuroraText } from '../components/ui/Aurora-text'
 import FAQ from '../components/FAQ'
 import { CONTENT, ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
@@ -579,7 +579,7 @@ const Pricing = () => {
             <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
         </button>
           </motion.div>
-        </div>
+    </div>
       </section>
     </PageBackground>
   )
