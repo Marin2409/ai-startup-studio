@@ -1,9 +1,12 @@
 import React from 'react'
+import Sidebar from '../components/Sidebar-dashboard'
+import Createproject from '../components/Create-project'
 
 const Dashboard = () => {
   return (
-    <div>
-      <h1>Welcome to the dashboard! You are successfully logged in.</h1>
+    <div className="dashboard-layout">
+      <Sidebar />
+      <Createproject />
     </div>
   )
 }
