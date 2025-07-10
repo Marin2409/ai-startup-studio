@@ -6,7 +6,7 @@ import { FileText, BarChart3, Settings, Target, Code, Users, ArrowRight, Sparkle
 // ==========================================
 // UI COMPONENTS
 // ==========================================
-import { AuroraText } from './ui/Aurora-text'
+import { AuroraText } from './ui/Aurora-text';
 import { ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
 
 const Showcase = () => {

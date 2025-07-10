@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from "motion/react"
 import { Plus, Minus, HelpCircle, Sparkles, Shield, Users, Target, X, Send, Mail } from 'lucide-react'
-import { AuroraText } from './ui/Aurora-text'
-import { TYPOGRAPHY, SPACING, ANIMATIONS, COMPONENTS } from '../lib/constants'
+import { AuroraText } from './ui/Aurora-text';
+import { TYPOGRAPHY, SPACING, ANIMATIONS, COMPONENTS } from '../lib/constants'; 
 
 const FAQ = () => {
   const navigate = useNavigate()

@@ -3,7 +3,7 @@
 // ----------------------------------
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Rocket, Sparkles, Calendar, Zap, Shield } from "lucide-react";
-import { TYPOGRAPHY, SPACING, ANIMATIONS, COMPONENTS } from '../lib/constants'
+import { TYPOGRAPHY, SPACING, ANIMATIONS } from '../lib/constants'
 
 const CTA = () => {
   const navigate = useNavigate()

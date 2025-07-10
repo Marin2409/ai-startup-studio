@@ -11,8 +11,7 @@ import {
 } from 'lucide-react'
 import { assets } from '../assets/assets'
 
-const Sidebar = () => {
-  const [activeItem, setActiveItem] = useState('Projects')
+const Sidebar = ({ activePage, setActivePage }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [showText, setShowText] = useState(false)
 
@@ -46,8 +45,8 @@ const Sidebar = () => {
       icon: Puzzle,
     },
     {
-      id: 'Usage',
-      label: 'Usage',
+      id: 'Analytics',
+      label: 'Analytics',
       icon: BarChart3,
     },
     {
@@ -56,14 +55,14 @@ const Sidebar = () => {
       icon: CreditCard,
     },
     {
-      id: 'Organization settings',
-      label: 'Organization settings',
+      id: 'AI Tools',
+      label: 'AI Tools',
       icon: Settings,
     },
   ]
 
   const handleItemClick = (itemId) => {
-    setActiveItem(itemId)
+    setActivePage(itemId)
   }
 
   return (
@@ -92,7 +91,7 @@ const Sidebar = () => {
         <ul className="sidebar-menu">
           {menuItems.map((item, index) => {
             const Icon = item.icon
-            const isActive = activeItem === item.id
+            const isActive = activePage === item.id
             
             return (
               <li key={item.id} className="sidebar-menu-item">

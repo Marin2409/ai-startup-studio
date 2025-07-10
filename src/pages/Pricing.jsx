@@ -26,7 +26,7 @@ import PageBackground from '../components/ui/PageBackground'
 import Button from '../components/ui/Button-component'
 import { AuroraText } from '../components/ui/Aurora-text'
 import FAQ from '../components/FAQ'
-import { CONTENT, ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
+import { ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
 
 /**
  * Pricing Component
