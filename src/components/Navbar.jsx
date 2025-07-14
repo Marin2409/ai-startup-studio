@@ -45,8 +45,8 @@ const Navbar = () => {
           <span className="text-white font-bold text-xl">AI Startup Studio</span>
         </Link>
     
-        {/* Desktop Navigation Links - Hidden on mobile, visible on md+ screens */}
-        <ul className="text-white md:flex hidden items-center justify-center gap-8 flex-1">
+        {/* Desktop Navigation Links - Visible on larger screens, hidden on mobile */}
+        <ul className="text-white flex items-center justify-center gap-8 flex-1 max-sm:hidden">
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/">Home</Link></li>
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/pricing">Pricing</Link></li>
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/features">Features</Link></li>
@@ -54,8 +54,8 @@ const Navbar = () => {
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/community">Community</Link></li>
         </ul>
     
-        {/* Desktop CTA Button - Primary action button for larger screens */} 
-        <button type="button" className="bg-white text-blue-600 md:inline hidden text-sm font-semibold hover:bg-blue-50 active:scale-95 transition-all w-40 h-11 rounded-full shadow-sm cursor-pointer" onClick={handleSignInClick}>
+        {/* Desktop CTA Button - Visible on larger screens, hidden on mobile */} 
+        <button type="button" className="bg-white text-blue-600 inline text-sm font-semibold hover:bg-blue-50 active:scale-95 transition-all w-40 h-11 rounded-full shadow-sm cursor-pointer max-sm:hidden" onClick={handleSignInClick}>
           Sign In
         </button>
     
@@ -63,7 +63,7 @@ const Navbar = () => {
         <button 
           aria-label="menu-btn" 
           type="button" 
-          className="menu-btn inline-block md:hidden active:scale-90 transition"
+          className="menu-btn inline-block sm:hidden active:scale-90 transition"
           onClick={toggleMobileMenu}
         >
           {/* Hamburger icon with rotation animation when menu is open */}
@@ -80,7 +80,7 @@ const Navbar = () => {
         </button>
     
         {/* Mobile Menu Dropdown - Conditionally rendered based on state */}
-        <div className={`mobile-menu absolute top-[70px] left-0 w-full bg-gradient-to-r from-blue-600 to-blue-700 p-6 md:hidden border-t border-blue-500/30 shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'block opacity-100 translate-y-0' : 'hidden opacity-0 -translate-y-2'}`}>
+        <div className={`mobile-menu absolute top-[70px] left-0 w-full bg-gradient-to-r from-blue-600 to-blue-700 p-6 sm:hidden border-t border-blue-500/30 shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'block opacity-100 translate-y-0' : 'hidden opacity-0 -translate-y-2'}`}>
           {/* Mobile navigation links */}
           <ul className="flex flex-col space-y-4 text-white text-lg">
             <li><Link to="/" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Home</Link></li>
@@ -93,7 +93,7 @@ const Navbar = () => {
           {/* Mobile CTA Button - Same functionality as desktop version */}
           <button 
             type="button" 
-            className="bg-white text-blue-600 mt-6 inline md:hidden text-sm font-semibold hover:bg-blue-50 active:scale-95 transition-all w-40 h-11 rounded-full shadow-sm cursor-pointer"
+            className="bg-white text-blue-600 mt-6 inline sm:hidden text-sm font-semibold hover:bg-blue-50 active:scale-95 transition-all w-40 h-11 rounded-full shadow-sm cursor-pointer"
             onClick={handleSignInClick}
           >
             Sign In

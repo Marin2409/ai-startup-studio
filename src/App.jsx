@@ -32,10 +32,14 @@ const App = () => {
   const isDashboardPath = location.pathname === "/dashboard";
   const isProjectPath = location.pathname.startsWith("/project");
 
+  // Show navbar on all pages except login, dashboard, and project pages
+  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath;
+  const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath;
+
   return (
     <div>
       {/* Navbar */}
-      {!isLoginPath && !isDashboardPath && !isProjectPath && <Navbar />}
+      {showNavbar && <Navbar />}
 
       {/* Routes */}
       <div className='min-h-screen'>
@@ -67,7 +71,7 @@ const App = () => {
       </div>
       
       {/* Footer */}
-      {!isLoginPath && !isDashboardPath && !isProjectPath && <Footer />}
+      {showFooter && <Footer />}
     </div>
   )
 }
