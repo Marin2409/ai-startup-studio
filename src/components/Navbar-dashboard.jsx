@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/Dropdown-menu"
 
-const NavbarDashboard = () => {
+const NavbarDashboard = ({ isModalOpen = false }) => {
   const navigate = useNavigate()
 
   // Mock user data - in real app this would come from context/props
@@ -52,7 +52,7 @@ const NavbarDashboard = () => {
   }
 
   return (
-    <div className="navbar-dashboard">
+    <div className={`navbar-dashboard ${isModalOpen ? 'navbar-blurred' : ''}`}>
       {/* Header Section */}
       <div className="navbar-header">
         {/* Left Side - User Info */}

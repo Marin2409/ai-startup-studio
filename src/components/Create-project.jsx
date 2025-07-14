@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Search, Plus, Filter, Settings, ChevronDown } from 'lucide-react'
 
 import {
@@ -23,7 +24,8 @@ import {
   PopoverTrigger,
 } from './ui/Popover'
 
-const Createproject = () => {
+const Createproject = ({ isModalOpen, setIsModalOpen }) => {
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false)
@@ -66,7 +68,6 @@ const Createproject = () => {
       progress: 72
     }
   ])
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [formData, setFormData] = useState({
     projectName: '',
     businessType: '',
@@ -111,6 +112,10 @@ const Createproject = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
+  }
+
+  const handleProjectClick = (projectId) => {
+    navigate(`/project/${projectId}`)
   }
 
   // Filter options for projects
@@ -174,7 +179,7 @@ const Createproject = () => {
   return (
     <div className="create-project-container">
       {/* Content Area */}
-      <div className="create-project-content">
+      <div className={`create-project-content ${isModalOpen ? 'content-blurred' : ''}`}>
         {filteredProjects.length === 0 ? (
           // Empty State with Controls Above
           <div className="empty-state-wrapper">
@@ -333,7 +338,7 @@ const Createproject = () => {
             {/* Projects Grid */}
             <div className="projects-grid">
               {filteredProjects.map((project) => (
-                <div key={project.id} className="project-card">
+                <div key={project.id} className="project-card" onClick={() => handleProjectClick(project.id)}>
                   <div className="project-card-header">
                     <div className="project-info">
                       <h3 className="project-name">{project.name}</h3>
@@ -346,7 +351,10 @@ const Createproject = () => {
                         </span>
                         <span className="funding-amount">{project.fundingAmount}</span>
                       </div>
-                      <button className="project-menu-btn">
+                      <button 
+                        className="project-menu-btn"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <Settings className="w-4 h-4" />
                       </button>
                     </div>

@@ -15,7 +15,7 @@ import Testimonials from '../components/Testimonials'
 import CTA from '../components/CTA'
 import Features from '../components/Features'
 import Showcase from '../components/Showcase'
-
+// import CommomCompanies from '../components/Commom-companies'
 /**
  * Home Component
  * 
@@ -38,7 +38,10 @@ const Home = () => {
           ========================================== */}
       {/* Primary value proposition with main CTAs */}
       <Hero />
-
+      {/* ==========================================
+          COMMOM COMPANIES SECTION
+          ========================================== */}
+      {/* <CommomCompanies /> */}
       {/* ==========================================
           FEATURES SECTION  
           ========================================== */}

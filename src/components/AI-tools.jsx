@@ -3,7 +3,7 @@ import React from 'react'
 const AItools = () => {
   return (
     <div>
-        AItools
+        AItoolsAItoolsAItoolsAItoolsAItoolsAItools
     </div>
   )
 }

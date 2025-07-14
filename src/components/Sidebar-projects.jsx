@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { 
-  FolderOpen, 
+  LayoutDashboard,
+  CheckSquare, 
   Users, 
-  Puzzle, 
+  FileText, 
   BarChart3, 
-  CreditCard, 
-  Settings,
   Brain,
-  Sparkles
+  Settings,
+  Sparkles,
+  Target,
+  Calendar
 } from 'lucide-react'
 import { assets } from '../assets/assets'
 
-const Sidebar = ({ activePage, setActivePage, isModalOpen = false }) => {
+const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [showText, setShowText] = useState(false)
 
@@ -30,9 +32,14 @@ const Sidebar = ({ activePage, setActivePage, isModalOpen = false }) => {
 
   const menuItems = [
     {
-      id: 'Projects',
-      label: 'Projects',
-      icon: FolderOpen,
+      id: 'Overview',
+      label: 'Overview',
+      icon: LayoutDashboard,
+    },
+    {
+      id: 'Tasks',
+      label: 'Tasks & Milestones',
+      icon: CheckSquare,
     },
     {
       id: 'Team',
@@ -40,9 +47,14 @@ const Sidebar = ({ activePage, setActivePage, isModalOpen = false }) => {
       icon: Users,
     },
     {
-      id: 'Integrations',
-      label: 'Integrations',
-      icon: Puzzle,
+      id: 'Documents',
+      label: 'Documents',
+      icon: FileText,
+    },
+    {
+      id: 'AI-Tools',
+      label: 'AI Tools',
+      icon: Brain,
     },
     {
       id: 'Analytics',
@@ -50,9 +62,9 @@ const Sidebar = ({ activePage, setActivePage, isModalOpen = false }) => {
       icon: BarChart3,
     },
     {
-      id: 'Billing',
-      label: 'Billing',
-      icon: CreditCard,
+      id: 'Settings',
+      label: 'Settings',
+      icon: Settings,
     },
   ]
 
@@ -114,26 +126,14 @@ const Sidebar = ({ activePage, setActivePage, isModalOpen = false }) => {
         </ul>
       </nav>
 
-      {/* AI Assistant Section */}
+      {/* AI Assistant Footer */}
       <div className="sidebar-footer">
-        <button 
-          className="sidebar-ai-button"
-          title={!isHovered ? 'AI Assistant' : ''}
-          style={{
-            transitionDelay: showText ? '120ms' : '0ms'
-          }}
-          onClick={() => setActivePage('AIassistant')}
-        >
+        <button className="sidebar-ai-button">
           <div className="sidebar-ai-icon">
             <Brain className="w-5 h-5" />
             <Sparkles className="w-3 h-3 sidebar-ai-sparkle" />
           </div>
-          <span 
-            className={`sidebar-ai-text ${showText ? 'visible' : 'hidden'}`}
-            style={{
-              transitionDelay: showText ? '120ms' : '0ms'
-            }}
-          >
+          <span className={`sidebar-ai-text ${showText ? 'visible' : 'hidden'}`}>
             AI Assistant
           </span>
         </button>
@@ -142,4 +142,5 @@ const Sidebar = ({ activePage, setActivePage, isModalOpen = false }) => {
   )
 }
 
-export default Sidebar
+export default SidebarProjects  
+

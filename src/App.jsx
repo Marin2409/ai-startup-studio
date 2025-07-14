@@ -23,17 +23,19 @@ import Features from './pages/Features'
 import Community from './pages/Community'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Project from './pages/Project'
 
 const App = () => {
 
   const location = useLocation();
   const isLoginPath = location.pathname === "/login";
   const isDashboardPath = location.pathname === "/dashboard";
+  const isProjectPath = location.pathname.startsWith("/project");
 
   return (
     <div>
       {/* Navbar */}
-      {!isLoginPath && !isDashboardPath && <Navbar />}
+      {!isLoginPath && !isDashboardPath && !isProjectPath && <Navbar />}
 
       {/* Routes */}
       <div className='min-h-screen'>
@@ -58,11 +60,14 @@ const App = () => {
 
           {/* Dashboard */}
           <Route path="/dashboard" element={<Dashboard />} />
+
+          {/* Project with ID */}
+          <Route path="/project/:projectId" element={<Project />} />
         </Routes>
       </div>
       
       {/* Footer */}
-      {!isLoginPath && !isDashboardPath && <Footer />}
+      {!isLoginPath && !isDashboardPath && !isProjectPath && <Footer />}
     </div>
   )
 }

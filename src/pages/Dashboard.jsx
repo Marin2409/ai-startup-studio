@@ -6,15 +6,16 @@ import Integrations from '../components/Integrations'
 import Billing from '../components/Billing'
 import Analytics from '../components/Analytics'
 import Team from '../components/Team'
-import AItools from '../components/AI-tools'
+import AIassistant from '../components/AI-assistant'
 
 const Dashboard = () => {
   const [activePage, setActivePage] = useState('Projects')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const renderActivePage = () => {
     switch (activePage) {
       case 'Projects':
-        return <Createproject />
+        return <Createproject isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       case 'Integrations':
         return <Integrations />
       case 'Billing':
@@ -23,17 +24,17 @@ const Dashboard = () => {
         return <Analytics />
       case 'Team':
         return <Team />
-      case 'AItools':
-        return <AItools />
+      case 'AIassistant':
+        return <AIassistant />
       default:
-        return <Createproject />
+        return <Createproject isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     }
   }
 
   return (
     <div className="dashboard-layout">
-      <Sidebar activePage={activePage} setActivePage={setActivePage} />
-      <NavbarDashboard />
+      <Sidebar activePage={activePage} setActivePage={setActivePage} isModalOpen={isModalOpen} />
+      <NavbarDashboard isModalOpen={isModalOpen} />
       {renderActivePage()}
     </div>
   )

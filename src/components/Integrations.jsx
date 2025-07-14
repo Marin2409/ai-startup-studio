@@ -170,9 +170,6 @@ const Integrations = () => {
       <div className="integrations-content">
         <div className="integrations-header">
           <h1 className="integrations-title">Integrations</h1>
-          <p className="integrations-subtitle">
-            Connect your favorite tools and services to enhance your workflow
-          </p>
         </div>
 
         <div className="integrations-grid">
