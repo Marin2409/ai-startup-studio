@@ -1,17 +1,12 @@
 import React, { useState } from 'react'
 import { 
-  TrendingUp, 
-  TrendingDown, 
-  Users, 
   Clock, 
   Target, 
   Brain, 
   Zap, 
   BarChart3, 
-  PieChart, 
   Activity,
   Calendar,
-  DollarSign,
   CheckCircle,
   AlertTriangle,
   ArrowUp,
@@ -19,12 +14,27 @@ import {
   Filter,
   Download,
   ChevronDown,
-  FolderOpen
 } from 'lucide-react'
+
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from './ui/Command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from './ui/Popover'
 
 const Analytics = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState('7d')
   const [selectedProject, setSelectedProject] = useState('all')
+  const [projectDropdownOpen, setProjectDropdownOpen] = useState(false)
+  const [timeRangeDropdownOpen, setTimeRangeDropdownOpen] = useState(false)
 
   // Mock projects data for dropdown
   const projects = [
@@ -34,6 +44,14 @@ const Analytics = () => {
     { id: 'ecommerce-platform', name: 'E-commerce Platform', type: 'E-commerce' },
     { id: 'healthcare-saas', name: 'Healthcare SaaS', type: 'SaaS' },
     { id: 'edtech-mobile', name: 'EdTech Mobile', type: 'EdTech' }
+  ]
+
+  // Time range options for dropdown
+  const timeRangeOptions = [
+    { id: '7d', name: 'Last 7 days' },
+    { id: '30d', name: 'Last 30 days' },
+    { id: '90d', name: 'Last 90 days' },
+    { id: '1y', name: 'Last year' }
   ]
 
   // Function to get analytics data based on selected project
@@ -133,30 +151,81 @@ const Analytics = () => {
           </div>
           <div className="header-actions">
             <div className="project-selector">
-              <select 
-                value={selectedProject} 
-                onChange={(e) => setSelectedProject(e.target.value)}
-                className="project-select"
-              >
-                {projects.map((project) => (
-                  <option key={project.id} value={project.id}>
-                    {project.name}
-                    {project.type !== 'overview' && ` (${project.type})`}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="select-icon" />
+              <Popover open={projectDropdownOpen} onOpenChange={setProjectDropdownOpen}>
+                <PopoverTrigger asChild>
+                  <button className="project-select">
+                    <span className="flex-1 text-left truncate">
+                      {selectedProjectData?.name || 'Select Project'}
+                      {selectedProjectData?.type !== 'overview' && ` (${selectedProjectData?.type})`}
+                    </span>
+                    <ChevronDown className="select-icon" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="filter-dropdown-content w-64" side="bottom" align="start" forceMount>
+                  <Command className="filter-command">
+                    <CommandInput 
+                      placeholder="Search projects..." 
+                      className="filter-command-input"
+                    />
+                    <CommandList className="filter-command-list">
+                      <CommandEmpty className="filter-command-empty">No projects found.</CommandEmpty>
+                      <CommandGroup className="filter-command-group">
+                        {projects.map((project) => (
+                          <CommandItem
+                            key={project.id}
+                            value={project.id}
+                            onSelect={(value) => {
+                              setSelectedProject(value)
+                              setProjectDropdownOpen(false)
+                            }}
+                            className="filter-command-item"
+                          >
+                            <span className={selectedProject === project.id ? 'font-medium' : ''}>
+                              {project.name}
+                              {project.type !== 'overview' && ` (${project.type})`}
+                            </span>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
-            <select 
-              value={selectedTimeRange} 
-              onChange={(e) => setSelectedTimeRange(e.target.value)}
-              className="time-range-select"
-            >
-              <option value="7d">Last 7 days</option>
-              <option value="30d">Last 30 days</option>
-              <option value="90d">Last 90 days</option>
-              <option value="1y">Last year</option>
-            </select>
+            <div className="">
+              <Popover open={timeRangeDropdownOpen} onOpenChange={setTimeRangeDropdownOpen}>
+                <PopoverTrigger asChild>
+                  <button className="time-range-select">
+                    <span>{timeRangeOptions.find(tr => tr.id === selectedTimeRange)?.name || 'Select Time Range'}</span>
+                    <ChevronDown className="w-4 ml-2 text-slate-600" /> 
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="filter-dropdown-content w-40" side="bottom" align="start" forceMount>
+                  <Command className="filter-command">
+                    <CommandList className="filter-command-list">
+                      <CommandEmpty className="filter-command-empty">No time ranges found.</CommandEmpty>
+                      <CommandGroup className="filter-command-group">
+                        {timeRangeOptions.map((tr) => (
+                          <CommandItem
+                            key={tr.id}
+                            value={tr.id}
+                            onSelect={(value) => {
+                              setSelectedTimeRange(value)
+                              setTimeRangeDropdownOpen(false)
+                            }}
+                            className="filter-command-item"
+                          >
+                            <span className={selectedTimeRange === tr.id ? 'font-medium' : ''}>
+                              {tr.name}
+                            </span>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
             <button className="export-btn">
               <Download className="w-4 h-4" />
               Export
@@ -198,7 +267,7 @@ const Analytics = () => {
           <div className="analytics-card project-performance">
             <div className="card-header">
               <h3 className="card-title">
-                {selectedProject === 'all' ? 'Project Performance' : 'Project Details'}
+                Project Performance
               </h3>
               <div className="card-actions">
                 <button className="card-action-btn">

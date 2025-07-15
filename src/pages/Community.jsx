@@ -36,18 +36,11 @@ import { AuroraText } from '../components/ui/Aurora-text'
 import PageBackground from '../components/ui/PageBackground'
 
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '../components/ui/Command'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '../components/ui/Popover'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../components/ui/Dropdown-menu'
 import { ANIMATIONS, TYPOGRAPHY, SPACING } from '../lib/constants'
 
 const Community = () => {
@@ -58,7 +51,6 @@ const Community = () => {
   const [showCommentBox, setShowCommentBox] = useState(false)
   const [commentText, setCommentText] = useState('')
   const [likedArticles, setLikedArticles] = useState(new Set())
-  const [authorDropdownOpen, setAuthorDropdownOpen] = useState(false)
   const navigate = useNavigate()
 
   const handleGetStarted = () => {
@@ -568,8 +560,8 @@ const Community = () => {
               </div>
 
               {/* Author Type Filter */}
-              <Popover open={authorDropdownOpen} onOpenChange={setAuthorDropdownOpen}>
-                <PopoverTrigger asChild>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
                   <button 
                     className="min-w-[180px] flex items-center justify-between bg-white/80 backdrop-blur-sm border border-blue-200 text-slate-700 hover:bg-white hover:border-blue-300 shadow-sm rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                   >
@@ -581,30 +573,20 @@ const Community = () => {
                     </span>
                     <ChevronDown className="w-4 h-4 opacity-50" />
                   </button>
-                </PopoverTrigger>
-                <PopoverContent className="p-0 w-[200px] bg-white" side="right" align="start">
-                  <Command>
-                    <CommandInput placeholder="Search authors..." />
-                    <CommandList>
-                      <CommandEmpty>No results found.</CommandEmpty>
-                      <CommandGroup>
-                        {authorTypes.map((type) => (
-                          <CommandItem
-                            key={type.id}
-                            value={type.id}
-                            onSelect={(value) => {
-                              setSelectedAuthorType(value)
-                              setAuthorDropdownOpen(false)
-                            }}
-                          >
-                            {type.name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="p-0 w-[200px] bg-white" side="right" align="start">
+                  {authorTypes.map((type) => (
+                    <DropdownMenuItem
+                      key={type.id}
+                      onClick={() => {
+                        setSelectedAuthorType(type.id)
+                      }}
+                    >
+                      {type.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             {/* Bottom row: Category Filter */}
