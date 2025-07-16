@@ -1,18 +1,15 @@
 import React from 'react'
 import { 
-  TrendingUp, 
   TrendingDown, 
   Users, 
   DollarSign, 
   Calendar, 
-  Target, 
   Activity, 
   CheckCircle, 
   AlertCircle, 
   Clock,
   ArrowUpRight,
   ArrowDownRight,
-  Briefcase,
   FileText,
   BarChart3,
   Settings,
@@ -150,7 +147,6 @@ const ProjectOverview = ({ project }) => {
       <div className="project-overview-header">
         <div className="project-info">
           <h1 className="project-title">{project.name}</h1>
-          <p className="project-subtitle">{project.description}</p>
         </div>
         <div className="project-actions">
           <button className="action-btn secondary" title="Edit project settings, team, and details">
@@ -194,9 +190,6 @@ const ProjectOverview = ({ project }) => {
           <div className="status-info">
             <span className={`status-value ${project.status.toLowerCase()}`}>{project.status}</span>
             <span className="status-label">Current Status</span>
-          </div>
-          <div className="status-indicator">
-            <div className={`indicator-dot ${project.status.toLowerCase()}`}></div>
           </div>
         </div>
 

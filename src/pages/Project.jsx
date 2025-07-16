@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import SidebarProjects from '../components/Sidebar-projects'
 import NavbarDashboard from '../components/Navbar-dashboard'
 import ProjectOverview from '../components/Project-overview'
+import ProjectSettings from '../components/Project-settings'
 
 // Mock project data - in real app this would come from API
 const mockProjects = {
@@ -70,7 +71,7 @@ const Project = () => {
       case 'Analytics':
         return <div className="page-placeholder">Analytics - Coming Soon</div>
       case 'Settings':
-        return <div className="page-placeholder">Settings - Coming Soon</div>
+        return <ProjectSettings project={project} />
       default:
         return <ProjectOverview project={project} />
     }

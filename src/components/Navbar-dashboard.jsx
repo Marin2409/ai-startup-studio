@@ -25,7 +25,7 @@ const NavbarDashboard = ({ isModalOpen = false }) => {
 
   // Dropdown menu handlers
   const handleProfile = () => {
-    console.log('Navigate to profile')
+    navigate('/user-profile')
   }
 
   const handleSettings = () => {

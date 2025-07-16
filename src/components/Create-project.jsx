@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search, Plus, Filter, Settings, ChevronDown } from 'lucide-react'
+import { Search, Plus, Filter, ChevronDown } from 'lucide-react'
 
 import {
   Dialog,
@@ -351,12 +351,6 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
                         </span>
                         <span className="funding-amount">{project.fundingAmount}</span>
                       </div>
-                      <button 
-                        className="project-menu-btn"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Settings className="w-4 h-4" />
-                      </button>
                     </div>
                   </div>
                   
@@ -384,8 +378,7 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
                   
                   <div className="project-card-footer">
                     <div className="project-status">
-                      <div className={`status-indicator ${project.status}`}></div>
-                      <span className="status-text">
+                      <span className={`status-text ${project.status}`}>
                         {project.status === 'active' ? 'Active' : 'Development'}
                       </span>
                     </div>

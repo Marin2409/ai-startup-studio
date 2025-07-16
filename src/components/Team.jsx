@@ -386,10 +386,10 @@ const Team = () => {
                   <div className="workspace-footer">
                     <span className="last-activity">Updated {workspace.lastActivity}</span>
                     <div className="workspace-actions">
-                      <button className="action-btn">
+                      <button className="action-btn-team">
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="action-btn">
+                      <button className="action-btn-team">
                         <Settings className="w-4 h-4" />
                       </button>
                     </div>
