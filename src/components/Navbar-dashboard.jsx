@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Settings, LogOut, UserIcon, CreditCard, HelpCircle } from 'lucide-react'
+import { LogOut, UserIcon, CreditCard, HelpCircle } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar"
 import {
   DropdownMenu,
@@ -24,16 +24,12 @@ const NavbarDashboard = ({ isModalOpen = false }) => {
   }
 
   // Dropdown menu handlers
-  const handleProfile = () => {
-    navigate('/user-profile')
+  const handleAccountPreferences = () => {
+    navigate('/account-preferences')
   }
 
-  const handleSettings = () => {
-    console.log('Navigate to settings')
-  }
-
-  const handleBilling = () => {
-    console.log('Navigate to billing')
+  const handleThemes = () => {
+    console.log('Navigate to themes')
   }
 
   const handleHelp = () => {
@@ -84,17 +80,13 @@ const NavbarDashboard = ({ isModalOpen = false }) => {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleProfile}>
+              <DropdownMenuItem onClick={handleAccountPreferences}>
                 <UserIcon className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <span>Account Preferences</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleBilling}>
+              <DropdownMenuItem onClick={handleThemes}>
                 <CreditCard className="mr-2 h-4 w-4" />
                 <span>Themes</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleSettings}>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleHelp}>
                 <HelpCircle className="mr-2 h-4 w-4" />

@@ -25,7 +25,7 @@ import Community from './pages/Community'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Project from './pages/Project'
-import UserProfile from './components/User-profile'
+import AccountPreferences from './components/AccountPreferences'
 
 const App = () => {
 
@@ -33,7 +33,7 @@ const App = () => {
   const isLoginPath = location.pathname === "/login";
   const isDashboardPath = location.pathname === "/dashboard";
   const isProjectPath = location.pathname.startsWith("/project");
-  const isUserProfilePath = location.pathname === "/user-profile";
+  const isUserProfilePath = location.pathname === "/account-preferences";
 
   // Show navbar on all pages except login, dashboard, and project pages
   const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath;
@@ -71,11 +71,11 @@ const App = () => {
           {/* Project with ID */}
           <Route path="/project/:projectId" element={<Project />} />
 
-          {/* User Profile */}
-          <Route path="/user-profile" element={
-            <div className="dashboard-layout">
+          {/* Account Preferences */}
+          <Route path="/account-preferences" element={
+            <div className="project-layout">
               <NavbarDashboard />
-              <UserProfile />
+              <AccountPreferences />
             </div>
           } />
           

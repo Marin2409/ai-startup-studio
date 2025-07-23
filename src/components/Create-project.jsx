@@ -177,9 +177,9 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
   }, [projects, searchQuery, selectedFilter])
 
   return (
-    <div className="create-project-container">
+    <div>
       {/* Content Area */}
-      <div className={`create-project-content ${isModalOpen ? 'content-blurred' : ''}`}>
+      <div className={` ${isModalOpen ? 'content-blurred' : ''}`}>
         {filteredProjects.length === 0 ? (
           // Empty State with Controls Above
           <div className="empty-state-wrapper">

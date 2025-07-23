@@ -142,8 +142,7 @@ const Analytics = () => {
   const selectedProjectData = projects.find(p => p.id === selectedProject)
 
   return (
-    <div className="analytics-container">
-      <div className="analytics-content">
+    <div>
         {/* Header */}
         <div className="analytics-header">
           <div className="header-left">
@@ -431,7 +430,6 @@ const Analytics = () => {
             </div>
           </div>
         </div>
-      </div>
     </div>
   )
 }

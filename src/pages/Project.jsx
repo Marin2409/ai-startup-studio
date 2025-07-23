@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+
+// Components
 import SidebarProjects from '../components/Sidebar-projects'
 import NavbarDashboard from '../components/Navbar-dashboard'
 import ProjectOverview from '../components/Project-overview'
 import ProjectSettings from '../components/Project-settings'
+import TeamProjects from '../components/Team-Projects'
+import ProjectStorage from '../components/Project-storage'
+import ProjectAssets from '../components/Project-assets'
+import ProjectTasks from '../components/Project-tasks'
+import ProjectCalendar from '../components/Project-calendar'
+import ProjectRoadmap from '../components/Project-roadmap'
+import ProjectTechStack from '../components/Project-techStack'
 
 // Mock project data - in real app this would come from API
+// TODO: Remove this once we have a real API
 const mockProjects = {
   1: {
     id: 1,
@@ -61,15 +71,21 @@ const Project = () => {
       case 'Overview':
         return <ProjectOverview project={project} />
       case 'Tasks':
-        return <div className="page-placeholder">Tasks & Milestones - Coming Soon</div>
+        return <ProjectTasks />
+      case 'Roadmap':
+        return <ProjectRoadmap />
       case 'Team':
-        return <div className="page-placeholder">Team - Coming Soon</div>
-      case 'Documents':
-        return <div className="page-placeholder">Documents - Coming Soon</div>
-      case 'AI-Tools':
-        return <div className="page-placeholder">AI Tools - Coming Soon</div>
-      case 'Analytics':
-        return <div className="page-placeholder">Analytics - Coming Soon</div>
+        return <TeamProjects />
+      case 'Calendar':
+        return <ProjectCalendar />
+      case 'TechStacks':
+        return <ProjectTechStack />
+      // case 'Analytics':
+      //   return <div className="page-placeholder">Analytics - Coming Soon</div>
+      case 'Assets':
+        return <ProjectAssets />
+      case 'Storage':
+        return <ProjectStorage />
       case 'Settings':
         return <ProjectSettings project={project} />
       default:
@@ -83,7 +99,9 @@ const Project = () => {
         activePage={activePage} 
         setActivePage={setActivePage}
       />
+
       <NavbarDashboard />
+
       <div className="project-content">
         {renderContent()}
       </div>

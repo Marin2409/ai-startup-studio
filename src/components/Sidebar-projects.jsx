@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   CheckSquare, 
   Users, 
-  FileText, 
   BarChart3, 
   Map,
   Settings,
@@ -12,6 +11,7 @@ import {
   Database,
   HardDrive,
   Package,
+  Calendar,
 } from 'lucide-react'
 import { assets } from '../assets/assets'
 
@@ -59,9 +59,9 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
           icon: Map,
         },
         {
-          id: 'Documents',
-          label: 'Documents',
-          icon: FileText,
+          id: 'Calendar',
+          label: 'Calendar',
+          icon: Calendar,
         },
         {
           id: 'TechStacks',
@@ -79,11 +79,11 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
           label: 'Analytics',
           icon: BarChart3,
         },
-        {
-          id: 'Assets',
-          label: 'Assets',
-          icon: Database,
-        },
+        // {
+        //   id: 'Assets',
+        //   label: 'Assets',
+        //   icon: Database,
+        // },
         {
           id: 'Storage',
           label: 'Storage',

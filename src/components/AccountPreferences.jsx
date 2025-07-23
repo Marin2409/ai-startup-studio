@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { 
   ArrowLeft, 
@@ -15,12 +15,14 @@ import {
   X
 } from 'lucide-react'
 
-const UserProfile = () => {
+const AccountPreferences = () => {
   const navigate = useNavigate()
+  const fileInputRef = useRef(null)
   const [activeSection, setActiveSection] = useState('profile')
   const [copiedField, setCopiedField] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [avatarImage, setAvatarImage] = useState(null)
 
   // Mock user data - in real app this would come from context/props
   const [userData, setUserData] = useState({
@@ -66,10 +68,38 @@ const UserProfile = () => {
   const handleCancel = () => {
     setTempData({ ...userData })
     setIsEditing(false)
+    setAvatarImage(null)
   }
 
   const handleInputChange = (field, value) => {
     setTempData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleAvatarUpload = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file')
+        return
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB')
+        return
+      }
+
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setAvatarImage(e.target.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleAvatarEditClick = () => {
+    fileInputRef.current?.click()
   }
 
   const handleNotificationToggle = (type) => {
@@ -112,12 +142,31 @@ const UserProfile = () => {
         <div className="profile-card">
           <div className="profile-avatar-section">
             <div className="profile-avatar">
-              <div className="avatar-placeholder">
-                {userData.firstName.charAt(0)}{userData.lastName.charAt(0)}
-              </div>
-              <button className="avatar-edit-btn">
+              {avatarImage ? (
+                <img 
+                  src={avatarImage} 
+                  alt="Profile Avatar" 
+                  className="avatar-image"
+                />
+              ) : (
+                <div className="avatar-placeholder">
+                  {userData.firstName.charAt(0)}{userData.lastName.charAt(0)}
+                </div>
+              )}
+              <button 
+                className="avatar-edit-btn"
+                onClick={handleAvatarEditClick}
+                title="Upload new avatar"
+              >
                 <Edit3 className="w-4 h-4" />
               </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarUpload}
+                style={{ display: 'none' }}
+              />
             </div>
             <div className="avatar-info">
               <h4>{userData.firstName} {userData.lastName}</h4>
@@ -153,13 +202,14 @@ const UserProfile = () => {
               <div className="input-with-copy">
                 <input
                   type="email"
-                  value={userData.email}
-                  disabled
+                  value={isEditing ? tempData.email : userData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  disabled={!isEditing}
                   className="form-input"
                 />
                 <button
                   onClick={() => handleCopyToClipboard(userData.email, 'email')}
-                  className="copy-btn"
+                  className="copy-btn-user-profile"
                 >
                   {copiedField === 'email' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 </button>
@@ -508,4 +558,4 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile
+export default AccountPreferences

@@ -270,8 +270,7 @@ const Team = () => {
   )
 
   return (
-    <div className="team-container">
-      <div className="team-content">
+    <div>
         {/* Header */}
         <div className="team-header">
           <div className="header-left">
@@ -509,7 +508,7 @@ const Team = () => {
             </div>
           </div>
         </div>
-      </div>
+      
 
       {/* Invite Member Modal */}
       {showInviteModal && (

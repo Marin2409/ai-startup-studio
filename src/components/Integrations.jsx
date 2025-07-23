@@ -8,13 +8,12 @@ import {
   DialogTitle,
 } from "./ui/Dialog"
 
-const Integrations = () => {
+const Integrations = ({ isModalOpen, setIsModalOpen }) => {
   const [connectedIntegrations, setConnectedIntegrations] = useState({
     github: false,
     googleDrive: false,
     slack: false
   })
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedIntegration, setSelectedIntegration] = useState(null)
   const [selectedProject, setSelectedProject] = useState('')
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
@@ -150,7 +149,7 @@ const Integrations = () => {
   ]
 
   return (
-    <div className="integrations-container">
+    <div>
       {/* Success Message */}
       {showSuccessMessage && (
         <div className="success-message">
@@ -167,7 +166,8 @@ const Integrations = () => {
         </div>
       )}
 
-      <div className="integrations-content">
+      <div>
+      <div className={` ${isModalOpen ? 'content-blurred' : ''}`}>
         <div className="integrations-header">
           <h1 className="integrations-title">Integrations</h1>
         </div>
@@ -227,6 +227,7 @@ const Integrations = () => {
               </div>
             )
           })}
+          </div>
         </div>
       </div>
 

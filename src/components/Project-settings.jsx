@@ -10,7 +10,8 @@ import {
   Crown,
   ArrowUpRight,
   Database,
-  Download
+  Download,
+  X
 } from 'lucide-react'
 
 const ProjectSettings = ({ project }) => {
@@ -18,6 +19,8 @@ const ProjectSettings = ({ project }) => {
   const [projectDescription, setProjectDescription] = useState(project?.description || 'AI-powered startup development platform with automated tools and resources.')
   const [isPublic, setIsPublic] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [deleteConfirmation, setDeleteConfirmation] = useState('')
 
   const projectId = 'pqcotbczcpbgqdymwtxc'
 
@@ -47,12 +50,21 @@ const ProjectSettings = ({ project }) => {
   }
 
   const handleDelete = () => {
-    if (showDeleteConfirm) {
+    setShowDeleteModal(true)
+  }
+
+  const handleConfirmDelete = () => {
+    if (deleteConfirmation === projectName) {
       // In real app, API call to delete project
       console.log('Deleting project...')
-    } else {
-      setShowDeleteConfirm(true)
+      setShowDeleteModal(false)
+      setDeleteConfirmation('')
     }
+  }
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false)
+    setDeleteConfirmation('')
   }
 
   const handleUpgradeToPro = () => {
@@ -70,8 +82,10 @@ const ProjectSettings = ({ project }) => {
     console.log('Viewing project usage...')
   }
 
+  const isDeleteButtonEnabled = deleteConfirmation === projectName
+
   return (
-    <div className="project-settings">
+    <div>
       <div className="settings-header">
         <h1 className="settings-title">Project Settings</h1>
         <p className="settings-subtitle">Manage your project configuration, access, and danger zone actions</p>
@@ -116,7 +130,7 @@ const ProjectSettings = ({ project }) => {
                       value={projectId}
                       readOnly
                     />
-                    <button className="copy-btn" onClick={copyProjectId}>
+                    <button className="copy-btn-settings" onClick={copyProjectId}>
                       <Copy className="w-4 h-4" />
                       Copy
                     </button>
@@ -326,17 +340,61 @@ const ProjectSettings = ({ project }) => {
                   </div>
                 </div>
                 <button 
-                  className={`btn-danger ${showDeleteConfirm ? 'confirm' : ''}`}
+                  className="btn-danger"
                   onClick={handleDelete}
                 >
                   <Trash2 className="w-4 h-4" />
-                  {showDeleteConfirm ? 'Confirm Delete' : 'Delete Project'}
+                  Delete Project
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="delete-modal-overlay">
+          <div className="delete-modal">
+            <div className="delete-modal-header">
+              <h3 className="delete-modal-title">Confirm deletion of {projectName}</h3>
+              <button className="delete-modal-close" onClick={handleCloseDeleteModal}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="delete-modal-warning">
+              <AlertTriangle className="w-5 h-5 warning-icon" />
+              <span className="warning-text">This action cannot be undone.</span>
+            </div>
+            
+            <p className="delete-modal-description">
+              This will permanently delete the {projectName} project and all of its data.
+            </p>
+            
+            <div className="delete-modal-form">
+              <label className="delete-modal-label">
+                Type {projectName} to confirm.
+              </label>
+              <input
+                type="text"
+                className="delete-modal-input"
+                value={deleteConfirmation}
+                onChange={(e) => setDeleteConfirmation(e.target.value)}
+                placeholder="Type the project name in here"
+              />
+            </div>
+            
+            <button 
+              className={`delete-modal-button ${isDeleteButtonEnabled ? 'enabled' : 'disabled'}`}
+              onClick={handleConfirmDelete}
+              disabled={!isDeleteButtonEnabled}
+            >
+              I understand, delete this project
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

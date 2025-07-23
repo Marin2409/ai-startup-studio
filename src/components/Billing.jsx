@@ -41,8 +41,7 @@ const Billing = () => {
   }
 
   return (
-    <div className="billing-container">
-      <div className="billing-content">
+    <div>
         <div className="billing-header">
           <h1 className="billing-title">Billing</h1>
         </div>
@@ -370,7 +369,6 @@ const Billing = () => {
             </div>
           </div>
         </div>
-      </div>
     </div>
   )
 }

@@ -142,7 +142,7 @@ const ProjectOverview = ({ project }) => {
   ]
 
   return (
-    <div className="project-overview">
+    <div>
       {/* Header Section */}
       <div className="project-overview-header">
         <div className="project-info">
@@ -175,11 +175,6 @@ const ProjectOverview = ({ project }) => {
         </div>
         
         <div className="status-card">
-          <div className="status-badge">
-            <span className={`badge ${project.badge.toLowerCase().replace(/[^a-z]/g, '-')}`}>
-              {project.badge}
-            </span>
-          </div>
           <div className="status-info">
             <span className="status-value">{project.fundingAmount}</span>
             <span className="status-label">Total Funding</span>
@@ -302,7 +297,7 @@ const ProjectOverview = ({ project }) => {
           <div className="team-stats">
             <div className="team-metric">
               <span className="team-value">{teamSummary.totalMembers}</span>
-              <span className="team-label">Total Members</span>
+              <span className="team-label"> Total Members</span>
             </div>
             <div className="team-departments">
               {teamSummary.departments.map((dept, index) => (

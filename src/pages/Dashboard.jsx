@@ -5,7 +5,7 @@ import Createproject from '../components/Create-project'
 import Integrations from '../components/Integrations'
 import Billing from '../components/Billing'
 import Analytics from '../components/Analytics'
-import Team from '../components/Team'
+import Team from '../components/Team-Dashboard'
 import AIassistant from '../components/AI-assistant'
 
 const Dashboard = () => {
@@ -17,7 +17,7 @@ const Dashboard = () => {
       case 'Projects':
         return <Createproject isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       case 'Integrations':
-        return <Integrations />
+        return <Integrations isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       case 'Billing':
         return <Billing />
       case 'Analytics':
@@ -32,10 +32,17 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="dashboard-layout">
-      <Sidebar activePage={activePage} setActivePage={setActivePage} isModalOpen={isModalOpen} />
+    <div className="project-layout">
+      <Sidebar activePage={activePage} 
+        setActivePage={setActivePage} 
+        isModalOpen={isModalOpen} 
+      />
+
       <NavbarDashboard isModalOpen={isModalOpen} />
-      {renderActivePage()}
+
+      <div className="project-content">
+        {renderActivePage()}
+      </div>
     </div>
   )
 }

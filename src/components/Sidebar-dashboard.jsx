@@ -5,7 +5,6 @@ import {
   Puzzle, 
   BarChart3, 
   CreditCard, 
-  Settings,
   Brain,
   Sparkles
 } from 'lucide-react'
