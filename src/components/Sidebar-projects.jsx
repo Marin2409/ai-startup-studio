@@ -79,11 +79,11 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
           label: 'Analytics',
           icon: BarChart3,
         },
-        // {
-        //   id: 'Assets',
-        //   label: 'Assets',
-        //   icon: Database,
-        // },
+        {
+          id: 'Assets',
+          label: 'Assets',
+          icon: Database,
+        },
         {
           id: 'Storage',
           label: 'Storage',

@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 // UI COMPONENTS & ASSETS
 // ----------------------------------
 import { assets } from '../assets/assets'
-import { Eye, EyeOff, Zap, Users, Star, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff, Zap, Users, Star, ArrowRight, X, Mail, CheckCircle, AlertCircle } from 'lucide-react'
 import PageBackground from '../components/ui/PageBackground'
 import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants'
 
@@ -23,6 +23,10 @@ const Login = () => {
   })
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
+  const [forgotPasswordStatus, setForgotPasswordStatus] = useState('') // '', 'loading', 'success', 'error'
+  const [forgotPasswordError, setForgotPasswordError] = useState('')
   const navigate = useNavigate()
   const location = useLocation()
   
@@ -118,6 +122,49 @@ const Login = () => {
     navigate('/')
   }
 
+  const handleForgotPasswordOpen = () => {
+    setShowForgotPasswordModal(true)
+    setForgotPasswordEmail('')
+    setForgotPasswordStatus('')
+    setForgotPasswordError('')
+  }
+
+  const handleForgotPasswordClose = () => {
+    setShowForgotPasswordModal(false)
+    setForgotPasswordEmail('')
+    setForgotPasswordStatus('')
+    setForgotPasswordError('')
+  }
+
+  const handleForgotPasswordSubmit = async (e) => {
+    e.preventDefault()
+    
+    // Validate email
+    if (!forgotPasswordEmail) {
+      setForgotPasswordError('Email is required')
+      return
+    }
+    
+    if (!/\S+@\S+\.\S+/.test(forgotPasswordEmail)) {
+      setForgotPasswordError('Please enter a valid email address')
+      return
+    }
+
+    setForgotPasswordStatus('loading')
+    setForgotPasswordError('')
+
+    // Simulate API call for password reset
+    setTimeout(() => {
+      // For demo purposes, always show success
+      setForgotPasswordStatus('success')
+      
+      // Auto close after 3 seconds
+      setTimeout(() => {
+        handleForgotPasswordClose()
+      }, 3000)
+    }, 2000)
+  }
+
   const features = [
     {
       icon: <Zap className="w-5 h-5" />,
@@ -137,15 +184,15 @@ const Login = () => {
   ]
 
   return (
-    <PageBackground variant="light" className="flex items-center justify-center p-4">
+    <PageBackground variant="light" className="flex items-center justify-center p-4 min-h-screen">
       
       {/* Main Container */}
-      <div className="relative w-full max-w-7xl mx-auto">
+      <div className="relative w-full max-w-6xl mx-auto">
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
-          <div className="grid lg:grid-cols-2 min-h-[700px]">
+          <div className="grid lg:grid-cols-2 min-h-[580px]">
             
             {/* Left Side - Enhanced Branding */}
-            <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 p-8 lg:p-12 flex flex-col justify-center items-center text-white overflow-hidden">
+            <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 p-6 lg:p-8 flex flex-col justify-center items-center text-white overflow-hidden">
               
               {/* Animated Background Elements */}
               <div className="absolute inset-0">
@@ -158,10 +205,10 @@ const Login = () => {
               <div className="relative z-10 text-center max-w-md">
                 
                 {/* Logo Section */}
-                <div className="mb-8">
+                <div className="mb-6">
                   <button 
                     onClick={handleLogoClick}
-                    className="group w-24 h-24 bg-white/10 rounded-2xl flex items-center justify-center mx-auto backdrop-blur-sm border-2 border-white/20 p-4 hover:bg-white/20 hover:scale-110 hover:border-white/40 transition-all duration-500 cursor-pointer focus:outline-none focus:ring-4 focus:ring-white/30"
+                    className="group w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto backdrop-blur-sm border-2 border-white/20 p-3 hover:bg-white/20 hover:scale-110 hover:border-white/40 transition-all duration-500 cursor-pointer focus:outline-none focus:ring-4 focus:ring-white/30"
                   >
                     <img 
                       src={assets.logo} 
@@ -174,14 +221,14 @@ const Login = () => {
                     ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
                     lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} 
                     ${TYPOGRAPHY.weights.bold} 
-                    mt-6 mb-3 text-white
+                    mt-4 mb-2 text-white
                   `}>
                     AI Startup Studio
                   </h1>
                   
                   <p className={`
                     ${TYPOGRAPHY.sizes.body.large} 
-                    text-white/90 mb-8 leading-relaxed
+                    text-white/90 mb-6 leading-relaxed
                   `}>
                     {isLogin 
                       ? 'Welcome back to the future of startup creation' 
@@ -191,11 +238,11 @@ const Login = () => {
                 </div>
                 
                 {/* Enhanced Features Grid */}
-                <div className="space-y-4 mb-8">
+                <div className="space-y-3 mb-6">
                   {features.map((feature, index) => (
                     <div
                       key={index}
-                      className="group flex items-center p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+                      className="group flex items-center p-3 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
                     >
                       <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
                         {feature.icon}
@@ -213,7 +260,7 @@ const Login = () => {
                 </div>
 
                 {/* Success Stats */}
-                <div className="grid grid-cols-3 gap-4 p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
+                <div className="grid grid-cols-3 gap-4 p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
                   <div className="text-center">
                     <div className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-white`}>10K+</div>
                     <div className={`${TYPOGRAPHY.sizes.tiny} text-white/80`}>Users</div>
@@ -231,11 +278,11 @@ const Login = () => {
             </div>
 
             {/* Right Side - Form */}
-            <div className="p-8 lg:p-12 flex flex-col justify-center min-h-[700px]">
+            <div className="p-6 lg:p-8 flex flex-col justify-center min-h-[580px]">
               <div className="max-w-md mx-auto w-full">
                 
                 {/* Form Header */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-6">
                   <h2 className={`
                     ${TYPOGRAPHY.sizes.sectionTitle.mobile} 
                     ${TYPOGRAPHY.weights.bold} 
@@ -252,7 +299,7 @@ const Login = () => {
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className={`${isLogin ? 'space-y-8' : 'space-y-6'}`}>
+                <form onSubmit={handleSubmit} className={`${isLogin ? 'space-y-6' : 'space-y-4'}`}>
                   
                   {/* Name Fields - Only for signup */}
                   {!isLogin && (
@@ -419,6 +466,7 @@ const Login = () => {
                     <div className="text-right">
                       <button
                         type="button"
+                        onClick={handleForgotPasswordOpen}
                         className={`${TYPOGRAPHY.sizes.caption} text-blue-600 hover:text-blue-800 ${TYPOGRAPHY.weights.medium} cursor-pointer ${ANIMATIONS.transition}`}
                       >
                         Forgot password?
@@ -479,6 +527,136 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      {showForgotPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={handleForgotPasswordClose}
+          ></div>
+
+          {/* Modal Content */}
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 border border-gray-200 overflow-hidden">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className={`${TYPOGRAPHY.sizes.cardTitle} ${TYPOGRAPHY.weights.bold} text-gray-900`}>
+                    Reset Password
+                  </h3>
+                  <p className={`${TYPOGRAPHY.sizes.caption} text-gray-500 mt-1`}>
+                    We'll send you a reset link
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleForgotPasswordClose}
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all duration-200"
+              >
+                <X className="w-5 h-5 cursor-pointer" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6">
+              {forgotPasswordStatus === 'success' ? (
+                // Success State
+                <div className="text-center py-4">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h4 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-gray-900 mb-2`}>
+                    Email Sent Successfully!
+                  </h4>
+                  <p className={`${TYPOGRAPHY.sizes.body.base} text-gray-600 mb-4`}>
+                    We've sent a password reset link to <strong>{forgotPasswordEmail}</strong>
+                  </p>
+                  <p className={`${TYPOGRAPHY.sizes.caption} text-gray-500`}>
+                    Check your inbox and follow the instructions to reset your password.
+                  </p>
+                </div>
+              ) : (
+                // Form State
+                <form onSubmit={handleForgotPasswordSubmit} className="space-y-4">
+                  <div>
+                    <p className={`${TYPOGRAPHY.sizes.body.base} text-gray-600 mb-4`}>
+                      Enter your email address and we'll send you a link to reset your password.
+                    </p>
+                    
+                    <div className="space-y-2">
+                      <label htmlFor="forgot-email" className={`block ${TYPOGRAPHY.sizes.caption} ${TYPOGRAPHY.weights.medium} text-gray-700`}>
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="forgot-email"
+                        value={forgotPasswordEmail}
+                        onChange={(e) => {
+                          setForgotPasswordEmail(e.target.value)
+                          setForgotPasswordError('')
+                        }}
+                        className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${ANIMATIONS.transition} ${
+                          forgotPasswordError 
+                            ? 'border-red-300 focus:border-red-500' 
+                            : 'border-gray-200 focus:border-blue-500'
+                        }`}
+                        placeholder="Enter your email address"
+                        disabled={forgotPasswordStatus === 'loading'}
+                      />
+                      {forgotPasswordError && (
+                        <div className="flex items-center space-x-2 mt-2">
+                          <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
+                          <p className={`text-red-500 ${TYPOGRAPHY.sizes.caption}`}>
+                            {forgotPasswordError}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex space-x-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={handleForgotPasswordClose}
+                      className={`flex-1 py-3 px-4 rounded-xl border-2 border-gray-200 text-gray-700 ${TYPOGRAPHY.weights.medium} hover:bg-gray-50 hover:border-gray-300 ${ANIMATIONS.transition} ${
+                        forgotPasswordStatus === 'loading' ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                      }`}
+                      disabled={forgotPasswordStatus === 'loading'}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={forgotPasswordStatus === 'loading'}
+                      className={`flex-1 py-3 px-4 rounded-xl ${TYPOGRAPHY.weights.semibold} text-white ${ANIMATIONS.transition} ${
+                        forgotPasswordStatus === 'loading'
+                          ? 'bg-gray-400 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:shadow-lg transform hover:scale-105 cursor-pointer'
+                      }`}
+                    >
+                      {forgotPasswordStatus === 'loading' ? (
+                        <div className="flex items-center justify-center space-x-2">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Sending...</span>
+                        </div>
+                      ) : (
+                        'Send Reset Link'
+                      )}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </PageBackground>
   )
 }

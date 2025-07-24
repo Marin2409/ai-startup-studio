@@ -80,8 +80,8 @@ const Project = () => {
         return <ProjectCalendar />
       case 'TechStacks':
         return <ProjectTechStack />
-      // case 'Analytics':
-      //   return <div className="page-placeholder">Analytics - Coming Soon</div>
+      case 'Analytics':
+        return <div className="page-placeholder">Analytics - Coming Soon</div>
       case 'Assets':
         return <ProjectAssets />
       case 'Storage':

@@ -4,28 +4,24 @@ import {
   Paperclip, 
   Mic, 
   MicOff, 
-  Image, 
   FileText, 
   Download, 
   Trash2, 
   FolderPlus, 
   TrendingUp, 
   Clock, 
-  Sparkles, 
   Bot, 
   User, 
   Copy, 
   ThumbsUp, 
   ThumbsDown,
   Zap,
-  Brain,
   Command,
   Upload,
   X,
   ChevronRight,
   Star,
   BarChart3,
-  Folder,
   Settings
 } from 'lucide-react'
 
@@ -202,9 +198,8 @@ const AIassistant = () => {
   }
 
   return (
-    <div className="ai-assistant-container">
+    <div>
       <div className="ai-assistant-content">
-
         {/* Main Chat Area */}
         <div className="ai-chat-container">
           {/* Messages */}

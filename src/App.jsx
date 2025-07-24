@@ -26,6 +26,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Project from './pages/Project'
 import AccountPreferences from './components/AccountPreferences'
+import HelpSupport from './components/Help&Support'
 
 const App = () => {
 
@@ -34,10 +35,11 @@ const App = () => {
   const isDashboardPath = location.pathname === "/dashboard";
   const isProjectPath = location.pathname.startsWith("/project");
   const isUserProfilePath = location.pathname === "/account-preferences";
+  const isHelpSupportPath = location.pathname === "/help-support";
 
   // Show navbar on all pages except login, dashboard, and project pages
-  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath;
-  const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath;
+  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath;
+  const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath;
 
   return (
     <div>
@@ -78,7 +80,15 @@ const App = () => {
               <AccountPreferences />
             </div>
           } />
-          
+
+          {/* Help & Support */}
+          <Route path="/help-support" element={
+            <div className="project-layout">
+              <NavbarDashboard />
+              <HelpSupport />
+            </div>
+          } />
+
         </Routes>
       </div>
       

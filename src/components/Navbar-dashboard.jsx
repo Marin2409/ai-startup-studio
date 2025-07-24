@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, UserIcon, CreditCard, HelpCircle } from 'lucide-react'
+import { LogOut, UserIcon, HelpCircle } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar"
 import {
   DropdownMenu,
@@ -28,12 +28,9 @@ const NavbarDashboard = ({ isModalOpen = false }) => {
     navigate('/account-preferences')
   }
 
-  const handleThemes = () => {
-    console.log('Navigate to themes')
-  }
 
   const handleHelp = () => {
-    console.log('Navigate to help')
+    navigate('/help-support')
   }
 
   const handleLogout = () => {
@@ -83,10 +80,6 @@ const NavbarDashboard = ({ isModalOpen = false }) => {
               <DropdownMenuItem onClick={handleAccountPreferences}>
                 <UserIcon className="mr-2 h-4 w-4" />
                 <span>Account Preferences</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleThemes}>
-                <CreditCard className="mr-2 h-4 w-4" />
-                <span>Themes</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleHelp}>
                 <HelpCircle className="mr-2 h-4 w-4" />
