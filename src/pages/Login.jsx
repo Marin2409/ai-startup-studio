@@ -12,7 +12,8 @@ import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants'
 // ----------------------------------
 // API BASE URL
 // ----------------------------------
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
+const API_BASE_URL = import.meta.env.BACKEND_RENDER_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
+
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true)
