@@ -12,8 +12,7 @@ import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants'
 // ----------------------------------
 // API BASE URL
 // ----------------------------------
-const API_BASE_URL = import.meta.env.BACKEND_RENDER_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
-
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -130,7 +129,13 @@ const Login = () => {
         localStorage.setItem('user', JSON.stringify(data.user))
         
         console.log('Success:', data.message)
-        navigate('/dashboard')
+
+        // Redirect to dashboard for existing users, onboarding for new users
+        if (isLogin) {
+          navigate('/dashboard')
+        } else {
+          navigate('/onboarding')
+        }
       } else {
         // Handle backend error messages
         setErrors({ general: data.message || 'Authentication failed' })

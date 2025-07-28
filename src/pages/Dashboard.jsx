@@ -4,7 +4,7 @@ import NavbarDashboard from '../components/Navbar-dashboard'
 import Createproject from '../components/Create-project'
 import Integrations from '../components/Integrations'
 import Billing from '../components/Billing'
-import Analytics from '../components/Analytics'
+// import Analytics from '../components/Analytics'
 import Team from '../components/Team-Dashboard'
 import AIassistant from '../components/AI-assistant'
 
@@ -21,7 +21,7 @@ const Dashboard = () => {
       case 'Billing':
         return <Billing />
       case 'Analytics':
-        return <Analytics />
+        return <div className="page-placeholder">Analytics - Coming Soon</div>
       case 'Team':
         return <Team />
       case 'AIassistant':

@@ -13,6 +13,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import NavbarDashboard from './components/Navbar-dashboard'
+import Onboarding from './components/Onboarding'
 
 // ----------------------------------
 // Pages                     
@@ -36,9 +37,10 @@ const App = () => {
   const isProjectPath = location.pathname.startsWith("/project");
   const isUserProfilePath = location.pathname === "/account-preferences";
   const isHelpSupportPath = location.pathname === "/help-support";
+  const isOnboardingPath = location.pathname === "/onboarding";
 
   // Show navbar on all pages except login, dashboard, and project pages
-  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath;
+  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isOnboardingPath;
   const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath;
 
   return (
@@ -86,6 +88,14 @@ const App = () => {
             <div className="project-layout">
               <NavbarDashboard />
               <HelpSupport />
+            </div>
+          } />
+
+          {/* Onboarding */}
+          <Route path="/onboarding" element={
+            <div className="project-layout">
+              <NavbarDashboard />
+              <Onboarding />
             </div>
           } />
 

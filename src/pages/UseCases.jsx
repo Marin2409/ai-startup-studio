@@ -379,7 +379,8 @@ const UseCases = () => {
                       </div>
                     </div>
 
-                    <button 
+                    {/* To-Do: REMOVE COMMUNITY LINK FOR NOW UNTIL BACKEND IS FULLY IMPLEMENTED */}
+                    {/* <button 
                       onClick={() => {
                         navigate('/community')
                         window.scrollTo({ top: 0 })
@@ -392,7 +393,7 @@ const UseCases = () => {
                     >
                       View Full Story
                       <ArrowRight className="w-4 h-4 ml-2" />
-                    </button>
+                    </button> */}
                   </div>
                 </motion.div>
               ))}

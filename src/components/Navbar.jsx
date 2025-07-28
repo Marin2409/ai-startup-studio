@@ -46,12 +46,13 @@ const Navbar = () => {
         </Link>
     
         {/* Desktop Navigation Links - Visible on larger screens, hidden on mobile */}
-        <ul className="text-white flex items-center justify-center gap-8 flex-1 max-sm:hidden">
+        <ul className="text-white flex items-center justify-center gap-8 flex-1 max-sm:hidden mr-15">
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/">Home</Link></li>
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/pricing">Pricing</Link></li>
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/features">Features</Link></li>
           <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/use-cases">Use Cases</Link></li>
-          <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/community">Community</Link></li>
+          {/* To-Do: REMOVE COMMUNITY LINK FOR NOW UNTIL BACKEND IS FULLY IMPLEMENTED */}
+          {/* <li><Link className="hover:text-blue-200 transition-colors duration-200" to="/community">Community</Link></li> */}
         </ul>
     
         {/* Desktop CTA Button - Visible on larger screens, hidden on mobile */} 
@@ -87,7 +88,8 @@ const Navbar = () => {
             <li><Link to="/pricing" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Pricing</Link></li>
             <li><Link to="/features" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Features</Link></li>
             <li><Link to="/use-cases" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Use Cases</Link></li>
-            <li><Link to="/community" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Community</Link></li>
+            {/* To-Do: REMOVE COMMUNITY LINK FOR NOW UNTIL BACKEND IS FULLY IMPLEMENTED */}
+            {/* <li><Link to="/community" className="text-sm hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Community</Link></li> */}
           </ul>
           
           {/* Mobile CTA Button - Same functionality as desktop version */}

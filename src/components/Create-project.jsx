@@ -38,10 +38,7 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
       description: 'AI-powered startup development platform with automated tools and resources.',
       region: 'aws | us-east-2',
       status: 'active',
-      badge: 'SERIES A',
-      fundingAmount: '$2.5M',
       lastUpdated: '2 hours ago',
-      progress: 85
     },
     {
       id: 2,
@@ -50,10 +47,7 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
       description: 'Modern e-commerce solution with integrated payment processing and analytics.',
       region: 'aws | us-east-2',
       status: 'active',
-      badge: 'SEED',
-      fundingAmount: '$500K',
       lastUpdated: '1 day ago',
-      progress: 45
     },
     {
       id: 3,
@@ -62,20 +56,19 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
       description: 'Digital banking platform with advanced security and mobile-first design.',
       region: 'aws | eu-west-1',
       status: 'development',
-      badge: 'PRE-SEED',
-      fundingAmount: '$100K',
       lastUpdated: '3 days ago',
-      progress: 72
     }
   ])
   const [formData, setFormData] = useState({
-    projectName: '',
-    businessType: '',
-    description: '',
-    targetMarket: '',
-    stage: '',
+    organizationName: '',
+    industry: '',
     teamSize: '',
-    budgetRange: ''
+    primaryObjective: '',
+    timeline: '',
+    budgetRange: '',
+    technicalLevel: '',
+    needCofounder: false,
+    preferredTechStack: ''
   })
 
   const handleNewProject = () => {
@@ -100,13 +93,15 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
     // Close modal and reset form
     setIsModalOpen(false)
     setFormData({
-      projectName: '',
-      businessType: '',
-      description: '',
-      targetMarket: '',
-      stage: '',
+      organizationName: '',
+      industry: '',
       teamSize: '',
-      budgetRange: ''
+      primaryObjective: '',
+      timeline: '',
+      budgetRange: '',
+      technicalLevel: '',
+      needCofounder: false,
+      preferredTechStack: ''
     })
   }
 
@@ -145,9 +140,7 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
                            project.description.toLowerCase().includes(searchLower) ||
                            project.type.toLowerCase().includes(searchLower) ||
                            project.region.toLowerCase().includes(searchLower) ||
-                           project.badge.toLowerCase().includes(searchLower) ||
                            project.status.toLowerCase().includes(searchLower) ||
-                           project.fundingAmount.toLowerCase().includes(searchLower) ||
                            // Search by business type keywords
                            (searchLower === 'saas' && project.type.toLowerCase() === 'saas') ||
                            (searchLower === 'ecommerce' && project.type.toLowerCase() === 'e-commerce') ||
@@ -155,8 +148,6 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
                            (searchLower === 'healthtech' && project.type.toLowerCase() === 'healthtech') ||
                            (searchLower === 'edtech' && project.type.toLowerCase() === 'edtech') ||
                            // Search by funding stage
-                           (searchLower.includes('seed') && project.badge.toLowerCase().includes('seed')) ||
-                           (searchLower.includes('series') && project.badge.toLowerCase().includes('series')) ||
                            // Search by status
                            (searchLower === 'active' && project.status === 'active') ||
                            (searchLower === 'development' && project.status === 'development')
@@ -166,7 +157,7 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
         if (selectedFilter === 'active' || selectedFilter === 'development') {
           matchesFilter = project.status === selectedFilter
         } else if (selectedFilter === 'funded') {
-          matchesFilter = project.badge && project.badge !== 'PRE-SEED'
+          matchesFilter = project.status === 'active'
         } else {
           matchesFilter = project.type.toLowerCase() === selectedFilter
         }
@@ -344,14 +335,6 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
                       <h3 className="project-name">{project.name}</h3>
                       <p className="project-region">{project.region}</p>
                     </div>
-                    <div className="project-actions">
-                      <div className="funding-info">
-                        <span className={`project-badge ${project.badge.toLowerCase().replace(/[^a-z]/g, '-')}`}>
-                          {project.badge}
-                        </span>
-                        <span className="funding-amount">{project.fundingAmount}</span>
-                      </div>
-                    </div>
                   </div>
                   
                   <div className="project-card-body">
@@ -361,19 +344,6 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
                     <p className="project-description">
                       {project.description}
                     </p>
-                    
-                    <div className="project-progress">
-                      <div className="progress-header">
-                        <span className="progress-label">Progress</span>
-                        <span className="progress-value">{project.progress}%</span>
-                      </div>
-                      <div className="progress-bar">
-                        <div 
-                          className="progress-fill" 
-                          style={{ width: `${project.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
                   </div>
                   
                   <div className="project-card-footer">
@@ -405,131 +375,186 @@ const Createproject = ({ isModalOpen, setIsModalOpen }) => {
           
           <form onSubmit={handleFormSubmit} className="modal-form">
             <div className="form-grid">
+              {/* Project Name */}
               <div className="form-group">
-                <label htmlFor="projectName" className="form-label">
+                <label htmlFor="organizationName" className="form-label">
                   Project Name *
                 </label>
                 <input
-                  id="projectName"
+                  id="organizationName"
                   type="text"
-                  value={formData.projectName}
-                  onChange={(e) => handleFormChange('projectName', e.target.value)}
-                  placeholder="Enter your project name"
+                  value={formData.organizationName}
+                  onChange={(e) => handleFormChange('organizationName', e.target.value)}
+                  placeholder="What's the name of your project?"
                   className="form-input"
                   required
                 />
               </div>
 
+              {/* Industry */}
               <div className="form-group">
-                <label htmlFor="businessType" className="form-label">
-                  Business Type *
+                <label htmlFor="industry" className="form-label">
+                  Industry *
                 </label>
                 <select
-                  id="businessType"
-                  value={formData.businessType}
-                  onChange={(e) => handleFormChange('businessType', e.target.value)}
+                  id="industry"
+                  value={formData.industry}
+                  onChange={(e) => handleFormChange('industry', e.target.value)}
                   className="form-select"
                   required
                 >
-                  <option value="">Select business type</option>
-                  <option value="saas">SaaS</option>
-                  <option value="ecommerce">E-commerce</option>
-                  <option value="marketplace">Marketplace</option>
-                  <option value="mobile-app">Mobile App</option>
-                  <option value="consulting">Consulting</option>
-                  <option value="fintech">Fintech</option>
-                  <option value="healthtech">Healthtech</option>
-                  <option value="edtech">Edtech</option>
+                  <option value="">Select your industry</option>
+                  <option value="saas">SaaS & Software</option>
+                  <option value="ecommerce">E-commerce & Retail</option>
+                  <option value="fintech">FinTech & Banking</option>
+                  <option value="healthtech">HealthTech & Medical</option>
+                  <option value="edtech">EdTech & Education</option>
+                  <option value="marketplace">Marketplace & Platform</option>
+                  <option value="social">Social & Community</option>
+                  <option value="enterprise">Enterprise & B2B</option>
+                  <option value="gaming">Gaming & Entertainment</option>
                   <option value="other">Other</option>
                 </select>
               </div>
 
-              <div className="form-group form-group-full">
-                <label htmlFor="description" className="form-label">
-                  Description *
-                </label>
-                <textarea
-                  id="description"
-                  value={formData.description}
-                  onChange={(e) => handleFormChange('description', e.target.value)}
-                  placeholder="Briefly describe your business or startup idea"
-                  className="form-textarea"
-                  rows={3}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="targetMarket" className="form-label">
-                  Target Market *
-                </label>
-                <input
-                  id="targetMarket"
-                  type="text"
-                  value={formData.targetMarket}
-                  onChange={(e) => handleFormChange('targetMarket', e.target.value)}
-                  placeholder="Who is your target audience?"
-                  className="form-input"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="stage" className="form-label">
-                  Current Stage *
-                </label>
-                <select
-                  id="stage"
-                  value={formData.stage}
-                  onChange={(e) => handleFormChange('stage', e.target.value)}
-                  className="form-select"
-                  required
-                >
-                  <option value="">Select stage</option>
-                  <option value="idea">Idea</option>
-                  <option value="validation">Validation</option>
-                  <option value="mvp">MVP</option>
-                  <option value="growth">Growth</option>
-                  <option value="scale">Scale</option>
-                </select>
-              </div>
-
+              {/* Team Size */}
               <div className="form-group">
                 <label htmlFor="teamSize" className="form-label">
-                  Team Size
+                  Team Size *
                 </label>
                 <select
                   id="teamSize"
                   value={formData.teamSize}
                   onChange={(e) => handleFormChange('teamSize', e.target.value)}
                   className="form-select"
+                  required
                 >
                   <option value="">Select team size</option>
-                  <option value="solo">Solo founder</option>
-                  <option value="2-3">2-3 people</option>
-                  <option value="4-10">4-10 people</option>
-                  <option value="11-50">11-50 people</option>
-                  <option value="50+">50+ people</option>
+                  <option value="solo">Just me (Solo founder)</option>
+                  <option value="2-5">2-5 people</option>
+                  <option value="6-10">6-10 people</option>
+                  <option value="11-25">11-25 people</option>
+                  <option value="25+">25+ people</option>
                 </select>
               </div>
 
+              {/* Primary Objective */}
+              <div className="form-group">
+                <label htmlFor="primaryObjective" className="form-label">
+                  Primary Objective *
+                </label>
+                <select
+                  id="primaryObjective"
+                  value={formData.primaryObjective}
+                  onChange={(e) => handleFormChange('primaryObjective', e.target.value)}
+                  className="form-select"
+                  required
+                >
+                  <option value="">Select your primary objective</option>
+                  <option value="mvp">Build MVP</option>
+                  <option value="funding">Raise Funding</option>
+                  <option value="scale">Scale Product</option>
+                  <option value="cofounder">Find Co-founder</option>
+                  <option value="validate">Validate Idea</option>
+                </select>
+              </div>
+
+              {/* Timeline */}
+              <div className="form-group">
+                <label htmlFor="timeline" className="form-label">
+                  Expected Timeline *
+                </label>
+                <select
+                  id="timeline"
+                  value={formData.timeline}
+                  onChange={(e) => handleFormChange('timeline', e.target.value)}
+                  className="form-select"
+                  required
+                >
+                  <option value="">Select timeline</option>
+                  <option value="1-3">1-3 months</option>
+                  <option value="3-6">3-6 months</option>
+                  <option value="6-12">6-12 months</option>
+                  <option value="12+">12+ months</option>
+                </select>
+              </div>
+
+              {/* Budget Range */}
               <div className="form-group">
                 <label htmlFor="budgetRange" className="form-label">
-                  Budget Range
+                  Budget Range *
                 </label>
                 <select
                   id="budgetRange"
                   value={formData.budgetRange}
                   onChange={(e) => handleFormChange('budgetRange', e.target.value)}
                   className="form-select"
+                  required
                 >
                   <option value="">Select budget range</option>
-                  <option value="0-1k">$0 - $1,000</option>
-                  <option value="1k-5k">$1,000 - $5,000</option>
-                  <option value="5k-10k">$5,000 - $10,000</option>
-                  <option value="10k-25k">$10,000 - $25,000</option>
-                  <option value="25k-50k">$25,000 - $50,000</option>
+                  <option value="0-5k">$0 - $5,000</option>
+                  <option value="5k-15k">$5,000 - $15,000</option>
+                  <option value="15k-50k">$15,000 - $50,000</option>
                   <option value="50k+">$50,000+</option>
+                </select>
+              </div>
+
+              {/* Technical Expertise Level */}
+              <div className="form-group">
+                <label htmlFor="technicalLevel" className="form-label">
+                  Technical Expertise Level *
+                </label>
+                <select
+                  id="technicalLevel"
+                  value={formData.technicalLevel}
+                  onChange={(e) => handleFormChange('technicalLevel', e.target.value)}
+                  className="form-select"
+                  required
+                >
+                  <option value="">Select your technical level</option>
+                  <option value="non-technical">Non-technical</option>
+                  <option value="some">Some experience</option>
+                  <option value="technical">Technical</option>
+                  <option value="expert">Expert developer</option>
+                </select>
+              </div>
+
+              {/* Need Co-founder */}
+              <div className="form-group">
+                <label htmlFor="needCofounder" className="form-label">
+                  Do you need a technical co-founder? *
+                </label>
+                <select
+                  id="needCofounder"
+                  value={formData.needCofounder}
+                  onChange={(e) => handleFormChange('needCofounder', e.target.value === 'true')}
+                  className="form-select"
+                  required
+                >
+                  <option value="">Select option</option>
+                  <option value="true">Yes, I need technical help</option>
+                  <option value="false">No, I can handle the tech</option>
+                </select>
+              </div>
+
+              {/* Preferred Tech Stack */}
+              <div className="form-group">
+                <label htmlFor="preferredTechStack" className="form-label">
+                  Preferred Tech Stack *
+                </label>
+                <select
+                  id="preferredTechStack"
+                  value={formData.preferredTechStack}
+                  onChange={(e) => handleFormChange('preferredTechStack', e.target.value)}
+                  className="form-select"
+                  required
+                >
+                  <option value="">Select preferred tech stack</option>
+                  <option value="react-node">React + Node.js</option>
+                  <option value="python-django">Python + Django</option>
+                  <option value="mobile-first">Mobile First (React Native)</option>
+                  <option value="wordpress">WordPress/No-Code</option>
+                  <option value="custom">Custom Solution</option>
                 </select>
               </div>
             </div>
