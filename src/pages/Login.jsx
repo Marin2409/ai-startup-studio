@@ -9,6 +9,11 @@ import { Eye, EyeOff, Zap, Users, Star, ArrowRight, X, Mail, CheckCircle, AlertC
 import PageBackground from '../components/ui/PageBackground'
 import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants'
 
+// ----------------------------------
+// API BASE URL
+// ----------------------------------
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
+
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
@@ -93,14 +98,49 @@ const Login = () => {
 
     setIsLoading(true)
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const endpoint = isLogin ? '/api/user/login' : '/api/user/register'
+      const payload = isLogin 
+        ? {
+            email: formData.email,
+            password: formData.password
+          }
+        : {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            company: formData.company,
+            password_hash: formData.password
+          }
+
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      })
+
+      const data = await response.json()
+      
+      if (response.ok && data.success) {
+        // Store the JWT token and user data
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        
+        console.log('Success:', data.message)
+        navigate('/dashboard')
+      } else {
+        // Handle backend error messages
+        setErrors({ general: data.message || 'Authentication failed' })
+      }
+      
+    } catch (error) {
+      console.error('Auth error:', error)
+      setErrors({ general: 'Connection error. Please check your internet connection.' })
+    } finally {
       setIsLoading(false)
-      // For demo purposes, just navigate to dashboard
-      console.log('Navigating to dashboard')
-      navigate('/dashboard')
-      // navigate(fromPage)
-    }, 2000)
+    }
   }
 
   const toggleMode = () => {
@@ -496,6 +536,18 @@ const Login = () => {
                       </div>
                     )}
                   </button>
+
+                  {/* General Error Display */}
+                  {errors.general && (
+                    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                      <div className="flex items-center space-x-2">
+                        <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                        <p className={`text-red-700 ${TYPOGRAPHY.sizes.body.base}`}>
+                          {errors.general}
+                        </p>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Toggle Mode */}
                   <div className="text-center">

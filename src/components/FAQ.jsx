@@ -298,7 +298,7 @@ const FAQ = () => {
             Get personalized guidance for your unique situation.
           </p>
           <div className={`flex flex-col sm:flex-row ${SPACING.gaps.medium} justify-center`}>
-            <button 
+            {/* <button 
               onClick={() => setShowMessageModal(true)}
               className={`
                 bg-white text-blue-600 px-6 py-3 rounded-full 
@@ -308,7 +308,7 @@ const FAQ = () => {
               `}
             >
               Leave us a Message
-            </button>
+            </button> */}
             <button 
               onClick={() => {
                 navigate('/community')
@@ -327,7 +327,7 @@ const FAQ = () => {
         </motion.div>
       </div>
 
-              {/* Message Modal */}
+        {/* Message Modal */}
         <AnimatePresence>
           {showMessageModal && (
             <motion.div
@@ -429,7 +429,7 @@ const FAQ = () => {
                     `}
                     placeholder="Tell us about your question, feedback, or how we can help you with your startup journey..."
                   />
-        </div>
+                </div>
 
                 {/* Form Actions */}
                 <div className={`flex flex-col sm:flex-row ${SPACING.gaps.small} pt-4`}>
@@ -456,7 +456,7 @@ const FAQ = () => {
                   >
                     Cancel
                   </button>
-    </div>
+                </div>
               </form>
             </motion.div>
           </motion.div>

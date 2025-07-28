@@ -235,7 +235,7 @@ const Pricing = () => {
             </span>
             <button
               onClick={() => setIsAnnual(!isAnnual)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full ${ANIMATIONS.transition} ${
+              className={`relative inline-flex h-6 w-11 items-center rounded-full cursor-pointer ${ANIMATIONS.transition} ${
                 isAnnual ? 'bg-blue-600' : 'bg-slate-200'
               }`}
             >
