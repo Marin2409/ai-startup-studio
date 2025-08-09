@@ -1,33 +1,29 @@
 import React, { useState } from 'react'
 import Sidebar from '../components/Sidebar-dashboard'
 import NavbarDashboard from '../components/Navbar-dashboard'
-import Createproject from '../components/Create-project'
-import Integrations from '../components/Integrations'
+import MyProjects from '../components/My-projects'
 import Billing from '../components/Billing'
+// import Integrations from '../components/Integrations'
 // import Analytics from '../components/Analytics'
-import Team from '../components/Team-Dashboard'
-import AIassistant from '../components/AI-assistant'
+// import Team from '../components/Team-Dashboard'
 
 const Dashboard = () => {
   const [activePage, setActivePage] = useState('Projects')
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const renderActivePage = () => {
     switch (activePage) {
       case 'Projects':
-        return <Createproject isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        return <MyProjects />
       case 'Integrations':
-        return <Integrations isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        return <div className="page-placeholder">Integrations - Coming Soon</div>
       case 'Billing':
         return <Billing />
       case 'Analytics':
         return <div className="page-placeholder">Analytics - Coming Soon</div>
       case 'Team':
-        return <Team />
-      case 'AIassistant':
-        return <AIassistant />
+        return <div className="page-placeholder">Team - Coming Soon</div>
       default:
-        return <Createproject isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        return <MyProjects />
     }
   }
 
@@ -35,10 +31,9 @@ const Dashboard = () => {
     <div className="project-layout">
       <Sidebar activePage={activePage} 
         setActivePage={setActivePage} 
-        isModalOpen={isModalOpen} 
       />
 
-      <NavbarDashboard isModalOpen={isModalOpen} />
+      <NavbarDashboard />
 
       <div className="project-content">
         {renderActivePage()}

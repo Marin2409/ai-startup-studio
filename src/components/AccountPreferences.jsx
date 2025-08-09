@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { 
   ArrowLeft, 
@@ -15,6 +15,9 @@ import {
   X
 } from 'lucide-react'
 
+// API Base URL
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
+
 const AccountPreferences = () => {
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
@@ -23,18 +26,31 @@ const AccountPreferences = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [avatarImage, setAvatarImage] = useState(null)
+  const [saveLoading, setSaveLoading] = useState(false)
+  const [saveError, setSaveError] = useState('')
+  const [saveSuccess, setSaveSuccess] = useState('')
+  const [toast, setToast] = useState({ visible: false, type: 'success', message: '' })
 
-  // Mock user data - in real app this would come from context/props
+  const showToast = (type, message) => {
+    setToast({ visible: true, type, message })
+    // Auto-hide after 3 seconds
+    window.clearTimeout(showToast._t)
+    showToast._t = window.setTimeout(() => {
+      setToast(t => ({ ...t, visible: false }))
+    }, 3000)
+  }
+
+  // User data
   const [userData, setUserData] = useState({
-    firstName: 'Jose',
-    lastName: 'Marin',
-    email: 'jamrin2409@gmail.com',
-    phone: '+1 (555) 123-4567',
-    location: 'San Francisco, CA',
-    bio: 'Full-stack developer passionate about AI and startup innovation.',
-    website: 'https://josemarin.dev',
-    github: 'Marin2409',
-    joinDate: 'January 2024',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    company: '',
+    address: '',
+    city: '',
+    state: '',
+    joinDate: '',
     subscription: 'Free',
     theme: 'dark',
     notifications: {
@@ -45,6 +61,67 @@ const AccountPreferences = () => {
   })
 
   const [tempData, setTempData] = useState({ ...userData })
+
+  // Fetch current user profile
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem('token')
+        if (!token) {
+          navigate('/login')
+          return
+        }
+
+        const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+
+        const data = await response.json()
+
+        if (response.ok && data.success) {
+          const u = data.user
+          const createdAt = u.created_at ? new Date(u.created_at) : null
+          const joinDate = createdAt ? createdAt.toLocaleString('en-US', { month: 'long', year: 'numeric' }) : ''
+
+          const mapped = {
+            firstName: u.first_name || '',
+            lastName: u.last_name || '',
+            email: u.email || '',
+            phone: u.phone || '',
+            company: u.company || '',
+            address: u.address || '',
+            city: u.city || '',
+            state: u.state || '',
+            joinDate,
+            subscription: (u.billing && u.billing.selected_plan)
+              ? (u.billing.selected_plan.charAt(0).toUpperCase() + u.billing.selected_plan.slice(1))
+              : 'Free',
+            theme: 'dark',
+            notifications: { email: true, push: true, marketing: false }
+          }
+
+          setUserData(mapped)
+          setTempData({ ...mapped })
+        } else {
+          if (response.status === 401) {
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            navigate('/login')
+            return
+          }
+          console.error('Failed to fetch profile:', data.message)
+        }
+      } catch (err) {
+        console.error('Error fetching profile:', err)
+      }
+    }
+
+    fetchUserProfile()
+  }, [navigate])
 
   const handleBackToDashboard = () => {
     navigate('/dashboard')
@@ -60,9 +137,133 @@ const AccountPreferences = () => {
     }
   }
 
-  const handleSave = () => {
-    setUserData({ ...tempData })
-    setIsEditing(false)
+  const handleSave = async () => {
+    try {
+      setSaveError('')
+      setSaveSuccess('')
+      setSaveLoading(true)
+      const token = localStorage.getItem('token')
+      if (!token) {
+        navigate('/login')
+        return
+      }
+
+      // Basic client-side validation
+      const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+      if (!emailRegex.test((tempData.email || '').trim())) {
+        setSaveError('Please provide a valid email address')
+        showToast('error', 'Please provide a valid email address')
+        setSaveLoading(false)
+        return
+      }
+      const phoneVal = (tempData.phone || '').trim()
+      if (phoneVal && !/^\+?[\d\s\-\(\)\.]+$/.test(phoneVal)) {
+        setSaveError('Please provide a valid phone number')
+        showToast('error', 'Please provide a valid phone number')
+        setSaveLoading(false)
+        return
+      }
+
+      // Build a payload with only changed fields
+      const payload = {}
+      if ((tempData.firstName || '').trim() !== (userData.firstName || '').trim()) {
+        payload.first_name = (tempData.firstName || '').trim()
+      }
+      if ((tempData.lastName || '').trim() !== (userData.lastName || '').trim()) {
+        payload.last_name = (tempData.lastName || '').trim()
+      }
+      if ((tempData.email || '').trim().toLowerCase() !== (userData.email || '').trim().toLowerCase()) {
+        payload.email = (tempData.email || '').trim().toLowerCase()
+      }
+      if ((tempData.phone || '').trim() !== (userData.phone || '').trim()) {
+        payload.phone = (tempData.phone || '').trim() || null
+      }
+      if ((tempData.company || '').trim() !== (userData.company || '').trim()) {
+        payload.company = (tempData.company || '').trim() || null
+      }
+      if ((tempData.address || '').trim() !== (userData.address || '').trim()) {
+        payload.address = (tempData.address || '').trim() || null
+      }
+      if ((tempData.city || '').trim() !== (userData.city || '').trim()) {
+        payload.city = (tempData.city || '').trim() || null
+      }
+      if ((tempData.state || '').trim() !== (userData.state || '').trim()) {
+        payload.state = (tempData.state || '').trim() || null
+      }
+
+      if (Object.keys(payload).length === 0) {
+        setSaveLoading(false)
+        setSaveSuccess('')
+        showToast('success', 'No changes to save')
+        return
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        const u = data.user
+        const createdAt = u.created_at ? new Date(u.created_at) : null
+        const joinDate = createdAt ? createdAt.toLocaleString('en-US', { month: 'long', year: 'numeric' }) : userData.joinDate
+
+        const mapped = {
+          firstName: u.first_name || '',
+          lastName: u.last_name || '',
+          email: u.email || '',
+          phone: u.phone || '',
+          company: u.company || '',
+          address: u.address || '',
+          city: u.city || '',
+          state: u.state || '',
+          joinDate,
+          subscription: userData.subscription,
+          theme: userData.theme,
+          notifications: userData.notifications
+        }
+
+        setUserData(mapped)
+        setTempData({ ...mapped })
+        setIsEditing(false)
+        // Notify other UI (e.g., Navbar) of updated profile
+        try {
+          window.dispatchEvent(new CustomEvent('user:profile-updated', {
+            detail: {
+              first_name: u.first_name,
+              last_name: u.last_name,
+              email: u.email,
+              phone: u.phone
+            }
+          }))
+        } catch (e) {
+          // no-op if window is not available
+        }
+        setSaveSuccess('Profile updated successfully')
+        showToast('success', 'Profile updated successfully')
+      } else {
+        console.error('Failed to update profile:', data.message)
+        setSaveError(data.message || 'Failed to update profile')
+        showToast('error', data.message || 'Failed to update profile')
+        if (response.status === 401) {
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+          navigate('/login')
+        }
+      }
+    } catch (err) {
+      console.error('Error updating profile:', err)
+      setSaveError('Connection error. Please try again.')
+      showToast('error', 'Connection error. Please try again.')
+    } finally {
+      setSaveLoading(false)
+    }
   }
 
   const handleCancel = () => {
@@ -73,33 +274,6 @@ const AccountPreferences = () => {
 
   const handleInputChange = (field, value) => {
     setTempData(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleAvatarUpload = (event) => {
-    const file = event.target.files[0]
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        alert('Please select an image file')
-        return
-      }
-      
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        alert('File size must be less than 5MB')
-        return
-      }
-
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        setAvatarImage(e.target.result)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
-
-  const handleAvatarEditClick = () => {
-    fileInputRef.current?.click()
   }
 
   const handleNotificationToggle = (type) => {
@@ -117,10 +291,8 @@ const AccountPreferences = () => {
   }
 
   const handleDeleteAccount = () => {
-    // In real app, this would trigger account deletion process
-    console.log('Account deletion requested')
-    setShowDeleteConfirm(false)
-    navigate('/')
+    // Open confirmation modal
+    setShowDeleteConfirm(true)
   }
 
   const navigationSections = [
@@ -153,20 +325,6 @@ const AccountPreferences = () => {
                   {userData.firstName.charAt(0)}{userData.lastName.charAt(0)}
                 </div>
               )}
-              <button 
-                className="avatar-edit-btn"
-                onClick={handleAvatarEditClick}
-                title="Upload new avatar"
-              >
-                <Edit3 className="w-4 h-4" />
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarUpload}
-                style={{ display: 'none' }}
-              />
             </div>
             <div className="avatar-info">
               <h4>{userData.firstName} {userData.lastName}</h4>
@@ -196,6 +354,53 @@ const AccountPreferences = () => {
                 className="form-input"
               />
             </div>
+
+            <div className="form-group">
+              <label>Address</label>
+              <input
+                type="text"
+                value={(isEditing ? tempData.address : userData.address) || ''}
+                onChange={(e) => handleInputChange('address', e.target.value)}
+                disabled={!isEditing}
+                className="form-input"
+                placeholder={userData.address ? undefined : 'Add address'}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>City</label>
+              <input
+                type="text"
+                value={(isEditing ? tempData.city : userData.city) || ''}
+                onChange={(e) => handleInputChange('city', e.target.value)}
+                disabled={!isEditing}
+                className="form-input"
+                placeholder={userData.city ? undefined : 'Add city'}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>State</label>
+              <input
+                type="text"
+                value={(isEditing ? tempData.state : userData.state) || ''}
+                onChange={(e) => handleInputChange('state', e.target.value)}
+                disabled={!isEditing}
+                className="form-input"
+                placeholder={userData.state ? undefined : 'Add state'}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Company</label>
+              <input
+                type="text"
+                value={isEditing ? tempData.company : userData.company}
+                onChange={(e) => handleInputChange('company', e.target.value)}
+                disabled={!isEditing}
+                className="form-input"
+              />
+            </div>
             
             <div className="form-group">
               <label>Email</label>
@@ -220,56 +425,14 @@ const AccountPreferences = () => {
               <label>Phone</label>
               <input
                 type="tel"
-                value={isEditing ? tempData.phone : userData.phone}
+                value={(isEditing ? tempData.phone : userData.phone) || ''}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
                 disabled={!isEditing}
                 className="form-input"
+                placeholder={userData.phone ? undefined : 'Add phone number'}
               />
             </div>
             
-            <div className="form-group">
-              <label>Location</label>
-              <input
-                type="text"
-                value={isEditing ? tempData.location : userData.location}
-                onChange={(e) => handleInputChange('location', e.target.value)}
-                disabled={!isEditing}
-                className="form-input"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label>Website</label>
-              <input
-                type="url"
-                value={isEditing ? tempData.website : userData.website}
-                onChange={(e) => handleInputChange('website', e.target.value)}
-                disabled={!isEditing}
-                className="form-input"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label>GitHub</label>
-              <input
-                type="text"
-                value={isEditing ? tempData.github : userData.github}
-                onChange={(e) => handleInputChange('github', e.target.value)}
-                disabled={!isEditing}
-                className="form-input"
-              />
-            </div>
-            
-            <div className="form-group full-width">
-              <label>Bio</label>
-              <textarea
-                value={isEditing ? tempData.bio : userData.bio}
-                onChange={(e) => handleInputChange('bio', e.target.value)}
-                disabled={!isEditing}
-                className="form-textarea"
-                rows={3}
-              />
-            </div>
           </div>
 
           {isEditing ? (
@@ -278,9 +441,9 @@ const AccountPreferences = () => {
                 <X className="w-4 h-4 mr-2" />
                 Cancel
               </button>
-              <button onClick={handleSave} className="btn-primary">
+                <button onClick={handleSave} className="btn-primary" disabled={saveLoading}>
                 <Save className="w-4 h-4 mr-2" />
-                Save Changes
+                  {saveLoading ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
           ) : (
@@ -335,7 +498,7 @@ const AccountPreferences = () => {
           <button className="btn-secondary">Change Password</button>
         </div>
         
-        <div className="setting-item">
+        {/* <div className="setting-item">
           <div className="setting-info">
             <h4>Two-Factor Authentication</h4>
             <p>Add an extra layer of security to your account</p>
@@ -349,7 +512,8 @@ const AccountPreferences = () => {
             <p>Manage your active login sessions across devices</p>
           </div>
           <button className="btn-secondary">View Sessions</button>
-        </div>
+        </div> */}
+
       </div>
     </div>
   )
@@ -377,7 +541,7 @@ const AccountPreferences = () => {
           </label>
         </div>
         
-        <div className="setting-item">
+        {/* <div className="setting-item">
           <div className="setting-info">
             <h4>Push Notifications</h4>
             <p>Get real-time notifications in your browser</p>
@@ -405,7 +569,7 @@ const AccountPreferences = () => {
             />
             <span className="toggle-slider"></span>
           </label>
-        </div>
+        </div> */}
       </div>
     </div>
   )
@@ -501,6 +665,40 @@ const AccountPreferences = () => {
 
   return (
     <div className="user-profile-container">
+      {/* Floating Toast */}
+      {toast.visible && (
+        <div
+          className={`toast ${toast.type}`}
+          role={toast.type === 'error' ? 'alert' : 'status'}
+          style={{
+            position: 'fixed',
+            top: 20,
+            right: 20,
+            zIndex: 1000,
+            minWidth: 280,
+            padding: '12px 14px',
+            borderRadius: 10,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+            background: toast.type === 'error' ? '#fee2e2' : '#e6f6ee',
+            color: toast.type === 'error' ? '#991b1b' : '#065f46',
+            border: `1px solid ${toast.type === 'error' ? '#fecaca' : '#a7f3d0'}`
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontWeight: 600 }}>
+              {toast.type === 'error' ? 'Error' : 'Success'}
+            </span>
+            <span style={{ opacity: 0.9 }}>{toast.message}</span>
+            <button
+              onClick={() => setToast(t => ({ ...t, visible: false }))}
+              style={{ marginLeft: 'auto', background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit' }}
+              aria-label="Dismiss notification"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <div className="profile-header">
         <h1>Account Settings</h1>
@@ -547,7 +745,38 @@ const AccountPreferences = () => {
               <button onClick={() => setShowDeleteConfirm(false)} className="btn-secondary">
                 Cancel
               </button>
-              <button onClick={handleDeleteAccount} className="btn-danger">
+              <button
+                onClick={async () => {
+                  try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                      navigate('/login')
+                      return
+                    }
+                    const resp = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                      method: 'DELETE',
+                      headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                      }
+                    })
+                    const data = await resp.json()
+                    if (resp.ok && data.success) {
+                      showToast('success', 'Account deleted')
+                      // Clear auth and redirect home
+                      localStorage.removeItem('token')
+                      localStorage.removeItem('user')
+                      setShowDeleteConfirm(false)
+                      navigate('/')
+                    } else {
+                      showToast('error', data.message || 'Failed to delete account')
+                    }
+                  } catch (e) {
+                    showToast('error', 'Connection error. Please try again.')
+                  }
+                }}
+                className="btn-danger"
+              >
                 Delete Account
               </button>
             </div>

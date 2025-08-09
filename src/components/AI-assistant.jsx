@@ -25,7 +25,7 @@ import {
   Settings
 } from 'lucide-react'
 
-const AIassistant = () => {
+const AIassistant = ({ project }) => {
   const [message, setMessage] = useState('')
   const [isRecording, setIsRecording] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
@@ -38,19 +38,35 @@ const AIassistant = () => {
     {
       id: 1,
       type: 'assistant',
-      content: "Hello! I'm your AI Assistant. I can help you manage your projects, analyze data, and streamline your workflow. What would you like to know or do today?",
+      content: project && project.project_name
+        ? `Hello! I'm your AI Assistant for **${project.project_name}**. I can help you manage this project, analyze data, and streamline your workflow. What would you like to know or do with this project today?`
+        : "Hello! I'm your AI Assistant. I can help you manage your projects, analyze data, and streamline your workflow. What would you like to know or do today?",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ])
+
+  // Update initial message when project data becomes available
+  useEffect(() => {
+    if (project && project.project_name && messages.length === 1) {
+      setMessages([
+        {
+          id: 1, 
+          type: 'assistant',
+          content: `Hello! I'm your AI Assistant for **${project.project_name}**. I can help you manage this project, analyze data, and streamline your workflow. What would you like to know or do with this project today?`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+      ])
+    }
+  }, [project])
 
   const suggestedCommands = [
     {
       category: 'Project Management',
       commands: [
-        { text: "What's my most recent project?", icon: Clock },
+        { text: project && project.project_name ? `What's the status of ${project.project_name}?` : "What's my most recent project?", icon: Clock },
         { text: "Show me project performance metrics", icon: BarChart3 },
         { text: "Create a new project folder", icon: FolderPlus },
-        { text: "Download all assets from AI Startup Studio", icon: Download }
+        { text: project && project.project_name ? `Download all assets from ${project.project_name}` : "Download all assets from AI Startup Studio", icon: Download }
       ]
     },
     {
@@ -58,7 +74,7 @@ const AIassistant = () => {
       commands: [
         { text: "Which project has the highest revenue potential?", icon: TrendingUp },
         { text: "Show me team productivity stats", icon: BarChart3 },
-        { text: "Generate project summary report", icon: FileText },
+        { text: project && project.project_name ? `Generate summary report for ${project.project_name}` : "Generate project summary report", icon: FileText },
         { text: "Analyze current workflow efficiency", icon: Zap }
       ]
     },
@@ -74,8 +90,10 @@ const AIassistant = () => {
   ]
 
   const demoResponses = {
-    "What's my most recent project?": {
-      content: "Your most recent project is **AI Startup Studio** (updated 2 hours ago). This SaaS project is currently in Series A funding stage with 85% completion rate. Would you like me to show you detailed analytics or recent activity?",
+    [project && project.project_name ? `What's the status of ${project.project_name}?` : "What's my most recent project?"]: {
+      content: project && project.project_name
+        ? `**${project.project_name}** is currently in **${project.status}** stage with the following details:\n\n• **Industry:** ${project.industry}\n• **Team Size:** ${project.team_size}\n• **Timeline:** ${project.timeline}\n• **Budget Range:** ${project.budget_range}\n• **Technical Level:** ${project.technical_level}\n\nWould you like me to show you detailed analytics or recent activity?`
+        : "Your most recent project is **AI Startup Studio** (updated 2 hours ago). This SaaS project is currently in Series A funding stage with 85% completion rate. Would you like me to show you detailed analytics or recent activity?",
       actions: ['Show Analytics', 'View Recent Activity', 'Open Project']
     },
     "Which project has the highest revenue potential?": {
@@ -90,9 +108,17 @@ const AIassistant = () => {
       content: "I'll help you create a new project folder. Please provide:\n\n1. Project name\n2. Project type (SaaS, E-commerce, Fintech, etc.)\n3. Initial team members\n4. Estimated timeline\n\nOr would you like me to create a folder based on a template?",
       actions: ['Use Template', 'Custom Setup', 'Import Existing']
     },
-    "Download all assets from AI Startup Studio": {
-      content: "Preparing download package for **AI Startup Studio**...\n\n**Assets included:**\n• Design files (24 items)\n• Documentation (12 files)\n• Code repositories (3 repos)\n• Marketing materials (8 files)\n\n**Total size:** 2.4 GB\n\nReady to download?",
+    [project && project.project_name ? `Download all assets from ${project.project_name}` : "Download all assets from AI Startup Studio"]: {
+      content: project && project.project_name
+        ? `Preparing download package for **${project.project_name}**...\n\n**Assets included:**\n• Design files (24 items)\n• Documentation (12 files)\n• Code repositories (3 repos)\n• Marketing materials (8 files)\n\n**Total size:** 2.4 GB\n\nReady to download?`
+        : "Preparing download package for **AI Startup Studio**...\n\n**Assets included:**\n• Design files (24 items)\n• Documentation (12 files)\n• Code repositories (3 repos)\n• Marketing materials (8 files)\n\n**Total size:** 2.4 GB\n\nReady to download?",
       actions: ['Download Now', 'Select Specific Files', 'Schedule Download']
+    },
+    [project && project.project_name ? `Generate summary report for ${project.project_name}` : "Generate project summary report"]: {
+      content: project && project.project_name
+        ? `Generating comprehensive report for **${project.project_name}**...\n\n**Report includes:**\n• Project overview and objectives\n• Current progress and milestones\n• Team performance metrics\n• Resource allocation analysis\n• Risk assessment and recommendations\n\n**Estimated completion:** 2-3 minutes\n\nWould you like me to include financial projections?`
+        : "Generating comprehensive project summary report...\n\n**Report includes:**\n• Project overview and objectives\n• Current progress and milestones\n• Team performance metrics\n• Resource allocation analysis\n• Risk assessment and recommendations\n\n**Estimated completion:** 2-3 minutes\n\nWould you like me to include financial projections?",
+      actions: ['Include Financials', 'Export as PDF', 'Share Report']
     }
   }
 
@@ -404,7 +430,7 @@ const AIassistant = () => {
           <div className="input-hints">
             <div className="hint-item">
               <Zap className="w-4 h-4" />
-              <span>Try: "What's my most recent project?"</span>
+              <span>Try: {project && project.project_name ? `"What's the status of ${project.project_name}?"` : '"What\'s my most recent project?"'}</span>
             </div>
             <div className="hint-item">
               <Star className="w-4 h-4" />

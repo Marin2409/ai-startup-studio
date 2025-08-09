@@ -1,21 +1,20 @@
 import React from 'react'
 import { 
-  TrendingDown, 
   Users, 
   DollarSign, 
-  Calendar, 
-  Activity, 
   CheckCircle, 
-  AlertCircle, 
   Clock,
-  ArrowUpRight,
-  ArrowDownRight,
   FileText,
   BarChart3,
   Settings,
   Plus,
   Edit3,
-  Eye
+  Eye,
+  Building2,
+  Target,
+  Code,
+  Heart,
+  Wrench
 } from 'lucide-react'
 
 // Project Overview Component
@@ -29,107 +28,6 @@ const ProjectOverview = ({ project }) => {
         </div>
       </div>
     )
-  }
-
-  // Mock data for enhanced features
-  const keyMetrics = [
-    { 
-      label: 'Monthly Recurring Revenue', 
-      value: '$47.2K', 
-      change: '+12.5%', 
-      trend: 'up',
-      icon: DollarSign 
-    },
-    { 
-      label: 'Active Users', 
-      value: '2,847', 
-      change: '+8.2%', 
-      trend: 'up',
-      icon: Users 
-    },
-    { 
-      label: 'Burn Rate', 
-      value: '$23.1K/mo', 
-      change: '-5.3%', 
-      trend: 'down',
-      icon: TrendingDown 
-    },
-    { 
-      label: 'Runway', 
-      value: '18 months', 
-      change: '+2 mo', 
-      trend: 'up',
-      icon: Calendar 
-    }
-  ]
-
-  const recentActivity = [
-    { 
-      type: 'milestone', 
-      title: 'MVP Development Completed', 
-      time: '2 hours ago',
-      icon: CheckCircle,
-      color: 'green'
-    },
-    { 
-      type: 'team', 
-      title: 'Sarah joined as Lead Designer', 
-      time: '1 day ago',
-      icon: Users,
-      color: 'blue'
-    },
-    { 
-      type: 'funding', 
-      title: 'Series A Round Discussion', 
-      time: '3 days ago',
-      icon: DollarSign,
-      color: 'purple'
-    },
-    { 
-      type: 'product', 
-      title: 'User Authentication Released', 
-      time: '5 days ago',
-      icon: Activity,
-      color: 'green'
-    }
-  ]
-
-  const milestones = [
-    { 
-      title: 'Market Research', 
-      status: 'completed', 
-      progress: 100,
-      dueDate: 'Completed'
-    },
-    { 
-      title: 'MVP Development', 
-      status: 'completed', 
-      progress: 100,
-      dueDate: 'Completed'
-    },
-    { 
-      title: 'Beta Testing', 
-      status: 'in-progress', 
-      progress: 75,
-      dueDate: 'Dec 15, 2024'
-    },
-    { 
-      title: 'Series A Preparation', 
-      status: 'pending', 
-      progress: 25,
-      dueDate: 'Jan 30, 2025'
-    }
-  ]
-
-  const teamSummary = {
-    totalMembers: 8,
-    activeToday: 6,
-    departments: [
-      { name: 'Engineering', count: 4, color: '#3b82f6' },
-      { name: 'Design', count: 2, color: '#8b5cf6' },
-      { name: 'Marketing', count: 1, color: '#10b981' },
-      { name: 'Operations', count: 1, color: '#f59e0b' }
-    ]
   }
 
   const quickActions = [
@@ -147,6 +45,7 @@ const ProjectOverview = ({ project }) => {
       <div className="project-overview-header">
         <div className="project-info">
           <h1 className="project-title">{project.name}</h1>
+          <p className="project-description">{project.description}</p>
         </div>
         <div className="project-actions">
           <button className="action-btn secondary" title="Edit project settings, team, and details">
@@ -198,118 +97,84 @@ const ProjectOverview = ({ project }) => {
 
       {/* Main Content Grid */}
       <div className="overview-grid">
-        {/* Key Metrics */}
-        <div className="overview-card metrics-card">
+        {/* Project Details Card */}
+        <div className="overview-card project-details-card">
           <div className="card-header">
-            <h3 className="card-title">Key Metrics</h3>
-            <span className="card-subtitle">Last 30 days</span>
+            <h3 className="card-title">Project Details</h3>
+            <span className="card-subtitle">Information from your submission</span>
           </div>
-          <div className="metrics-grid">
-            {keyMetrics.map((metric, index) => {
-              const Icon = metric.icon
-              return (
-                <div key={index} className="metric-item">
-                  <div className="metric-header">
-                    <div className="metric-icon">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div className={`metric-change ${metric.trend}`}>
-                      {metric.trend === 'up' ? (
-                        <ArrowUpRight className="w-4 h-4" />
-                      ) : (
-                        <ArrowDownRight className="w-4 h-4" />
-                      )}
-                      {metric.change}
-                    </div>
-                  </div>
-                  <div className="metric-content">
-                    <span className="metric-value">{metric.value}</span>
-                    <span className="metric-label">{metric.label}</span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="overview-card activity-card">
-          <div className="card-header">
-            <h3 className="card-title">Recent Activity</h3>
-            <button className="view-all-btn">View All</button>
-          </div>
-          <div className="activity-list">
-            {recentActivity.map((activity, index) => {
-              const Icon = activity.icon
-              return (
-                <div key={index} className="activity-item">
-                  <div className={`activity-icon ${activity.color}`}>
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div className="activity-content">
-                    <span className="activity-title">{activity.title}</span>
-                    <span className="activity-time">{activity.time}</span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Milestone Progress */}
-        <div className="overview-card milestones-card">
-          <div className="card-header">
-            <h3 className="card-title">Milestone Progress</h3>
-            <span className="card-subtitle">Current roadmap</span>
-          </div>
-          <div className="milestones-list">
-            {milestones.map((milestone, index) => (
-              <div key={index} className="milestone-item">
-                <div className="milestone-header">
-                  <span className="milestone-title">{milestone.title}</span>
-                  <span className={`milestone-status ${milestone.status}`}>
-                    {milestone.status === 'completed' && <CheckCircle className="w-4 h-4" />}
-                    {milestone.status === 'in-progress' && <Clock className="w-4 h-4" />}
-                    {milestone.status === 'pending' && <AlertCircle className="w-4 h-4" />}
-                  </span>
-                </div>
-                <div className="milestone-progress">
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill" 
-                      style={{ width: `${milestone.progress}%` }}
-                    ></div>
-                  </div>
-                  <span className="progress-text">{milestone.progress}%</span>
-                </div>
-                <span className="milestone-due">{milestone.dueDate}</span>
+          <div className="project-details-grid">
+            <div className="detail-item">
+              <div className="detail-icon">
+                <Building2 className="w-5 h-5" />
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Team Summary */}
-        <div className="overview-card team-card">
-          <div className="card-header">
-            <h3 className="card-title">Team Overview</h3>
-            <span className="card-subtitle">{teamSummary.activeToday}/{teamSummary.totalMembers} active today</span>
-          </div>
-          <div className="team-stats">
-            <div className="team-metric">
-              <span className="team-value">{teamSummary.totalMembers}</span>
-              <span className="team-label"> Total Members</span>
+              <div className="detail-content">
+                <span className="detail-label">Industry: </span>
+                <span className="detail-value">{project.industry}</span>
+              </div>
             </div>
-            <div className="team-departments">
-              {teamSummary.departments.map((dept, index) => (
-                <div key={index} className="department-item">
-                  <div 
-                    className="department-indicator" 
-                    style={{ backgroundColor: dept.color }}
-                  ></div>
-                  <span className="department-name">{dept.name}</span>
-                  <span className="department-count">{dept.count}</span>
-                </div>
-              ))}
+            <div className="detail-item">
+              <div className="detail-icon">
+                <Users className="w-5 h-5" />
+              </div>
+              <div className="detail-content">
+                <span className="detail-label">Team Size: </span>
+                <span className="detail-value">{project.teamSize}</span>
+              </div>
+            </div>
+            <div className="detail-item">
+              <div className="detail-icon">
+                <Target className="w-5 h-5" />
+              </div>
+              <div className="detail-content">
+                <span className="detail-label">Primary Objective: </span>
+                <span className="detail-value">{project.objective}</span>
+              </div>
+            </div>
+            <div className="detail-item">
+              <div className="detail-icon">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div className="detail-content">
+                <span className="detail-label">Timeline: </span>
+                <span className="detail-value">{project.timeline}</span>
+              </div>
+            </div>
+            <div className="detail-item">
+              <div className="detail-icon">
+                <DollarSign className="w-5 h-5" />
+              </div>
+              <div className="detail-content">
+                <span className="detail-label">Budget Range: </span>
+                <span className="detail-value">{project.budgetRange}</span>
+              </div>
+            </div>
+            <div className="detail-item">
+              <div className="detail-icon">
+                <Code className="w-5 h-5" />
+              </div>
+              <div className="detail-content">
+                <span className="detail-label">Technical Level: </span>
+                <span className="detail-value">{project.technicalLevel}</span>
+              </div>
+            </div>
+            <div className="detail-item">
+              <div className="detail-icon">
+                <Heart className="w-5 h-5" />
+              </div>
+              <div className="detail-content">
+                <span className="detail-label">Need Co-founder: </span>
+                <span className="detail-value">{project.needCofounder ? 'Yes' : 'No'}</span>
+              </div>
+            </div>
+            <div className="detail-item">
+              <div className="detail-icon">
+                <Wrench className="w-5 h-5" />
+              </div>
+              <div className="detail-content">
+                <span className="detail-label">Preferred Tech Stack: </span>
+                <span className="detail-value">{project.techStack}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -329,44 +194,6 @@ const ProjectOverview = ({ project }) => {
                 </button>
               )
             })}
-          </div>
-        </div>
-
-        {/* Project Health */}
-        <div className="overview-card health-card">
-          <div className="card-header">
-            <h3 className="card-title">Project Health</h3>
-            <span className="card-subtitle">Overall assessment</span>
-          </div>
-          <div className="health-indicators">
-            <div className="health-item">
-              <span className="health-label">Financial</span>
-              <div className="health-bar">
-                <div className="health-fill excellent" style={{ width: '85%' }}></div>
-              </div>
-              <span className="health-score">85%</span>
-            </div>
-            <div className="health-item">
-              <span className="health-label">Development</span>
-              <div className="health-bar">
-                <div className="health-fill good" style={{ width: '78%' }}></div>
-              </div>
-              <span className="health-score">78%</span>
-            </div>
-            <div className="health-item">
-              <span className="health-label">Market</span>
-              <div className="health-bar">
-                <div className="health-fill warning" style={{ width: '65%' }}></div>
-              </div>
-              <span className="health-score">65%</span>
-            </div>
-            <div className="health-item">
-              <span className="health-label">Team</span>
-              <div className="health-bar">
-                <div className="health-fill excellent" style={{ width: '92%' }}></div>
-              </div>
-              <span className="health-score">92%</span>
-            </div>
           </div>
         </div>
       </div>

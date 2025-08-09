@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+// import { useNavigate } from 'react-router-dom'
 import { 
   CreditCard, 
   Download, 
@@ -9,6 +10,9 @@ import {
 } from 'lucide-react'
 
 const Billing = () => {
+  // Navigate to other pages
+  // const navigate = useNavigate()
+
   const [spendCapEnabled, setSpendCapEnabled] = useState(true)
   const [emailRecipient, setEmailRecipient] = useState('jamrin2409@gmail.com')
   const [additionalEmails, setAdditionalEmails] = useState('')
@@ -40,6 +44,11 @@ const Billing = () => {
     console.log('Saving billing info:', billingInfo)
   }
 
+  const handleChangePlan = () => {
+    console.log('Changing subscription plan button clicked')
+    // navigate('/pricing-checkout')
+  }
+
   return (
     <div>
         <div className="billing-header">
@@ -60,7 +69,7 @@ const Billing = () => {
               <div className="subscription-card">
                 <div className="subscription-header">
                   <span className="plan-name">Free Plan</span>
-                  <button className="change-plan-btn">
+                  <button className="change-plan-btn" onClick={handleChangePlan}>
                     Change subscription plan
                   </button>
                 </div>
@@ -81,53 +90,8 @@ const Billing = () => {
             </div>
           </div>
 
-          {/* Cost Control Section */}
-          <div className="billing-section">
-            <div className="section-left">
-              <h2 className="section-title">Cost Control</h2>
-              <p className="section-description">
-                Allow scaling beyond your plan's <span className="text-link">included quota</span>.
-              </p>
-              <div className="more-info">
-                <h3 className="info-title">More information</h3>
-                <a href="#" className="spend-cap-link">
-                  <span>Spend cap</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-            <div className="section-right">
-              <div className="cost-control-card">
-                <p className="cost-control-description">
-                  If you need to go beyond the included quota, simply switch off your spend cap to pay for additional usage.
-                </p>
-                
-                <div className="spend-cap-section">
-                  <div className="spend-cap-chart">
-                    <div className="chart-bars">
-                      {[...Array(6)].map((_, i) => (
-                        <div key={i} className="chart-bar" style={{ height: `${Math.random() * 60 + 20}%` }}></div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="spend-cap-info">
-                    <h3 className="spend-cap-title">Spend cap is enabled</h3>
-                    <p className="spend-cap-description">
-                      You won't be charged any extra for usage. However, your projects could 
-                      become unresponsive or enter read only mode if you exceed the included quota.
-                    </p>
-                    <button className="change-spend-cap-btn">
-                      Change spend cap
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Past Invoices Section */}
-          <div className="billing-section">
+          {/* <div className="billing-section">
             <div className="section-left">
               <h2 className="section-title">Past Invoices</h2>
               <p className="section-description">
@@ -167,10 +131,10 @@ const Billing = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Payment Methods Section */}
-          <div className="billing-section">
+          {/* <div className="billing-section">
             <div className="section-left">
               <h2 className="section-title">Payment Methods</h2>
               <p className="section-description">
@@ -189,10 +153,10 @@ const Billing = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Credit Balance Section */}
-          <div className="billing-section">
+          {/* <div className="billing-section">
             <div className="section-left">
               <h2 className="section-title">Credit Balance</h2>
               <p className="section-description">
@@ -211,10 +175,10 @@ const Billing = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Email Recipient Section */}
-          <div className="billing-section">
+          {/* <div className="billing-section">
             <div className="section-left">
               <h2 className="section-title">Email Recipient</h2>
               <p className="section-description">
@@ -257,10 +221,10 @@ const Billing = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Billing Address & Tax ID Section */}
-          <div className="billing-section">
+          {/* <div className="billing-section">
             <div className="section-left">
               <h2 className="section-title">Billing Address & Tax ID</h2>
               <p className="section-description">
@@ -367,7 +331,7 @@ const Billing = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
     </div>
   )

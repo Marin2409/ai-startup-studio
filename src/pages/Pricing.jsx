@@ -32,7 +32,7 @@ import { ANIMATIONS, TYPOGRAPHY, SPACING, COMPONENTS } from '../lib/constants'
  * Pricing Component
  * 
  * Complete pricing page featuring:
- * - Three-tier pricing structure (Starter, Professional, Enterprise)
+ * - Three-tier pricing structure (Starter, Builder, Enterprise)
  * - Annual/monthly billing toggle with savings
  * - Detailed feature comparison
  * - Key benefits showcase
@@ -77,29 +77,28 @@ const Pricing = () => {
           price: 10,
           description: "Refill all your tools when you run out",
           includes: [
-            "5 more AI business plans",
-            "10 more templates",
-            "5 more tech recommendations", 
-            "1 more feature prioritization"
+            "5 more images/icons",
+            "3 more roadmaps",
+            "50 more AI prompts",
+            "1 more pitch template"
           ]
         },
         individual: [
-          { service: "AI Business Plans", price: 4, quantity: "5 more plans" },
-          { service: "Template Access", price: 3, quantity: "10 more templates" },
-          { service: "Tech Recommendations", price: 2, quantity: "5 more recommendations" },
-          { service: "Feature Prioritization", price: 5, quantity: "1 more project" }
+          { service: "Images/Icons", price: 3, quantity: "5 more images" },
+          { service: "Roadmaps", price: 5, quantity: "1 more roadmap" },
+          { service: "AI Prompts", price: 2, quantity: "25 more prompts" },
+          { service: "Pitch Templates", price: 8, quantity: "1 more template" }
         ]
       },
       features: [
-        { name: "3 Active Projects", included: true, highlight: true },
-        { name: "AI Business Plan Generator", included: true, limit: "5 plans/month" },
-        { name: "Basic Template Library", included: true, limit: "10 templates" },
-        { name: "Project Roadmap Generator", included: true, limit: "Basic timelines" },
-        { name: "Tech Stack Recommender", included: true, limit: "3 recommendations" },
-        { name: "Feature Prioritization Tool", included: true, limit: "1 project" },
+        { name: "1 Active Project", included: true, highlight: true },
+        { name: "Basic AI Business Plan Documents", included: true, limit: "6 documents" },
         { name: "PDF Exports", included: true },
-        { name: "Community Support", included: true },
-        { name: "💡 Pay-as-you-go top-ups available", included: true, highlight: true, payAsYouGo: true },
+        { name: "Image Generator", included: true, limit: "1 image per project" },
+        { name: "Project Roadmap Generator", included: true, limit: "Incomplete map" },
+        { name: "Tech Stack Builder", included: true, limit: "Basic (no implementation)" },
+        { name: "No AI Assistant", included: true },
+        { name: "💡 Pay-up credits available", included: true, highlight: true, payAsYouGo: true },
         { name: "Cloud Terminal Access", included: false },
         { name: "Advanced AI Features", included: false },
         { name: "Priority Support", included: false },
@@ -109,8 +108,8 @@ const Pricing = () => {
     {
       name: "Builder",
       subtitle: "Complete toolkit for serious entrepreneurs",
-      price: 29,
-      annualPrice: 24,
+      price: 5,
+      annualPrice: 4,
       badge: "Most Popular",
       badgeColor: "bg-blue-100 text-blue-700",
       icon: <Brain className="w-6 h-6" />,
@@ -118,46 +117,66 @@ const Pricing = () => {
       buttonText: "Start Building",
       buttonVariant: "primary",
       popular: true,
+      payAsYouGo: {
+        available: true,
+        bundle: {
+          name: "Builder Pack",
+          price: 15,
+          description: "Extend your Builder plan capabilities",
+          includes: [
+            "10 more images/icons",
+            "3 more roadmaps",
+            "100 more AI prompts",
+            "2 more pitch templates"
+          ]
+        },
+        individual: [
+          { service: "Images/Icons", price: 3, quantity: "5 more images" },
+          { service: "Roadmaps", price: 5, quantity: "1 more roadmap" },
+          { service: "AI Prompts", price: 2, quantity: "50 more prompts" },
+          { service: "Pitch Templates", price: 8, quantity: "1 more template" }
+        ]
+      },
       features: [
-        { name: "Unlimited Projects", included: true, highlight: true },
-        { name: "AI Business Plan Generator", included: true, limit: "Unlimited" },
-        { name: "Complete Template Library", included: true, limit: "25+ templates" },
-        { name: "Advanced Project Roadmaps", included: true, limit: "12-18 month timelines" },
-        { name: "Smart Tech Stack Recommender", included: true, limit: "Budget-aware suggestions" },
-        { name: "MVP Feature Prioritization", included: true, limit: "RICE & MoSCoW scoring" },
-        { name: "Cloud-Based Terminal", included: true, limit: "Full development environment" },
-        { name: "Multi-format Exports", included: true, limit: "PDF, Word, PPT" },
-        { name: "Email Support", included: true },
-        { name: "Version Control", included: true },
-        { name: "Basic Analytics", included: true },
-        { name: "API Access", included: false }
+        { name: "3 Active Projects", included: true, highlight: true },
+        { name: "Standard AI Business Plan", included: true, limit: "10 documents" },
+        { name: "PDF & PNG Exports", included: true },
+        { name: "Image/Icon Generator", included: true, limit: "5 images/icons per project" },
+        { name: "Project Roadmap Generator", included: true, limit: "Complete map" },
+        { name: "Pitch Presentation Templates", included: true, limit: "1 template per project" },
+        { name: "Limited AI Assistant", included: true, limit: "100 prompts/month, no memory" },
+        { name: "Database Creator", included: true, limit: "Partial tables" },
+        { name: "Tech Stack Builder", included: true, limit: "Standard (compatibility only)" },
+        { name: "💡 Pay-up credits available", included: true, highlight: true, payAsYouGo: true },
+        { name: "API Access", included: false },
+        { name: "White-label Options", included: false }
       ]
     },
     {
-      name: "Pro",
+      name: "Enterprise",
       subtitle: "Advanced features for teams and agencies",
-      price: 79,
-      annualPrice: 63,
+      price: 15,
+      annualPrice: 12,
       badge: "Full Power",
       badgeColor: "bg-purple-100 text-purple-700",
       icon: <Crown className="w-6 h-6" />,
-      description: "Professional-grade platform with team collaboration and advanced AI",
-      buttonText: "Go Pro",
+      description: "Professional-grade platform with unlimited AI and advanced features",
+      buttonText: "Go Enterprise",
       buttonVariant: "primary",
       popular: false,
       features: [
-        { name: "Everything in Builder", included: true, highlight: true },
-        { name: "Team Collaboration", included: true, limit: "Up to 10 members" },
-        { name: "Advanced AI Models", included: true, limit: "GPT-4 & Claude access" },
-        { name: "Custom Templates", included: true, limit: "Create & share templates" },
-        { name: "Advanced Analytics", included: true, limit: "Project insights & metrics" },
-        { name: "API Access", included: true, limit: "Full API integration" },
-        { name: "White-label Options", included: true, limit: "Custom branding" },
-        { name: "Priority Support", included: true, limit: "24/7 chat support" },
-        { name: "Advanced Integrations", included: true, limit: "Slack, GitHub, etc." },
-        { name: "Custom Workflows", included: true },
-        { name: "Data Export", included: true },
-        { name: "Advanced Security", included: true }
+        { name: "Unlimited Projects", included: true, highlight: true },
+        { name: "Full AI Business Plan", included: true, limit: "14 documents" },
+        { name: "PDF, PNG & SVG Exports", included: true },
+        { name: "Image/Icon Generator", included: true, limit: "10 images/icons per project" },
+        { name: "Project Roadmap Generator", included: true, limit: "Multiple complete maps" },
+        { name: "Pitch Presentation Templates", included: true, limit: "3 templates per project" },
+        { name: "Full AI Assistant", included: true, limit: "Unlimited prompts with memory" },
+        { name: "Database Creator", included: true, limit: "Full tables + SQL editor + mock data" },
+        { name: "Tech Stack Builder", included: true, limit: "Full (implementation + AI assistant)" },
+        { name: "Priority Support", included: true },
+        { name: "Advanced Integrations", included: true },
+        { name: "Custom Workflows", included: true }
       ]
     }
   ]
@@ -170,17 +189,17 @@ const Pricing = () => {
     {
       icon: <Brain className="w-8 h-8" />,
       title: "AI Business Plan Generator",
-      description: "Generate 15-20 page professional business plans with market analysis and financial projections in minutes"
+      description: "Generate comprehensive business plans with market analysis, financial projections, and strategic planning in minutes"
     },
     {
       icon: <Target className="w-8 h-8" />,
       title: "Smart Development Roadmaps",
-      description: "12-18 month project timelines with sprint planning and milestone tracking"
+      description: "Complete project timelines with milestone tracking, sprint planning, and AI-powered feature prioritization"
     },
     {
       icon: <Zap className="w-8 h-8" />,
-      title: "Cloud Development Environment",
-      description: "Browser-based terminal with one-click project scaffolding for popular frameworks"
+      title: "AI-Powered Development Tools",
+      description: "Intelligent tech stack recommendations, database design, and image generation with AI assistance"
     }
   ]
 
@@ -372,7 +391,7 @@ const Pricing = () => {
                   </div>
 
                   {/* ==========================================
-                      PAY-AS-YOU-GO SECTION (STARTER ONLY)
+                      PAY-AS-YOU-GO SECTION
                       ========================================== */}
                   
                   {plan.payAsYouGo && (
@@ -565,21 +584,21 @@ const Pricing = () => {
             </p>
             
             <button 
-          className={`
-            group bg-white text-blue-600 
-            h-14 px-8 ${TYPOGRAPHY.sizes.body.small} ${TYPOGRAPHY.weights.semibold} 
-            ${ANIMATIONS.transition} hover:bg-blue-50 
-            flex items-center justify-center rounded-full 
-            shadow-lg hover:scale-105 transform cursor-pointer mx-auto
-          `}
-          onClick={handleGetStarted}
-          >
-            <Rocket className={`w-5 h-5 mr-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
-            Start Building Your Startup
-            <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
-        </button>
+              className={`
+                group bg-white text-blue-600 
+                h-14 px-8 ${TYPOGRAPHY.sizes.body.small} ${TYPOGRAPHY.weights.semibold} 
+                ${ANIMATIONS.transition} hover:bg-blue-50 
+                flex items-center justify-center rounded-full 
+                shadow-lg hover:scale-105 transform cursor-pointer mx-auto
+              `}
+              onClick={handleGetStarted}
+            >
+              <Rocket className={`w-5 h-5 mr-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
+              Start Building Your Startup
+              <ArrowRight className={`w-4 h-4 ml-2 group-hover:translate-x-1 ${ANIMATIONS.transition} text-blue-600`} />
+            </button>
           </motion.div>
-    </div>
+        </div>
       </section>
     </PageBackground>
   )

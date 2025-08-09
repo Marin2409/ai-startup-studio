@@ -11,7 +11,7 @@ import { TYPOGRAPHY, ANIMATIONS } from '../lib/constants'
 // API Base URL
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 
-const Onboarding = () => {
+const PricingOnboarding = () => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -23,7 +23,6 @@ const Onboarding = () => {
   const [errors, setErrors] = useState({})
 
   // Only plans array needed for pricing selection
-
   const plans = [
     {
       id: 'free',
@@ -32,38 +31,51 @@ const Onboarding = () => {
       description: 'Perfect for getting started',
       features: [
         '1 Active Project',
-        'Basic AI Templates',
-        'Community Support',
-        'Standard Analytics'
+        'Basic AI Business Plan Documents (6 docs)',
+        'PDF Exports',
+        'Image Generator (1 per project)',
+        'Project Roadmap (Incomplete)',
+        'Tech Stack Builder (Basic)',
+        'No AI Assistant',
+        '💡 Pay-up credits available'
       ]
     },
     {
       id: 'pro',
-      name: 'Professional',
-      price: 29,
-      description: 'For growing startups',
+      name: 'Builder',
+      price: 5,
+      description: 'For serious entrepreneurs',
       features: [
-        '5 Active Projects',
-        'Advanced AI Tools',
-        'Priority Support',
-        'Advanced Analytics',
-        'Team Collaboration',
-        'Custom Integrations'
+        '3 Active Projects',
+        'Standard AI Business Plan (10 docs)',
+        'PDF & PNG Exports',
+        'Image/Icon Generator (5 per project)',
+        'Project Roadmap (Complete)',
+        'Pitch Templates (1 per project)',
+        'Limited AI Assistant (100 prompts/month)',
+        'Database Creator (Partial tables)',
+        'Tech Stack Builder (Standard)',
+        '💡 Pay-up credits available'
       ],
       popular: true
     },
     {
       id: 'enterprise',
       name: 'Enterprise',
-      price: 99,
+      price: 15,
       description: 'For established companies',
       features: [
         'Unlimited Projects',
-        'Custom AI Models',
-        'Dedicated Support',
-        'White-label Solution',
-        'Advanced Security',
-        'API Access'
+        'Full AI Business Plan (14 docs)',
+        'PDF, PNG & SVG Exports',
+        'Image/Icon Generator (10 per project)',
+        'Project Roadmap (Multiple complete)',
+        'Pitch Templates (3 per project)',
+        'Full AI Assistant (Unlimited with memory)',
+        'Database Creator (Full + SQL editor)',
+        'Tech Stack Builder (Full implementation)',
+        'Priority Support',
+        'Advanced Integrations'
       ]
     }
   ]
@@ -110,7 +122,7 @@ const Onboarding = () => {
         onboardingCompleted: true
       }
       
-      const response = await fetch(`${API_BASE_URL}/api/user/complete-onboarding`, {
+      const response = await fetch(`${API_BASE_URL}/api/user/pricing-onboarding`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,16 +138,17 @@ const Onboarding = () => {
         localStorage.setItem('user', JSON.stringify({
           ...userData,
           ...data.user,
+          billing: data.billing,
           onboardingCompleted: true
         }))
         
         navigate('/dashboard')
       } else {
-        setErrors({ general: data.message || 'Failed to complete onboarding' })
+        setErrors({ general: data.message || 'Failed to complete pricing onboarding' })
       }
       
     } catch (error) {
-      console.error('Onboarding error:', error)
+      console.error('Pricing onboarding error:', error)
       setErrors({ general: 'Connection error. Please try again.' })
     } finally {
       setIsLoading(false)
@@ -143,7 +156,6 @@ const Onboarding = () => {
   }
 
   // No renderStepContent needed - direct pricing UI
-
   return (
     <PageBackground variant="light" className="min-h-screen py-12">
       <div className="max-w-4xl mx-auto px-4">
@@ -210,22 +222,22 @@ const Onboarding = () => {
                 <p className={`${TYPOGRAPHY.sizes.body.base} text-gray-600 mb-4`}>
                   {plan.description}
                 </p>
-                <div className="mb-4">
-                  <div className={`${TYPOGRAPHY.sizes.pageTitle.mobile} ${TYPOGRAPHY.weights.bold} text-gray-900 flex items-baseline justify-center`}>
-                    <span>$</span>
-                    <span className="text-5xl">
-                      {formData.billingCycle === 'annual' ? Math.round(plan.price * 0.8) : plan.price}
-                    </span>
-                    <span className={`${TYPOGRAPHY.sizes.body.base} text-gray-600 ml-2`}>
-                      /month
-                    </span>
+                                  <div className="mb-4">
+                    <div className={`${TYPOGRAPHY.sizes.pageTitle.mobile} ${TYPOGRAPHY.weights.bold} text-gray-900 flex items-baseline justify-center`}>
+                      <span>$</span>
+                      <span className="text-5xl">
+                        {formData.billingCycle === 'annual' ? Math.round(plan.price * 0.8) : plan.price}
+                      </span>
+                      <span className={`${TYPOGRAPHY.sizes.body.base} text-gray-600 ml-2`}>
+                        {plan.price === 0 ? '' : '/month'}
+                      </span>
+                    </div>
+                    {formData.billingCycle === 'annual' && plan.price > 0 && (
+                      <p className={`${TYPOGRAPHY.sizes.caption} text-green-600 mt-1`}>
+                        Save ${Math.round(plan.price * 12 * 0.2)} per year
+                      </p>
+                    )}
                   </div>
-                  {formData.billingCycle === 'annual' && plan.price > 0 && (
-                    <p className={`${TYPOGRAPHY.sizes.caption} text-green-600 mt-1`}>
-                      Save ${Math.round(plan.price * 12 * 0.2)} per year
-                    </p>
-                  )}
-                </div>
               </div>
               
               {/* Features List */}
@@ -304,4 +316,4 @@ const Onboarding = () => {
   )
 }
 
-export default Onboarding
+export default PricingOnboarding

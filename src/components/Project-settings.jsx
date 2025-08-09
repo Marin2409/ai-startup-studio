@@ -1,64 +1,204 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { 
   Copy, 
   AlertTriangle, 
   Trash2, 
-  RefreshCw, 
-  Pause, 
-  Globe, 
-  Users, 
-  Crown,
-  ArrowUpRight,
-  Database,
-  Download,
-  X
+  X,
+  Save,
+  ArrowLeft
 } from 'lucide-react'
 
-const ProjectSettings = ({ project }) => {
-  const [projectName, setProjectName] = useState(project?.name || 'ai-startup-studio')
-  const [projectDescription, setProjectDescription] = useState(project?.description || 'AI-powered startup development platform with automated tools and resources.')
-  const [isPublic, setIsPublic] = useState(false)
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+// API Base URL
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
+
+const ProjectSettings = ({ project: initialProject }) => {
+  const { projectId } = useParams()
+  const navigate = useNavigate()
+  
+  // Project data state
+  const [project, setProject] = useState(initialProject || null)
+  const [projectName, setProjectName] = useState('')
+  const [projectDescription, setProjectDescription] = useState('')
+  
+  // UI state
+  const [isLoading, setIsLoading] = useState(!initialProject)
+  const [error, setError] = useState(null)
+  const [isSaving, setIsSaving] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteConfirmation, setDeleteConfirmation] = useState('')
+  const [saveMessage, setSaveMessage] = useState('')
 
-  const projectId = 'pqcotbczcpbgqdymwtxc'
+  // Fetch project data if not provided via props
+  useEffect(() => {
+    const fetchProject = async () => {
+      if (initialProject) {
+        setProject(initialProject)
+        setProjectName(initialProject.name)
+        setProjectDescription(initialProject.description)
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        setIsLoading(true)
+        setError(null)
+
+        const token = localStorage.getItem('token')
+        if (!token) {
+          setError('Authentication required')
+          return
+        }
+
+        console.log('Fetching project settings for ID:', projectId)
+
+        const response = await fetch(`${API_BASE_URL}/api/user/projects/${projectId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+
+        const data = await response.json()
+
+        if (response.ok && data.success) {
+          console.log('Project fetched for settings:', data.project.name)
+          setProject(data.project)
+          setProjectName(data.project.name)
+          setProjectDescription(data.project.description)
+        } else {
+          console.error('Failed to fetch project:', data.message)
+          setError(data.message || 'Failed to fetch project')
+        }
+      } catch (error) {
+        console.error('Error fetching project:', error)
+        setError('Connection error. Please try again.')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    if (projectId) {
+      fetchProject()
+    }
+  }, [projectId, initialProject])
 
   const copyProjectId = () => {
-    navigator.clipboard.writeText(projectId)
-    // In real app, show toast notification
+    if (project?.id) {
+      navigator.clipboard.writeText(project.id)
+      // You could add a toast notification here
+      console.log('Project ID copied to clipboard')
+    }
   }
 
-  const handleSave = () => {
-    // In real app, API call to save project settings
-    console.log('Saving project settings...')
-  }
+  const handleSave = async () => {
+    if (!project || !projectName.trim() || !projectDescription.trim()) {
+      setError('Project name and description are required')
+      return
+    }
 
-  const handleRestart = () => {
-    // In real app, API call to restart project
-    console.log('Restarting project...')
-  }
+    try {
+      setIsSaving(true)
+      setError(null)
+      setSaveMessage('')
 
-  const handlePause = () => {
-    // In real app, API call to pause project
-    console.log('Pausing project...')
-  }
+      const token = localStorage.getItem('token')
+      if (!token) {
+        setError('Authentication required')
+        return
+      }
 
-  const handleTransfer = () => {
-    // In real app, open transfer modal
-    console.log('Transferring project...')
+      console.log('Saving project settings...')
+
+      const response = await fetch(`${API_BASE_URL}/api/user/projects/${project.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          project_name: projectName.trim(),
+          project_description: projectDescription.trim()
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        console.log('Project settings saved successfully')
+        setSaveMessage('Settings saved successfully!')
+        // Update local project state
+        setProject(prev => ({
+          ...prev,
+          name: data.project.name,
+          description: data.project.description
+        }))
+        
+        // Clear success message after 3 seconds
+        setTimeout(() => setSaveMessage(''), 3000)
+      } else {
+        console.error('Failed to save project:', data.message)
+        setError(data.message || 'Failed to save project settings')
+      }
+    } catch (error) {
+      console.error('Error saving project:', error)
+      setError('Connection error. Please try again.')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const handleDelete = () => {
     setShowDeleteModal(true)
   }
 
-  const handleConfirmDelete = () => {
-    if (deleteConfirmation === projectName) {
-      // In real app, API call to delete project
+  const handleConfirmDelete = async () => {
+    if (deleteConfirmation !== projectName) {
+      return
+    }
+
+    try {
+      setIsDeleting(true)
+      setError(null)
+
+      const token = localStorage.getItem('token')
+      if (!token) {
+        setError('Authentication required')
+        return
+      }
+
       console.log('Deleting project...')
-      setShowDeleteModal(false)
-      setDeleteConfirmation('')
+
+      const response = await fetch(`${API_BASE_URL}/api/user/projects/${project.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        console.log('Project deleted successfully')
+        // Navigate back to dashboard
+        navigate('/dashboard', { 
+          state: { 
+            message: data.message,
+            projectDeleted: true 
+          } 
+        })
+      } else {
+        console.error('Failed to delete project:', data.message)
+        setError(data.message || 'Failed to delete project')
+        setIsDeleting(false)
+      }
+    } catch (error) {
+      console.error('Error deleting project:', error)
+      setError('Connection error. Please try again.')
+      setIsDeleting(false)
     }
   }
 
@@ -67,22 +207,42 @@ const ProjectSettings = ({ project }) => {
     setDeleteConfirmation('')
   }
 
-  const handleUpgradeToPro = () => {
-    // In real app, navigate to billing/upgrade
-    console.log('Upgrading to Pro...')
-  }
-
-  const handleExportData = () => {
-    // In real app, trigger data export
-    console.log('Exporting project data...')
-  }
-
-  const handleViewUsage = () => {
-    // In real app, navigate to usage analytics
-    console.log('Viewing project usage...')
-  }
-
   const isDeleteButtonEnabled = deleteConfirmation === projectName
+
+  if (isLoading) {
+    return (
+      <div className="settings-loading">
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <p>Loading project settings...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error && !project) {
+    return (
+      <div className="settings-error">
+        <div className="error-message">
+          <h3>Error Loading Project Settings</h3>
+          <p>{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="retry-btn"
+          >
+            Try Again
+          </button>
+          <button 
+            onClick={() => navigate('/dashboard')} 
+            className="back-btn"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -90,6 +250,20 @@ const ProjectSettings = ({ project }) => {
         <h1 className="settings-title">Project Settings</h1>
         <p className="settings-subtitle">Manage your project configuration, access, and danger zone actions</p>
       </div>
+
+      {error && (
+        <div className="error-banner">
+          <AlertTriangle className="w-5 h-5" />
+          <span>{error}</span>
+        </div>
+      )}
+
+      {saveMessage && (
+        <div className="success-banner">
+          <Save className="w-5 h-5" />
+          <span>{saveMessage}</span>
+        </div>
+      )}
 
       <div className="settings-content">
         {/* General Settings */}
@@ -109,6 +283,7 @@ const ProjectSettings = ({ project }) => {
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                     placeholder="Enter project name"
+                    maxLength={100}
                   />
                 </div>
                 <div className="form-group">
@@ -119,7 +294,9 @@ const ProjectSettings = ({ project }) => {
                     onChange={(e) => setProjectDescription(e.target.value)}
                     placeholder="Enter project description"
                     rows="3"
+                    maxLength={500}
                   />
+                  <span className="char-count">{projectDescription.length}/500</span>
                 </div>
                 <div className="form-group">
                   <label className="form-label">Project ID</label>
@@ -127,7 +304,7 @@ const ProjectSettings = ({ project }) => {
                     <input
                       type="text"
                       className="form-input readonly"
-                      value={projectId}
+                      value={project?.id || ''}
                       readOnly
                     />
                     <button className="copy-btn-settings" onClick={copyProjectId}>
@@ -137,185 +314,28 @@ const ProjectSettings = ({ project }) => {
                   </div>
                 </div>
                 <div className="form-actions">
-                  <button className="btn-cancel">Cancel</button>
-                  <button className="btn-save" onClick={handleSave}>Save Changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Project Visibility */}
-        <div className="settings-section">
-          <div className="section-content">
-            <div className="section-left">
-              <h3 className="section-title">Project Visibility</h3>
-              <p className="section-description">Control who can access your project</p>
-            </div>
-            <div className="section-right">
-              <div className="settings-card">
-                <div className="visibility-option">
-                  <div className="option-info">
-                    <div className="option-icon">
-                      <Users className="w-5 h-5" />
-                    </div>
-                    <div className="option-details">
-                      <span className="option-title">Private Project</span>
-                      <span className="option-description">Only team members can access</span>
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="visibility"
-                    checked={!isPublic}
-                    onChange={() => setIsPublic(false)}
-                    className="radio-input"
-                  />
-                </div>
-                <div className="visibility-option">
-                  <div className="option-info">
-                    <div className="option-icon">
-                      <Globe className="w-5 h-5" />
-                    </div>
-                    <div className="option-details">
-                      <span className="option-title">Public Project</span>
-                      <span className="option-description">Anyone with the link can view</span>
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="visibility"
-                    checked={isPublic}
-                    onChange={() => setIsPublic(true)}
-                    className="radio-input"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Custom Domains */}
-        <div className="settings-section">
-          <div className="section-content">
-            <div className="section-left">
-              <h3 className="section-title">Custom Domains</h3>
-              <p className="section-description">Present a branded experience to your users</p>
-            </div>
-            <div className="section-right">
-              <div className="settings-card pro-feature">
-                <div className="pro-banner">
-                  <Crown className="w-5 h-5" />
-                  <div className="pro-info">
-                    <span className="pro-title">Custom domains are a Pro Plan add-on</span>
-                    <span className="pro-description">Paid Plans come with free vanity subdomains or Custom Domains for an additional $10/month per domain.</span>
-                  </div>
-                  <button className="btn-upgrade" onClick={handleUpgradeToPro}>
-                    Upgrade to Pro
+                  <button 
+                    className="btn-cancel"
+                    onClick={() => navigate(`/project/${project?.id}`)}
+                  >
+                    Cancel
                   </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Project Actions */}
-        <div className="settings-section">
-          <div className="section-content">
-            <div className="section-left">
-              <h3 className="section-title">Project Actions</h3>
-              <p className="section-description">Manage project state and operations</p>
-            </div>
-            <div className="section-right">
-              <div className="settings-card">
-                <div className="action-item">
-                  <div className="action-info">
-                    <RefreshCw className="w-5 h-5 action-icon" />
-                    <div className="action-details">
-                      <span className="action-title">Restart Project</span>
-                      <span className="action-description">Your project will not be available for a few minutes.</span>
-                    </div>
-                  </div>
-                  <button className="btn-action" onClick={handleRestart}>
-                    Restart Project
-                  </button>
-                </div>
-                <div className="action-item">
-                  <div className="action-info">
-                    <Pause className="w-5 h-5 action-icon" />
-                    <div className="action-details">
-                      <span className="action-title">Pause Project</span>
-                      <span className="action-description">Your project will not be accessible while it is paused.</span>
-                    </div>
-                  </div>
-                  <button className="btn-action" onClick={handlePause}>
-                    Pause Project
-                  </button>
-                </div>
-                <div className="action-item">
-                  <div className="action-info">
-                    <Database className="w-5 h-5 action-icon" />
-                    <div className="action-details">
-                      <span className="action-title">Export Project Data</span>
-                      <span className="action-description">Download a backup of your project data and configurations.</span>
-                    </div>
-                  </div>
-                  <button className="btn-action" onClick={handleExportData}>
-                    <Download className="w-4 h-4" />
-                    Export Data
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Project Usage */}
-        <div className="settings-section">
-          <div className="section-content">
-            <div className="section-left">
-              <h3 className="section-title">Project Usage</h3>
-              <p className="section-description">Monitor resource consumption and analytics</p>
-            </div>
-            <div className="section-right">
-              <div className="settings-card">
-                <div className="usage-notice">
-                  <div className="usage-info">
-                    <Database className="w-5 h-5" />
-                    <div className="usage-details">
-                      <span className="usage-title">Project usage statistics have been moved</span>
-                      <span className="usage-description">You may view your project's usage under your organization's settings</span>
-                    </div>
-                  </div>
-                  <button className="btn-action" onClick={handleViewUsage}>
-                    View Project Usage
-                    <ArrowUpRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Transfer Project */}
-        <div className="settings-section">
-          <div className="section-content">
-            <div className="section-left">
-              <h3 className="section-title">Transfer Project</h3>
-              <p className="section-description">Transfer your project to a different organization</p>
-            </div>
-            <div className="section-right">
-              <div className="settings-card">
-                <div className="transfer-info">
-                  <div className="transfer-details">
-                    <ArrowUpRight className="w-5 h-5" />
-                    <div className="transfer-content">
-                      <span className="transfer-title">Transfer project to another organization</span>
-                      <span className="transfer-description">To transfer projects, the owner must be a member of both the source and target organizations.</span>
-                    </div>
-                  </div>
-                  <button className="btn-action" onClick={handleTransfer}>
-                    Transfer Project
+                  <button 
+                    className="btn-save" 
+                    onClick={handleSave}
+                    disabled={isSaving || !projectName.trim() || !projectDescription.trim()}
+                  >
+                    {isSaving ? (
+                      <>
+                        <div className="spinner-small"></div>
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4" />
+                        Save Changes
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -335,13 +355,14 @@ const ProjectSettings = ({ project }) => {
                 <div className="danger-warning">
                   <AlertTriangle className="w-5 h-5" />
                   <div className="danger-info">
-                    <span className="danger-title">Deleting this project will also remove your database.</span>
-                    <span className="danger-description">Make sure you have made a backup if you want to keep your data.</span>
+                    <span className="danger-title">Deleting this project will remove all project data.</span>
+                    <span className="danger-description">This action cannot be undone. Make sure you have backed up any important data.</span>
                   </div>
                 </div>
                 <button 
                   className="btn-danger"
                   onClick={handleDelete}
+                  disabled={isDeleting}
                 >
                   <Trash2 className="w-4 h-4" />
                   Delete Project
@@ -374,23 +395,30 @@ const ProjectSettings = ({ project }) => {
             
             <div className="delete-modal-form">
               <label className="delete-modal-label">
-                Type {projectName} to confirm.
+                Type <strong>{projectName}</strong> to confirm.
               </label>
               <input
                 type="text"
                 className="delete-modal-input"
                 value={deleteConfirmation}
                 onChange={(e) => setDeleteConfirmation(e.target.value)}
-                placeholder="Type the project name in here"
+                placeholder="Type the project name here"
               />
             </div>
             
             <button 
               className={`delete-modal-button ${isDeleteButtonEnabled ? 'enabled' : 'disabled'}`}
               onClick={handleConfirmDelete}
-              disabled={!isDeleteButtonEnabled}
+              disabled={!isDeleteButtonEnabled || isDeleting}
             >
-              I understand, delete this project
+              {isDeleting ? (
+                <>
+                  <div className="spinner-small"></div>
+                  Deleting...
+                </>
+              ) : (
+                'I understand, delete this project'
+              )}
             </button>
           </div>
         </div>

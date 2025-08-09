@@ -130,11 +130,11 @@ const Login = () => {
         
         console.log('Success:', data.message)
 
-        // Redirect to dashboard for existing users, onboarding for new users
+        // Redirect to dashboard for existing users, pricing checkout for new users
         if (isLogin) {
           navigate('/dashboard')
         } else {
-          navigate('/onboarding')
+          navigate('/pricing-onboarding')
         }
       } else {
         // Handle backend error messages

@@ -5,8 +5,6 @@ import {
   Puzzle, 
   BarChart3, 
   CreditCard, 
-  Brain,
-  Sparkles
 } from 'lucide-react'
 import { assets } from '../assets/assets'
 
@@ -112,31 +110,6 @@ const Sidebar = ({ activePage, setActivePage, isModalOpen = false }) => {
           })}
         </ul>
       </nav>
-
-      {/* AI Assistant Section */}
-      <div className="sidebar-footer">
-        <button 
-          className="sidebar-ai-button"
-          title={!isHovered ? 'AI Assistant' : ''}
-          style={{
-            transitionDelay: showText ? '120ms' : '0ms'
-          }}
-          onClick={() => setActivePage('AIassistant')}
-        >
-          <div className="sidebar-ai-icon">
-            <Brain className="w-5 h-5" />
-            <Sparkles className="w-3 h-3 sidebar-ai-sparkle" />
-          </div>
-          <span 
-            className={`sidebar-ai-text ${showText ? 'visible' : 'hidden'}`}
-            style={{
-              transitionDelay: showText ? '120ms' : '0ms'
-            }}
-          >
-            AI Assistant
-          </span>
-        </button>
-      </div>
     </div>
   )
 }

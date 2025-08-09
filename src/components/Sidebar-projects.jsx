@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   CheckSquare, 
   Users, 
-  BarChart3, 
   Map,
   Settings,
   Sparkles,
@@ -12,10 +11,11 @@ import {
   HardDrive,
   Package,
   Calendar,
+  DollarSign,
 } from 'lucide-react'
 import { assets } from '../assets/assets'
 
-const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => {
+const SidebarProjects = ({ activePage, setActivePage }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [showText, setShowText] = useState(false)
   const navigate = useNavigate()
@@ -50,13 +50,8 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
       items: [
         {
           id: 'Tasks',
-          label: 'Tasks & Milestones',
+          label: 'Tasks',
           icon: CheckSquare,
-        },
-        {
-          id: 'Roadmap',
-          label: 'Roadmap',
-          icon: Map,
         },
         {
           id: 'Calendar',
@@ -68,6 +63,16 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
           label: 'Tech Stacks',
           icon: Package,
         },
+        {
+          id: 'Team',
+          label: 'Team',
+          icon: Users,
+        },
+        {
+          id: 'Financials',
+          label: 'Financials',
+          icon: DollarSign,
+        },
       ]
     },
     {
@@ -75,19 +80,14 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
       title: 'Data and Storage',
       items: [
         {
-          id: 'Analytics',
-          label: 'Analytics',
-          icon: BarChart3,
-        },
-        {
           id: 'Assets',
           label: 'Assets',
-          icon: Database,
+          icon: HardDrive,
         },
         {
-          id: 'Storage',
-          label: 'Storage',
-          icon: HardDrive,
+          id: 'Database',
+          label: 'Database',
+          icon: Database,
         },
       ]
     },
@@ -99,11 +99,6 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
           id: 'Settings',
           label: 'Settings',
           icon: Settings,
-        },
-        {
-          id: 'Team',
-          label: 'Team',
-          icon: Users,
         },
       ]
     },
@@ -161,7 +156,7 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
 
   return (
     <div 
-      className={`sidebar ${isHovered ? 'expanded' : 'collapsed'} ${isModalOpen ? 'sidebar-blurred' : ''}`}
+      className={`sidebar ${isHovered ? 'expanded' : 'collapsed'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -198,12 +193,15 @@ const SidebarProjects = ({ activePage, setActivePage, isModalOpen = false }) => 
 
       {/* AI Assistant Footer */}
       <div className="sidebar-footer">
-        <button className="sidebar-ai-button">
-          <div className="sidebar-ai-icon">
+        <button 
+          className="sidebar-upgrade-button"
+          onClick={() => setActivePage('AIAssistant')}
+        >
+          <div className="sidebar-upgrade-icon">
             <Map className="w-5 h-5" />
-            <Sparkles className="w-3 h-3 sidebar-ai-sparkle" />
+            <Sparkles className="w-3 h-3 sidebar-upgrade-sparkle" />
           </div>
-          <span className={`sidebar-ai-text ${showText ? 'visible' : 'hidden'}`}>
+          <span className={`sidebar-upgrade-text ${showText ? 'visible' : 'hidden'}`}>
             AI Assistant
           </span>
         </button>

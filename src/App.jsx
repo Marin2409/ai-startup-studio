@@ -13,7 +13,8 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import NavbarDashboard from './components/Navbar-dashboard'
-import Onboarding from './components/Onboarding'
+import PricingOnboarding from './components/Pricing-onboarding'
+import PricingCheckout from './components/Pricing-checkout'
 
 // ----------------------------------
 // Pages                     
@@ -28,6 +29,7 @@ import Dashboard from './pages/Dashboard'
 import Project from './pages/Project'
 import AccountPreferences from './components/AccountPreferences'
 import HelpSupport from './components/Help&Support'
+import CreateProject from './components/Create-project'
 
 const App = () => {
 
@@ -37,11 +39,13 @@ const App = () => {
   const isProjectPath = location.pathname.startsWith("/project");
   const isUserProfilePath = location.pathname === "/account-preferences";
   const isHelpSupportPath = location.pathname === "/help-support";
-  const isOnboardingPath = location.pathname === "/onboarding";
+  const isPricingOnboardingPath = location.pathname === "/pricing-onboarding";
+  const isPricingCheckoutPath = location.pathname === "/pricing-checkout";
+  const isCreateProjectPath = location.pathname === "/create-project";
 
   // Show navbar on all pages except login, dashboard, and project pages
-  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isOnboardingPath;
-  const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath;
+  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isPricingOnboardingPath && !isCreateProjectPath && !isPricingCheckoutPath;
+  const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isPricingOnboardingPath && !isCreateProjectPath && !isPricingCheckoutPath;
 
   return (
     <div>
@@ -91,11 +95,27 @@ const App = () => {
             </div>
           } />
 
-          {/* Onboarding */}
-          <Route path="/onboarding" element={
+          {/* Pricing Onboarding */}
+          <Route path="/pricing-onboarding" element={
             <div className="project-layout">
               <NavbarDashboard />
-              <Onboarding />
+              <PricingOnboarding />
+            </div>
+          } />
+
+          {/* Create Project */}
+          <Route path="/create-project" element={
+            <div className="project-layout">
+              <NavbarDashboard />
+              <CreateProject />
+            </div>
+          } />
+
+          {/* Pricing Checkout */}
+          <Route path="/pricing-checkout" element={
+            <div className="project-layout">
+              <NavbarDashboard />
+              <PricingCheckout />
             </div>
           } />
 

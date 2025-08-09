@@ -24,7 +24,7 @@ import {
   ArrowDown
 } from 'lucide-react'
 
-const ProjectStorage = () => {
+const ProjectDatabase = () => {
   const [activeTab, setActiveTab] = useState('databases')
   const [showNewDatabaseModal, setShowNewDatabaseModal] = useState(false)
   const [showNewEnvironmentModal, setShowNewEnvironmentModal] = useState(false)
@@ -552,4 +552,4 @@ const ProjectStorage = () => {
   )
 }
 
-export default ProjectStorage
+export default ProjectDatabase
