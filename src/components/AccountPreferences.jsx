@@ -300,7 +300,7 @@ const AccountPreferences = () => {
     { id: 'security', label: 'Security', icon: Shield },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'billing', label: 'Billing & Subscription', icon: CreditCard },
+    // { id: 'billing', label: 'Billing & Subscription', icon: CreditCard },
   ]
 
   const renderProfileSection = () => (
@@ -609,42 +609,57 @@ const AccountPreferences = () => {
     </div>
   )
 
-  const renderBillingSection = () => (
-    <div className="profile-section">
-      <div className="section-header">
-        <h3>Billing & Subscription</h3>
-        <p>Manage your subscription and billing information</p>
-      </div>
+  // const renderBillingSection = () => (
+  //   <div className="profile-section">
+  //     <div className="section-header">
+  //       <h3>Billing & Subscription</h3>
+  //       <p>Manage your subscription and billing information</p>
+  //     </div>
       
-      <div className="settings-card">
-        <div className="subscription-info">
-          <div className="subscription-badge">
-            <span className="badge-free">{userData.subscription}</span>
-          </div>
-          <div className="subscription-details">
-            <h4>Current Plan: {userData.subscription}</h4>
-            <p>You're currently on the free plan with basic features</p>
-          </div>
-        </div>
+  //     <div className="settings-card">
+  //       <div className="subscription-info">
+  //         <div className="subscription-badge">
+  //           <span className="badge-free">{userData.subscription}</span>
+  //         </div>
+  //         <div className="subscription-details">
+  //           <h4>Current Plan: {userData.subscription}</h4>
+  //           <p>
+  //             {(() => {
+  //               switch (userData.subscription) {
+  //                 case 'Free':
+  //                   return "You're currently on the free plan with basic features";
+  //                 case 'Builder':
+  //                   return "You're currently on the Builder plan with Extended Features";
+  //                 case 'Enterprise':
+  //                   return "You're currently on the Enterprise plan with Full extended Features";
+  //                 default:
+  //                   return userData.subscription
+  //                     ? `You're currently on the ${userData.subscription} plan`
+  //                     : "You're currently on a plan";
+  //               }
+  //             })()}
+  //           </p>
+  //         </div>
+  //       </div>
         
-        <div className="setting-item">
-          <div className="setting-info">
-            <h4>Payment Method</h4>
-            <p>Manage your payment methods and billing address</p>
-          </div>
-          <button className="btn-secondary">Manage Billing</button>
-        </div>
+  //       <div className="setting-item">
+  //         <div className="setting-info">
+  //           <h4>Payment Method</h4>
+  //           <p>Manage your payment methods and billing address</p>
+  //         </div>
+  //         <button className="btn-secondary">Manage Billing</button>
+  //       </div>
         
-        <div className="setting-item">
-          <div className="setting-info">
-            <h4>Usage & Limits</h4>
-            <p>View your current usage and plan limits</p>
-          </div>
-          <button className="btn-secondary">View Usage</button>
-        </div>
-      </div>
-    </div>
-  )
+  //       <div className="setting-item">
+  //         <div className="setting-info">
+  //           <h4>Usage & Limits</h4>
+  //           <p>View your current usage and plan limits</p>
+  //         </div>
+  //         <button className="btn-secondary">View Usage</button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // )
 
   const renderContent = () => {
     switch (activeSection) {
@@ -656,8 +671,8 @@ const AccountPreferences = () => {
         return renderNotificationsSection()
       case 'appearance':
         return renderAppearanceSection()
-      case 'billing':
-        return renderBillingSection()
+      // case 'billing':
+      //   return renderBillingSection()
       default:
         return renderProfileSection()
     }

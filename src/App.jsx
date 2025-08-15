@@ -14,7 +14,6 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import NavbarDashboard from './components/Navbar-dashboard'
 import PricingOnboarding from './components/Pricing-onboarding'
-import PricingCheckout from './components/Pricing-checkout'
 
 // ----------------------------------
 // Pages                     
@@ -30,6 +29,7 @@ import Project from './pages/Project'
 import AccountPreferences from './components/AccountPreferences'
 import HelpSupport from './components/Help&Support'
 import CreateProject from './components/Create-project'
+import UpgradePlan from './components/UpgradePlan'
 
 const App = () => {
 
@@ -40,12 +40,12 @@ const App = () => {
   const isUserProfilePath = location.pathname === "/account-preferences";
   const isHelpSupportPath = location.pathname === "/help-support";
   const isPricingOnboardingPath = location.pathname === "/pricing-onboarding";
-  const isPricingCheckoutPath = location.pathname === "/pricing-checkout";
   const isCreateProjectPath = location.pathname === "/create-project";
+  const isUpgradePlanPath = location.pathname === "/upgrade-plan";
 
   // Show navbar on all pages except login, dashboard, and project pages
-  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isPricingOnboardingPath && !isCreateProjectPath && !isPricingCheckoutPath;
-  const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isPricingOnboardingPath && !isCreateProjectPath && !isPricingCheckoutPath;
+  const showNavbar = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isPricingOnboardingPath && !isCreateProjectPath && !isUpgradePlanPath;
+  const showFooter = !isLoginPath && !isDashboardPath && !isProjectPath && !isUserProfilePath && !isHelpSupportPath && !isPricingOnboardingPath && !isCreateProjectPath && !isUpgradePlanPath;
 
   return (
     <div>
@@ -111,11 +111,11 @@ const App = () => {
             </div>
           } />
 
-          {/* Pricing Checkout */}
-          <Route path="/pricing-checkout" element={
+          {/* Upgrade Plan */}
+          <Route path="/upgrade-plan" element={
             <div className="project-layout">
               <NavbarDashboard />
-              <PricingCheckout />
+              <UpgradePlan />
             </div>
           } />
 

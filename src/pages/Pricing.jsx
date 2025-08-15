@@ -70,39 +70,39 @@ const Pricing = () => {
       buttonText: "Start Free",
       buttonVariant: "outline",
       popular: false,
-      payAsYouGo: {
+      perProjectAddOns: {
         available: true,
-        bundle: {
-          name: "Power Pack",
-          price: 10,
-          description: "Refill all your tools when you run out",
-          includes: [
-            "5 more images/icons",
-            "3 more roadmaps",
-            "50 more AI prompts",
-            "1 more pitch template"
-          ]
-        },
-        individual: [
-          { service: "Images/Icons", price: 3, quantity: "5 more images" },
-          { service: "Roadmaps", price: 5, quantity: "1 more roadmap" },
-          { service: "AI Prompts", price: 2, quantity: "25 more prompts" },
-          { service: "Pitch Templates", price: 8, quantity: "1 more template" }
+        options: [
+          {
+            type: "images",
+            name: "Image Pack",
+            price: 5,
+            quantity: 10,
+            description: "10 more AI-generated images/icons (account-wide)"
+          },
+          {
+            type: "documents",
+            name: "Document Pack",
+            price: 8,
+            quantity: 5,
+            description: "5 additional documents for one project"
+          },
+          {
+            type: "bundle",
+            name: "Project Booster",
+            price: 12,
+            quantity: "10 images + 5 documents",
+            description: "Complete project enhancement package",
+            savings: "$1 savings"
+          }
         ]
       },
       features: [
-        { name: "1 Active Project", included: true, highlight: true },
-        { name: "Basic AI Business Plan Documents", included: true, limit: "6 documents" },
-        { name: "PDF Exports", included: true },
-        { name: "Image Generator", included: true, limit: "1 image per project" },
-        { name: "Project Roadmap Generator", included: true, limit: "Incomplete map" },
-        { name: "Tech Stack Builder", included: true, limit: "Basic (no implementation)" },
-        { name: "No AI Assistant", included: true },
-        { name: "💡 Pay-up credits available", included: true, highlight: true, payAsYouGo: true },
-        { name: "Cloud Terminal Access", included: false },
-        { name: "Advanced AI Features", included: false },
-        { name: "Priority Support", included: false },
-        { name: "Custom Integrations", included: false }
+        { name: "Active Projects", included: true, limit: "1" },
+        { name: "Basic AI Business Plan", included: true, limit: "6 documents" },
+        { name: "Exports", included: true, limit: "PDF only" },
+        { name: "Image Generator", included: true, limit: "2 per project" },
+        { name: "AI Assistant", included: false, limit: "" }
       ]
     },
     {
@@ -117,39 +117,39 @@ const Pricing = () => {
       buttonText: "Start Building",
       buttonVariant: "primary",
       popular: true,
-      payAsYouGo: {
+      perProjectAddOns: {
         available: true,
-        bundle: {
-          name: "Builder Pack",
-          price: 15,
-          description: "Extend your Builder plan capabilities",
-          includes: [
-            "10 more images/icons",
-            "3 more roadmaps",
-            "100 more AI prompts",
-            "2 more pitch templates"
-          ]
-        },
-        individual: [
-          { service: "Images/Icons", price: 3, quantity: "5 more images" },
-          { service: "Roadmaps", price: 5, quantity: "1 more roadmap" },
-          { service: "AI Prompts", price: 2, quantity: "50 more prompts" },
-          { service: "Pitch Templates", price: 8, quantity: "1 more template" }
+        options: [
+          {
+            type: "images",
+            name: "Image Pack",
+            price: 5,
+            quantity: 10,
+            description: "10 more AI-generated images/icons (account-wide)"
+          },
+          {
+            type: "documents",
+            name: "Document Pack",
+            price: 8,
+            quantity: 5,
+            description: "5 additional documents for one project"
+          },
+          {
+            type: "bundle",
+            name: "Project Booster",
+            price: 12,
+            quantity: "10 images + 5 documents",
+            description: "Complete project enhancement package",
+            savings: "$1 savings"
+          }
         ]
       },
       features: [
-        { name: "3 Active Projects", included: true, highlight: true },
-        { name: "Standard AI Business Plan", included: true, limit: "10 documents" },
-        { name: "PDF & PNG Exports", included: true },
-        { name: "Image/Icon Generator", included: true, limit: "5 images/icons per project" },
-        { name: "Project Roadmap Generator", included: true, limit: "Complete map" },
-        { name: "Pitch Presentation Templates", included: true, limit: "1 template per project" },
-        { name: "Limited AI Assistant", included: true, limit: "100 prompts/month, no memory" },
-        { name: "Database Creator", included: true, limit: "Partial tables" },
-        { name: "Tech Stack Builder", included: true, limit: "Standard (compatibility only)" },
-        { name: "💡 Pay-up credits available", included: true, highlight: true, payAsYouGo: true },
-        { name: "API Access", included: false },
-        { name: "White-label Options", included: false }
+        { name: "Active Projects", included: true, limit: "3" },
+        { name: "Intermediate AI Business Plan", included: true, limit: "16 Documents" },
+        { name: "Exports", included: true, limit: "PDF + PNG" },
+        { name: "Image Generator", included: true, limit: "3 per project" },
+        { name: "AI Assistant", included: true, limit: "Limited (100 prompts/month)" }
       ]
     },
     {
@@ -164,19 +164,17 @@ const Pricing = () => {
       buttonText: "Go Enterprise",
       buttonVariant: "primary",
       popular: false,
+      perProjectAddOns: {
+        available: false, // Enterprise includes everything
+        note: "All features included - no additional purchases needed"
+      },
       features: [
-        { name: "Unlimited Projects", included: true, highlight: true },
-        { name: "Full AI Business Plan", included: true, limit: "14 documents" },
-        { name: "PDF, PNG & SVG Exports", included: true },
-        { name: "Image/Icon Generator", included: true, limit: "10 images/icons per project" },
-        { name: "Project Roadmap Generator", included: true, limit: "Multiple complete maps" },
-        { name: "Pitch Presentation Templates", included: true, limit: "3 templates per project" },
-        { name: "Full AI Assistant", included: true, limit: "Unlimited prompts with memory" },
-        { name: "Database Creator", included: true, limit: "Full tables + SQL editor + mock data" },
-        { name: "Tech Stack Builder", included: true, limit: "Full (implementation + AI assistant)" },
-        { name: "Priority Support", included: true },
-        { name: "Advanced Integrations", included: true },
-        { name: "Custom Workflows", included: true }
+        { name: "Active Projects", included: true, limit: "Unlimited" },
+        { name: "Advanced AI Business Plan", included: true, limit: "Complete set of Documents (32)" },
+        { name: "Exports", included: true, limit: "PDF + PNG + SVG" },
+        { name: "Image Generator", included: true, limit: "5 per project" },
+        { name: "AI Assistant", included: true, limit: "Pro (200 prompts/month)" },
+        
       ]
     }
   ]
@@ -283,10 +281,10 @@ const Pricing = () => {
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-4">
                 <Zap className="w-6 h-6" />
               </div>
-              <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2`}>Never Hit a Wall</h3>
+              <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2`}>Expand Any Project</h3>
               <p className={`text-slate-600 ${TYPOGRAPHY.sizes.caption}`}>
-                Start free and only pay for what you need. Run out of AI plans or templates? 
-                <span className={`${TYPOGRAPHY.weights.medium} text-blue-600`}><br/>Top up instantly</span> without upgrading to a full subscription.
+                Start with your plan's included documents and images. Need more for a specific project? 
+                <span className={`${TYPOGRAPHY.weights.medium} text-blue-600`}><br/>Purchase additional resources per project</span> - no subscription upgrade required.
               </p>
             </div>
           </div>
@@ -378,7 +376,7 @@ const Pricing = () => {
                             ${TYPOGRAPHY.sizes.caption} 
                             ${feature.included ? 'text-slate-900' : 'text-slate-400'} 
                             ${feature.highlight ? TYPOGRAPHY.weights.semibold : ''} 
-                            ${feature.payAsYouGo ? 'text-blue-600' : ''}
+                            ${feature.perProjectAddOns ? 'text-blue-600' : ''}
                           `}>
                             {feature.name}
                           </span>
@@ -394,37 +392,46 @@ const Pricing = () => {
                       PAY-AS-YOU-GO SECTION
                       ========================================== */}
                   
-                  {plan.payAsYouGo && (
+                  {plan.perProjectAddOns && plan.perProjectAddOns.available && (
                     <div className="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
                       <h4 className={`${TYPOGRAPHY.weights.semibold} text-blue-900 mb-3 flex items-center`}>
                         <Zap className="w-4 h-4 mr-2" />
-                        When you run out, top up instantly:
+                        Expand specific projects when needed:
                       </h4>
                       
-                      {/* Bundle Option */}
-                      <div className="mb-4 p-3 bg-white rounded-lg border border-blue-100">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className={`${TYPOGRAPHY.weights.medium} text-slate-900`}>{plan.payAsYouGo.bundle.name}</span>
-                          <span className={`${TYPOGRAPHY.weights.bold} text-blue-600`}>${plan.payAsYouGo.bundle.price}</span>
-                        </div>
-                        <p className={`${TYPOGRAPHY.sizes.caption} text-slate-600 mb-2`}>{plan.payAsYouGo.bundle.description}</p>
-                        <div className={`${TYPOGRAPHY.sizes.tiny} text-slate-500`}>
-                          {plan.payAsYouGo.bundle.includes.map((item, idx) => (
-                            <div key={idx}>• {item}</div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Individual Options */}
-                      <div className={`${TYPOGRAPHY.sizes.tiny} text-slate-600`}>
-                        <div className={`${TYPOGRAPHY.weights.medium} mb-1`}>Or buy individually:</div>
-                        {plan.payAsYouGo.individual.map((item, idx) => (
-                          <div key={idx} className="flex justify-between">
-                            <span>{item.service}</span>
-                            <span className={TYPOGRAPHY.weights.medium}>${item.price} for {item.quantity}</span>
+                      <div className="space-y-3">
+                        {plan.perProjectAddOns.options.map((option, idx) => (
+                          <div key={idx} className="p-3 bg-white rounded-lg border border-blue-100">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className={`${TYPOGRAPHY.weights.medium} text-slate-900`}>{option.name}</span>
+                              <div className="flex items-center gap-2">
+                                {option.savings && (
+                                  <span className={`${TYPOGRAPHY.sizes.tiny} text-green-600 bg-green-100 px-2 py-1 rounded-full`}>
+                                    {option.savings}
+                                  </span>
+                                )}
+                                <span className={`${TYPOGRAPHY.weights.bold} text-blue-600`}>${option.price}</span>
+                              </div>
+                            </div>
+                            <p className={`${TYPOGRAPHY.sizes.caption} text-slate-600 mb-1`}>{option.description}</p>
+                            <div className={`${TYPOGRAPHY.sizes.tiny} text-slate-500`}>
+                              {option.quantity} {option.type === 'bundle' ? '' : option.type === 'images' ? 'images' : 'documents for one project'}
+                            </div>
                           </div>
                         ))}
                       </div>
+                    </div>
+                  )}
+                  
+                  {plan.perProjectAddOns && !plan.perProjectAddOns.available && (
+                    <div className="mb-8 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
+                      <h4 className={`${TYPOGRAPHY.weights.semibold} text-emerald-900 mb-2 flex items-center`}>
+                        <Check className="w-4 h-4 mr-2" />
+                        Everything Included
+                      </h4>
+                      <p className={`${TYPOGRAPHY.sizes.caption} text-emerald-700`}>
+                        {plan.perProjectAddOns.note}
+                      </p>
                     </div>
                   )}
 
@@ -447,6 +454,115 @@ const Pricing = () => {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==========================================
+          DOCUMENT ACCESS EXPLAINER
+          ========================================== */}
+      <section className={SPACING.section.desktop}>
+        <div className={`${SPACING.container.medium} mx-auto`}>          
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-slate-200 shadow-sm">
+            <h2 className={`${TYPOGRAPHY.sizes.sectionTitle.mobile} lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} ${TYPOGRAPHY.weights.bold} text-slate-900 mb-4`}>
+              How document access works
+            </h2>
+            <p className={`${TYPOGRAPHY.sizes.body.base} text-slate-600 mb-6`}>
+              Each plan includes a set number of AI‑generated business plan documents per project. Need more? Add on packs can be purchased per project at any time.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div className="rounded-xl border border-slate-200 p-6">
+                <div className={`${TYPOGRAPHY.weights.semibold} text-slate-900 mb-1`}>Starter</div>
+                <div className={`${TYPOGRAPHY.sizes.pageTitle.mobile} ${TYPOGRAPHY.weights.bold} text-emerald-600`}>6</div>
+                <div className={`${TYPOGRAPHY.sizes.caption} text-slate-600`}>documents included</div>
+                <ul className="mt-3 text-slate-700 ${TYPOGRAPHY.sizes.tiny} list-disc pl-5">
+                  <li>Overview</li>
+                  <li>Executive Summary</li>
+                  <li>SWOT Analysis</li>
+                  <li>Viability Analysis</li>
+                  <li>Industry Overview</li>
+                  <li>Target Audience</li>
+                </ul>
+              </div>
+              <div className="rounded-xl border border-slate-200 p-6">
+                <div className={`${TYPOGRAPHY.weights.semibold} text-slate-900 mb-1`}>Builder</div>
+                <div className={`${TYPOGRAPHY.sizes.pageTitle.mobile} ${TYPOGRAPHY.weights.bold} text-blue-600`}>16</div>
+                <div className={`${TYPOGRAPHY.sizes.caption} text-slate-600`}>documents included</div>
+                <ul className="mt-3 text-slate-700 ${TYPOGRAPHY.sizes.tiny} list-disc pl-5">
+                  <li>Everything in Starter</li>
+                  <li>Market Size & Trends</li>
+                  <li>Competitor Analysis</li>
+                  <li>Core Offerings</li>
+                  <li>Expansion Opportunities</li>
+                  <li>Secondary Offerings</li>
+                  <li>Customer Service</li>
+                  <li>Marketing Overview</li>
+                  <li>Branding & Identity</li>
+                  <li>Online Presence</li>
+                  <li>Digital Marketing</li>
+                  <li>Revenue</li>
+                  <li>Expenses</li>
+                  <li>Profit & Loss</li>
+                  <li>Cash Flow</li>
+                  <li>Funding Plan</li>
+                </ul>
+              </div>
+              <div className="rounded-xl border border-slate-200 p-6">
+                <div className={`${TYPOGRAPHY.weights.semibold} text-slate-900 mb-1`}>Enterprise</div>
+                <div className={`${TYPOGRAPHY.sizes.pageTitle.mobile} ${TYPOGRAPHY.weights.bold} text-purple-600`}>32</div>
+                <div className={`${TYPOGRAPHY.sizes.caption} text-slate-600`}>documents included</div>
+                <ul className="mt-3 text-slate-700 ${TYPOGRAPHY.sizes.tiny} list-disc pl-5">
+                  <li>Everything in Builder</li>
+                  <li>Team & Roles</li>
+                  <li>Operations Plan</li>
+                  <li>Pre-Launch</li>
+                  <li>Post-Launch</li>
+                  <li>Frontend</li>
+                  <li>Backend</li>
+                  <li>UI/UX</li>
+                  <li>Deployment & Hosting</li>
+                  <li>Database Schema</li>
+                  <li>Tables</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 p-6 bg-slate-50">
+              <div className={`${TYPOGRAPHY.weights.semibold} text-slate-900 mb-2`}>Per-Project Add‑ons</div>
+              <div className={`${TYPOGRAPHY.sizes.caption} text-slate-600 mb-3`}>Enhance specific projects when you need more:</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ${TYPOGRAPHY.sizes.tiny} text-slate-700">
+                <div className="col-span-1">
+                  <div className={`${TYPOGRAPHY.weights.semibold} text-blue-700 mb-2`}>Document Expansion</div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Document Pack</span>
+                      <span className="font-medium">$8</span>
+                    </div>
+                    <div className="text-slate-600 text-xs">5 additional documents for one specific project</div>
+                  </div>
+                </div>
+                <div className="col-span-1">
+                  <div className={`${TYPOGRAPHY.weights.semibold} text-green-700 mb-2`}>Image Enhancement</div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Image Pack</span>
+                      <span className="font-medium">$5</span>
+                    </div>
+                    <div className="text-slate-600 text-xs">10 additional AI-generated images (account-wide)</div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                <div className={`${TYPOGRAPHY.weights.semibold} text-blue-900 mb-1`}>How it works:</div>
+                <ul className="space-y-1 text-xs text-blue-800">
+                  <li>• Purchase from any project page when you need more documents</li>
+                  <li>• Each document pack applies to one project of your choice</li>
+                  <li>• Image packs work across all your projects</li>
+                  <li>• Enterprise plan includes unlimited access to everything</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>

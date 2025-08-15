@@ -12,6 +12,7 @@ const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 const CreateProject = () => {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
+    const [currentStep, setCurrentStep] = useState(1)
     const [formData, setFormData] = useState({
         projectName: '',
         industry: '',
@@ -22,7 +23,8 @@ const CreateProject = () => {
         technicalLevel: '',
         needCofounder: false,
         preferredTechStack: '',
-        projectDescription: ''
+        projectDescription: '',
+        aiPrompt: ''
     })
     const [errors, setErrors] = useState({})
 
@@ -131,8 +133,36 @@ const CreateProject = () => {
         return Object.keys(newErrors).length === 0
     }
 
+    const validateStep2 = () => {
+        const newErrors = {}
+        
+        if (!formData.aiPrompt.trim()) {
+        newErrors.aiPrompt = 'Please provide a description for AI to help create your project'
+        }
+        
+        setErrors(newErrors)
+        return Object.keys(newErrors).length === 0
+    }
+
+    const handleNextStep = () => {
+        if (validateForm()) {
+            setCurrentStep(2)
+            setErrors({})
+        }
+    }
+
+    const handlePreviousStep = () => {
+        setCurrentStep(1)
+        setErrors({})
+    }
+
   const handleSubmit = async () => {
-    if (!validateForm()) return
+    if (currentStep === 1) {
+        handleNextStep()
+        return
+    }
+    
+    if (!validateStep2()) return
 
     setIsLoading(true)
     
@@ -154,7 +184,8 @@ const CreateProject = () => {
         technical_level: formData.technicalLevel,
         need_cofounder: formData.needCofounder,
         preferred_tech_stack: formData.preferredTechStack,
-        project_description: formData.projectDescription.trim()
+        project_description: formData.projectDescription.trim(),
+        ai_prompt: formData.aiPrompt.trim()
       }
       
       const response = await fetch(`${API_BASE_URL}/api/user/create-project`, {
@@ -201,6 +232,29 @@ const CreateProject = () => {
         </div>
 
         <div className="bg-white rounded-3xl shadow-xl p-8 lg:p-12">
+          {/* Step Indicator */}
+          <div className="mb-8">
+            <div className="flex items-center justify-center space-x-4">
+              <div className={`flex items-center ${currentStep >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
+                  currentStep >= 1 ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-300'
+                }`}>
+                  1
+                </div>
+                <span className="ml-2 font-medium">Project Details</span>
+              </div>
+              <div className={`w-12 h-0.5 ${currentStep >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+              <div className={`flex items-center ${currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
+                  currentStep >= 2 ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-300'
+                }`}>
+                  2
+                </div>
+                <span className="ml-2 font-medium">AI Description</span>
+              </div>
+            </div>
+          </div>
+
           {/* Error Display */}
           {errors.general && (
             <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl">
@@ -210,7 +264,8 @@ const CreateProject = () => {
             </div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {currentStep === 1 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column */}
             <div className="space-y-6">
               {/* Project Name */}
@@ -459,38 +514,107 @@ const CreateProject = () => {
               </div>
             </div>
           </div>
+        ) : (
+          /* Step 2: AI Description */
+          <div className="space-y-6">
+            <div className="text-center mb-8">
+              <h2 className={`${TYPOGRAPHY.sizes.sectionTitle.mobile} lg:${TYPOGRAPHY.sizes.sectionTitle.desktop} ${TYPOGRAPHY.weights.bold} text-gray-900 mb-4`}>
+                Help AI Understand Your Project
+              </h2>
+              <p className={`${TYPOGRAPHY.sizes.body.large} text-gray-600 max-w-2xl mx-auto`}>
+                Describe your project in detail to help our AI generate comprehensive project documents, 
+                technical specifications, and development roadmap.
+              </p>
+            </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-between mt-12">
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:border-gray-400 transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className={`px-8 py-3 rounded-xl cursor-pointer ${TYPOGRAPHY.weights.semibold} text-white ${ANIMATIONS.transition} ${
-                isLoading
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl transform hover:scale-105'
-              }`}
-            >
-              {isLoading ? (
-                <div className="flex items-center">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
-                  Creating Project...
-                </div>
-              ) : (
-                <div className="flex items-center">
-                  Create Project
-                  <ArrowRight className="w-5 h-5 ml-3" />
-                </div>
+            <div>
+              <label className={`block ${TYPOGRAPHY.sizes.body.small} ${TYPOGRAPHY.weights.medium} text-gray-700 mb-2`}>
+                AI Project Description *
+              </label>
+              <textarea
+                value={formData.aiPrompt}
+                onChange={(e) => handleInputChange('aiPrompt', e.target.value)}
+                placeholder="Describe your project idea, target audience, key features, technical requirements, business model, and any specific goals or constraints. Be as detailed as possible to help AI generate accurate project documentation..."
+                rows={8}
+                className={`w-full px-4 py-3 border-2 rounded-xl ${ANIMATIONS.transition} ${
+                  errors.aiPrompt 
+                    ? 'border-red-300 focus:border-red-500' 
+                    : 'border-gray-200 focus:border-blue-500'
+                } focus:outline-none resize-none`}
+              />
+              {errors.aiPrompt && (
+                <p className="text-red-600 text-sm mt-1">{errors.aiPrompt}</p>
               )}
-            </button>
+              <p className="text-sm text-gray-500 mt-2">
+                This description will be used by AI to generate project documentation, technical specs, and development plans.
+              </p>
+            </div>
+
+            {/* Project Summary */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-gray-900 mb-4`}>
+                Project Summary
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium text-gray-700">Project:</span> {formData.projectName || 'Not specified'}
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Industry:</span> {formData.industry ? industryOptions.find(opt => opt.value === formData.industry)?.label : 'Not specified'}
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Team Size:</span> {formData.teamSize ? teamSizeOptions.find(opt => opt.value === formData.teamSize)?.label : 'Not specified'}
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Objective:</span> {formData.primaryObjective ? objectiveOptions.find(opt => opt.value === formData.primaryObjective)?.label : 'Not specified'}
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Timeline:</span> {formData.timeline ? timelineOptions.find(opt => opt.value === formData.timeline)?.label : 'Not specified'}
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Budget:</span> {formData.budgetRange ? budgetOptions.find(opt => opt.value === formData.budgetRange)?.label : 'Not specified'}
+                </div>
+              </div>
+            </div>
           </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-between mt-12">
+          <button
+            onClick={currentStep === 1 ? () => navigate('/dashboard') : handlePreviousStep}
+            className="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:border-gray-400 transition-colors cursor-pointer"
+          >
+            {currentStep === 1 ? 'Cancel' : 'Back'}
+          </button>
+          
+          <button
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className={`px-8 py-3 rounded-xl cursor-pointer ${TYPOGRAPHY.weights.semibold} text-white ${ANIMATIONS.transition} ${
+              isLoading
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl transform hover:scale-105'
+            }`}
+          >
+            {isLoading ? (
+              <div className="flex items-center">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
+                Creating Project...
+              </div>
+            ) : currentStep === 1 ? (
+              <div className="flex items-center">
+                Next
+                <ArrowRight className="w-5 h-5 ml-3" />
+              </div>
+            ) : (
+              <div className="flex items-center">
+                Create Project
+                <ArrowRight className="w-5 h-5 ml-3" />
+              </div>
+            )}
+          </button>
+        </div>
         </div>
       </div>
   )

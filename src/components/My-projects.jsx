@@ -1,21 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Search, Plus, Filter, ChevronDown } from 'lucide-react'
-
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from './ui/Command'
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from './ui/Popover'
+import { Search, Plus } from 'lucide-react'  
 
 // API Base URL
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
@@ -25,7 +10,6 @@ const MyProjects = () => {
   const location = useLocation()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedFilter, setSelectedFilter] = useState('all')
-  const [filterDropdownOpen, setFilterDropdownOpen] = useState(false)
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -127,19 +111,6 @@ const MyProjects = () => {
     }
   }, [location.state, navigate, location.pathname, fetchProjects])
 
-  // Filter options for projects
-  const filterOptions = [
-    { id: 'all', name: 'All Projects' },
-    { id: 'saas', name: 'SaaS' },
-    { id: 'ecommerce', name: 'E-commerce' },
-    { id: 'fintech', name: 'Fintech' },
-    { id: 'healthtech', name: 'Healthtech' },
-    { id: 'edtech', name: 'Edtech' },
-    { id: 'active', name: 'Active Only' },
-    { id: 'development', name: 'In Development' },
-    { id: 'funded', name: 'Funded Projects' }
-  ]
-
   // Filter and search logic
   const filteredProjects = useMemo(() => {
     if (searchQuery === '' && selectedFilter === 'all') {
@@ -153,25 +124,17 @@ const MyProjects = () => {
                            project.name.toLowerCase().includes(searchLower) ||
                            project.description.toLowerCase().includes(searchLower) ||
                            project.type.toLowerCase().includes(searchLower) ||
-                           project.region.toLowerCase().includes(searchLower) ||
-                           project.status.toLowerCase().includes(searchLower) ||
                            // Search by business type keywords
                            (searchLower === 'saas' && project.type.toLowerCase() === 'saas') ||
                            (searchLower === 'ecommerce' && project.type.toLowerCase() === 'e-commerce') ||
                            (searchLower === 'fintech' && project.type.toLowerCase() === 'fintech') ||
                            (searchLower === 'healthtech' && project.type.toLowerCase() === 'healthtech') ||
-                           (searchLower === 'edtech' && project.type.toLowerCase() === 'edtech') ||
-                           // Search by funding stage
-                           // Search by status
-                           (searchLower === 'active' && project.status === 'active') ||
-                           (searchLower === 'development' && project.status === 'development')
+                           (searchLower === 'edtech' && project.type.toLowerCase() === 'edtech')
       
       let matchesFilter = true
       if (selectedFilter !== 'all') {
-        if (selectedFilter === 'active' || selectedFilter === 'development') {
+        if (selectedFilter === 'active') {
           matchesFilter = project.status === selectedFilter
-        } else if (selectedFilter === 'funded') {
-          matchesFilter = project.status === 'active'
         } else {
           matchesFilter = project.type.toLowerCase() === selectedFilter
         }
@@ -242,43 +205,6 @@ const MyProjects = () => {
                     className="search-input"
                   />
                 </div>
-                
-                <Popover open={filterDropdownOpen} onOpenChange={setFilterDropdownOpen}>
-                  <PopoverTrigger asChild>
-                    <button className="filter-btn">
-                      <Filter className="w-4 h-4" />
-                      <ChevronDown className="w-4 h-4 ml-1" />
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent className="filter-dropdown-content w-56" side="bottom" align="end" forceMount>
-                    <Command className="filter-command">
-                      <CommandInput 
-                        placeholder="Search filters..." 
-                        className="filter-command-input"
-                      />
-                      <CommandList className="filter-command-list">
-                        <CommandEmpty className="filter-command-empty">No filters found.</CommandEmpty>
-                        <CommandGroup className="filter-command-group">
-                          {filterOptions.map((option) => (
-                            <CommandItem
-                              key={option.id}
-                              value={option.id}
-                              onSelect={(value) => {
-                                setSelectedFilter(value)
-                                setFilterDropdownOpen(false)
-                              }}
-                              className="filter-command-item"
-                            >
-                              <span className={selectedFilter === option.id ? 'font-medium' : ''}>
-                                {option.name}
-                              </span>
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
               </div>
             </div>
             
@@ -334,43 +260,6 @@ const MyProjects = () => {
                     className="search-input"
                   />
                 </div>
-                
-                <Popover open={filterDropdownOpen} onOpenChange={setFilterDropdownOpen}>
-                  <PopoverTrigger asChild>
-                    <button className="filter-btn">
-                      <Filter className="w-4 h-4" />
-                      <ChevronDown className="w-4 h-4 ml-1" />
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent className="filter-dropdown-content w-56" side="bottom" align="end" forceMount>
-                    <Command className="filter-command">
-                      <CommandInput 
-                        placeholder="Search filters..." 
-                        className="filter-command-input"
-                      />
-                      <CommandList className="filter-command-list">
-                        <CommandEmpty className="filter-command-empty">No filters found.</CommandEmpty>
-                        <CommandGroup className="filter-command-group">
-                          {filterOptions.map((option) => (
-                            <CommandItem
-                              key={option.id}
-                              value={option.id}
-                              onSelect={(value) => {
-                                setSelectedFilter(value)
-                                setFilterDropdownOpen(false)
-                              }}
-                              className="filter-command-item"
-                            >
-                              <span className={selectedFilter === option.id ? 'font-medium' : ''}>
-                                {option.name}
-                              </span>
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
               </div>
             </div>
 
@@ -381,7 +270,6 @@ const MyProjects = () => {
                   <div className="project-card-header">
                     <div className="project-info">
                       <h3 className="project-name">{project.name}</h3>
-                      <p className="project-region">{project.region}</p>
                     </div>
                   </div>
                   
@@ -397,7 +285,7 @@ const MyProjects = () => {
                   <div className="project-card-footer">
                     <div className="project-status">
                       <span className={`status-text ${project.status}`}>
-                        {project.status === 'active' ? 'Active' : 'Development'}
+                        {project.status === 'active' ? 'Active' : ''}
                       </span>
                     </div>
                     <span className="project-updated">

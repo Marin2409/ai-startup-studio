@@ -30,32 +30,24 @@ const PricingOnboarding = () => {
       price: 0,
       description: 'Perfect for getting started',
       features: [
-        '1 Active Project',
-        'Basic AI Business Plan Documents (6 docs)',
-        'PDF Exports',
-        'Image Generator (1 per project)',
-        'Project Roadmap (Incomplete)',
-        'Tech Stack Builder (Basic)',
-        'No AI Assistant',
-        '💡 Pay-up credits available'
+        'Active Projects: 1',
+        'Basic AI Business Plan: (6 documents)',
+        'Exports: PDF only',
+        'Image Generator: 2 per project',
+        'AI Assistant: None',
       ]
     },
     {
-      id: 'pro',
+      id: 'builder',
       name: 'Builder',
       price: 5,
       description: 'For serious entrepreneurs',
       features: [
-        '3 Active Projects',
-        'Standard AI Business Plan (10 docs)',
-        'PDF & PNG Exports',
-        'Image/Icon Generator (5 per project)',
-        'Project Roadmap (Complete)',
-        'Pitch Templates (1 per project)',
-        'Limited AI Assistant (100 prompts/month)',
-        'Database Creator (Partial tables)',
-        'Tech Stack Builder (Standard)',
-        '💡 Pay-up credits available'
+        'Active Projects: 3',
+        'Intermediate AI Business Plan(16 Documents)',
+        'Exports: PDF + PNG',
+        'Image Generator: 3 per project',
+        'AI Assistant: Limited (100 prompts/month)',
       ],
       popular: true
     },
@@ -65,18 +57,34 @@ const PricingOnboarding = () => {
       price: 15,
       description: 'For established companies',
       features: [
-        'Unlimited Projects',
-        'Full AI Business Plan (14 docs)',
-        'PDF, PNG & SVG Exports',
-        'Image/Icon Generator (10 per project)',
-        'Project Roadmap (Multiple complete)',
-        'Pitch Templates (3 per project)',
-        'Full AI Assistant (Unlimited with memory)',
-        'Database Creator (Full + SQL editor)',
-        'Tech Stack Builder (Full implementation)',
-        'Priority Support',
-        'Advanced Integrations'
+        'Active Projects: Unlimited',
+        'Advanced AI Business Plan: (Complete set of Documents (32))',
+        'Exports: PDF + PNG + SVG',
+        'Image/Icon Generator: 5 per project',
+        'AI Assistant: Pro (200 prompts/month)',
       ]
+    }
+  ]
+
+  // Add-on packs (same explainer as Pricing page)
+  const addonExplainers = [
+    {
+      id: 'free',
+      title: 'Starter (Free)',
+      priceLabel: 'Coder Package – $8',
+      details: 'Includes Tech Stack Documents (Frontend, Backend, UI/UX, Deployment & Hosting) + Database Documents (Schema, Tables)'
+    },
+    {
+      id: 'builder',
+      title: 'Builder',
+      priceLabel: 'Database Package – $4',
+      details: 'Includes Database Documents (Schema, Tables)'
+    },
+    {
+      id: 'enterprise',
+      title: 'Enterprise',
+      priceLabel: 'Both packages included',
+      details: 'No add‑on purchase needed'
     }
   ]
 
@@ -310,6 +318,44 @@ const PricingOnboarding = () => {
           <p className={`${TYPOGRAPHY.sizes.caption} text-gray-500 mt-4`}>
             You can change your plan anytime from your dashboard
           </p>
+        </div>
+      </div>
+
+      {/* Per-Project Add-ons Explanation */}
+      <div className="max-w-4xl mx-auto mb-10 mt-10 p-6 rounded-2xl border border-gray-200 bg-white">
+        <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-gray-900 mb-2`}>
+          Per-Project Add‑ons
+        </h3>
+        <p className={`${TYPOGRAPHY.sizes.caption} text-gray-600 mb-5`}>
+          Need more for a specific project? Purchase additional resources on-demand.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="rounded-xl border border-blue-200 bg-blue-50 p-5">
+            <div className={`${TYPOGRAPHY.weights.semibold} text-blue-900 mb-2`}>Document Expansion</div>
+            <div className="text-blue-700 font-medium mb-2">$8 per pack</div>
+            <div className="text-sm text-blue-800 mb-3">5 additional documents for one specific project</div>
+            <div className="text-xs text-blue-700">
+              • Choose which project to enhance<br/>
+              • Purchase when you need more documents<br/>
+              • Available for Free and Builder plans
+            </div>
+          </div>
+          <div className="rounded-xl border border-green-200 bg-green-50 p-5">
+            <div className={`${TYPOGRAPHY.weights.semibold} text-green-900 mb-2`}>Image Enhancement</div>
+            <div className="text-green-700 font-medium mb-2">$5 per pack</div>
+            <div className="text-sm text-green-800 mb-3">10 additional AI-generated images (account-wide)</div>
+            <div className="text-xs text-green-700">
+              • Use across all your projects<br/>
+              • High-quality AI-generated images<br/>
+              • Available for all plans
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+          <div className={`${TYPOGRAPHY.weights.semibold} text-purple-900 mb-2`}>Enterprise Plan</div>
+          <div className="text-sm text-purple-800">
+            Includes unlimited access to all documents and images - no additional purchases needed!
+          </div>
         </div>
       </div>
     </PageBackground>
