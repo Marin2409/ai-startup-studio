@@ -8,12 +8,12 @@ import ProjectOverview from '../components/Project-overview'
 import ProjectSettings from '../components/Project-settings'
 import AIassistant from '../components/AI-assistant'
 // import ProjectFinancials from '../components/Project-financials'
-// import ProjectDatabase from '../components/Project-database'
+import ProjectDatabase from '../components/Project-database'
 // import TeamProjects from '../components/Team-projects'
 // import ProjectAssets from '../components/Project-assets'
 // import ProjectTasks from '../components/Project-tasks'
 // import ProjectCalendar from '../components/Project-calendar'
-// import ProjectTechStack from '../components/Project-techStack'
+import ProjectTechStack from '../components/Project-techStack'
 
 // API Base URL
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
@@ -119,13 +119,13 @@ const Project = () => {
       case 'Calendar':
         return <div className="page-placeholder">Calendar - Coming Soon</div>
       case 'TechStacks':
-        return <div className="page-placeholder">TechStacks - Coming Soon</div>
+        return <ProjectTechStack project={project} />
       case 'Financials':
         return <div className="page-placeholder">Financials - Coming Soon</div>
       case 'Assets':
         return <div className="page-placeholder">Assets - Coming Soon</div>
       case 'Database':
-        return <div className="page-placeholder">Database - Coming Soon</div>
+        return <ProjectDatabase project={project} />
       case 'Settings':
         return <ProjectSettings project={project} />
       case 'AIAssistant':

@@ -1,15 +1,11 @@
 import React, { useState } from 'react'
 import { 
-  Users, 
-  CheckCircle, 
-  FileText,
-  BarChart3,
-  Settings,
-  Plus,
   ShoppingCart,
-  Package,
-  Zap,
-  Image
+  Image,
+  Code,
+  Database,
+  Star,
+  Check
 } from 'lucide-react'
 import { TYPOGRAPHY } from '../lib/constants'
 import { useNavigate } from 'react-router-dom'
@@ -23,10 +19,11 @@ const ProjectOverview = ({ project }) => {
   const [isPurchasing, setIsPurchasing] = useState(false)
   const [isPurchasingImages, setIsPurchasingImages] = useState(false)
   const [imageCredits, setImageCredits] = useState(0)
+  const [documentCredits, setDocumentCredits] = useState(0)
   
-  // Fetch user's image credits on component mount
+  // Fetch user's credits on component mount
   React.useEffect(() => {
-    const fetchImageCredits = async () => {
+    const fetchUserCredits = async () => {
       try {
         const token = localStorage.getItem('token')
         const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
@@ -38,13 +35,14 @@ const ProjectOverview = ({ project }) => {
         const data = await response.json()
         if (response.ok && data.success) {
           setImageCredits(data.user.billing?.image_credits || 0)
+          setDocumentCredits(data.user.billing?.document_credits || 0)
         }
       } catch (error) {
-        console.error('Error fetching image credits:', error)
+        console.error('Error fetching user credits:', error)
       }
     }
     
-    fetchImageCredits()
+    fetchUserCredits()
   }, [])
   
   if (!project) {
@@ -58,22 +56,13 @@ const ProjectOverview = ({ project }) => {
     )
   }
 
-  const quickActions = [
-    { label: 'View Analytics', icon: BarChart3, color: 'blue' },
-    { label: 'Manage Tasks', icon: CheckCircle, color: 'green' },
-    { label: 'Team Overview', icon: Users, color: 'purple' },
-    { label: 'Documents', icon: FileText, color: 'orange' },
-    { label: 'Settings', icon: Settings, color: 'gray' },
-    { label: 'Add Update', icon: Plus, color: 'blue' }
-  ]
-
-  // Document usage / limits - Use project data directly
+  // Document usage / limits - NEW SCHEMA
   const subscription = (project?.subscription || 'free').toLowerCase()
   const baseDocs = project?.baseDocuments || 6
-  const purchasedDocs = project?.purchasedDocuments || 0
-  const totalDocs = project?.totalDocuments || baseDocs + purchasedDocs
   const usedDocs = project?.usedDocuments || 0
-  const usedPercent = Math.min(100, Math.round((usedDocs / totalDocs) * 100))
+  // Total available = base documents + document credits from billing
+  const totalAvailable = baseDocs + documentCredits
+  const usedPercent = Math.min(100, Math.round((usedDocs / totalAvailable) * 100))
   
   // For progress bar visualization
   const DOC_LIMITS = { free: 6, builder: 16, enterprise: 32 }
@@ -89,7 +78,7 @@ const ProjectOverview = ({ project }) => {
     navigate('/upgrade-plan')
   }
 
-  // Handle document purchase for current project
+  // Handle document credit purchase (account-wide)
   const handlePurchaseDocuments = async (quantity = 5) => {
     setIsPurchasing(true)
     try {
@@ -106,8 +95,10 @@ const ProjectOverview = ({ project }) => {
       const data = await response.json()
       
       if (response.ok && data.success) {
-        alert(`Successfully purchased ${quantity} additional documents for this project!`)
-        // Refresh the page or update project data
+        alert(`Successfully purchased ${quantity} document credits for your account!`)
+        // Update document credits locally
+        setDocumentCredits(data.purchase.new_document_credits)
+        // Refresh the page to update all data
         window.location.reload()
       } else {
         alert(data.message || 'Failed to purchase documents')
@@ -171,10 +162,10 @@ const ProjectOverview = ({ project }) => {
               {subscription === 'enterprise' ? 'Complete Business Plan Access' : 'Expand your business plan'}
             </h3>
             <div className={`text-slate-500 ${TYPOGRAPHY.sizes.caption}`}>
-              {usedDocs}/{totalDocs} documents available
-              {purchasedDocs > 0 && (
+              {usedDocs}/{totalAvailable} documents available
+              {documentCredits > 0 && (
                 <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                  +{purchasedDocs} purchased
+                  +{documentCredits} credits
                 </span>
               )}
               <br />
@@ -247,12 +238,12 @@ const ProjectOverview = ({ project }) => {
             </div>
             {/* usage fill */}
             <div className="relative z-10 h-full bg-gradient-to-r from-emerald-500 to-emerald-400" style={{ width: `${usedPercent}%` }}></div>
-            {/* purchased documents indicator */}
-            {purchasedDocs > 0 && (
+            {/* document credits indicator */}
+            {documentCredits > 0 && (
               <div className="absolute top-0 h-full bg-blue-500/30 border-l-2 border-blue-500" 
                    style={{ 
                      left: `${(baseDocs / maxEnterprise) * 100}%`,
-                     width: `${(purchasedDocs / maxEnterprise) * 100}%`
+                     width: `${(documentCredits / maxEnterprise) * 100}%`
                    }}>
               </div>
             )}
@@ -272,15 +263,93 @@ const ProjectOverview = ({ project }) => {
               <span className="h-2.5 w-2.5 rounded-full bg-purple-500/80"></span>
               <span className={`${TYPOGRAPHY.sizes.tiny}`}>Enterprise ({DOC_LIMITS.enterprise} docs)</span>
             </div>
-            {purchasedDocs > 0 && (
+            {documentCredits > 0 && (
               <div className="inline-flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-blue-500"></span>
-                <span className={`${TYPOGRAPHY.sizes.tiny}`}>Purchased (+{purchasedDocs} docs)</span>
+                <span className={`${TYPOGRAPHY.sizes.tiny}`}>Credits (+{documentCredits} docs)</span>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Active Add-on Packages Section */}
+      {project?.projectAddOns && project.projectAddOns.length > 0 && (
+        <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="flex items-center gap-3 mb-4">
+            <Star className="w-5 h-5 text-yellow-500" />
+            <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-slate-900`}>
+              Active Add-on Packages
+            </h3>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {project.projectAddOns.map((addon, index) => {
+              const isCoderPackage = addon === 'coder_package'
+              const isDatabasePackage = addon === 'database_package'
+              
+              return (
+                <div
+                  key={index}
+                  className={`p-4 rounded-xl border-2 ${
+                    isCoderPackage 
+                      ? 'border-blue-200 bg-blue-50' 
+                      : 'border-purple-200 bg-purple-50'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-lg ${
+                      isCoderPackage ? 'bg-blue-100' : 'bg-purple-100'
+                    }`}>
+                      {isCoderPackage ? (
+                        <Code className={`w-5 h-5 ${isCoderPackage ? 'text-blue-600' : 'text-purple-600'}`} />
+                      ) : (
+                        <Database className={`w-5 h-5 ${isCoderPackage ? 'text-blue-600' : 'text-purple-600'}`} />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className={`font-semibold ${isCoderPackage ? 'text-blue-900' : 'text-purple-900'}`}>
+                          {isCoderPackage ? 'Coder Package' : 'Database Package'}
+                        </h4>
+                        <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                          isCoderPackage 
+                            ? 'bg-blue-100 text-blue-700' 
+                            : 'bg-purple-100 text-purple-700'
+                        }`}>
+                          <Check className="w-3 h-3" />
+                          Active
+                        </div>
+                      </div>
+                      <p className={`text-sm ${isCoderPackage ? 'text-blue-700' : 'text-purple-700'}`}>
+                        {isCoderPackage 
+                          ? 'Access to tech stack and database documentation'
+                          : 'Access to database schema and table structures'
+                        }
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {isCoderPackage ? (
+                          <>
+                            <span className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded">Frontend</span>
+                            <span className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded">Backend</span>
+                            <span className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded">UI/UX</span>
+                            <span className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded">Database</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-xs bg-purple-200 text-purple-800 px-2 py-1 rounded">Schema</span>
+                            <span className="text-xs bg-purple-200 text-purple-800 px-2 py-1 rounded">Tables</span>
+                            <span className="text-xs bg-purple-200 text-purple-800 px-2 py-1 rounded">Indexing</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Documents Section - Overview */}
       <h3 className="status-header-title">Overview</h3> 
@@ -486,80 +555,6 @@ const ProjectOverview = ({ project }) => {
           <div className="status-info">
             <span className="status-value">Post-Launch</span>
             <span className="status-label">Post-Launch</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Documents Section - Tech Stack */}
-      <h3 className="status-card-title">Tech Stack</h3>
-      <div className="status-overview-documents">
-      
-        <div className="status-card">
-          <div className="status-info">
-            <span className="status-value">Frontend</span>
-            <span className="status-label">Frontend</span>
-          </div>
-        </div>
-
-        <div className="status-card">
-          <div className="status-info">
-            <span className="status-value">Backend</span>
-            <span className="status-label">Backend</span>
-          </div>
-        </div>
-
-        <div className="status-card">
-          <div className="status-info">
-            <span className="status-value">UI/UX</span>
-            <span className="status-label">UI/UX</span>
-          </div>
-        </div>
-
-        <div className="status-card">
-          <div className="status-info">
-            <span className="status-value">Deployment & Hosting</span>
-            <span className="status-label">Deployment & Hosting</span>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Documents Section - Database */}
-      <h3 className="status-card-title">Database</h3>
-      <div className="status-overview-documents">
-      
-        <div className="status-card">
-          <div className="status-info">
-            <span className="status-value">Database Schema</span>
-            <span className="status-label">Database Schema</span>
-          </div>
-        </div>
-
-        <div className="status-card">
-          <div className="status-info">
-            <span className="status-value">Tables</span>
-            <span className="status-label">Tables</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="overview-grid">
-        {/* Quick Actions */}
-        <div className="overview-card actions-card">
-          <div className="card-header">
-            <h3 className="card-title">Quick Actions</h3>
-          </div>
-          <div className="actions-grid">
-            {quickActions.map((action, index) => {
-              const Icon = action.icon
-              return (
-                <button key={index} className={`quick-action ${action.color}`}>
-                  <Icon className="w-5 h-5" />
-                  <span>{action.label}</span>
-                </button>
-              )
-            })}
           </div>
         </div>
       </div>

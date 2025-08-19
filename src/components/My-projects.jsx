@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Search, Plus } from 'lucide-react'  
+import { Search, Plus, Code, Database } from 'lucide-react'  
 
 // API Base URL
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
@@ -271,6 +271,33 @@ const MyProjects = () => {
                     <div className="project-info">
                       <h3 className="project-name">{project.name}</h3>
                     </div>
+                    {/* Add-on Package Indicators */}
+                    {project.projectAddOns && project.projectAddOns.length > 0 && (
+                      <div className="flex items-center gap-1">
+                        {project.projectAddOns.map((addon, index) => {
+                          const isCoderPackage = addon === 'coder_package'
+                          const isDatabasePackage = addon === 'database_package'
+                          
+                          return (
+                            <div
+                              key={index}
+                              className={`flex items-center justify-center w-6 h-6 rounded-full ${
+                                isCoderPackage 
+                                  ? 'bg-blue-100 text-blue-600' 
+                                  : 'bg-purple-100 text-purple-600'
+                              }`}
+                              title={isCoderPackage ? 'Coder Package Active' : 'Database Package Active'}
+                            >
+                              {isCoderPackage ? (
+                                <Code className="w-3 h-3" />
+                              ) : (
+                                <Database className="w-3 h-3" />
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
                   </div>
                   
                   <div className="project-card-body">
