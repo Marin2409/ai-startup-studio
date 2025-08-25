@@ -4,15 +4,11 @@ import {
   AlertCircle, 
   Package,
   Check,
-  Sparkles,
   Database,
   Code,
   Star,
   ArrowRight,
-  X,
-  Zap,
-  Image,
-  FileText
+  X
 } from 'lucide-react'
 
 // API Base URL
@@ -25,7 +21,7 @@ const Billing = () => {
   const [error, setError] = useState('')
   const [isPurchasing, setIsPurchasing] = useState(false)
   const [isCanceling, setIsCanceling] = useState(false)
-  const [isPurchasingPayAsYouGo, setIsPurchasingPayAsYouGo] = useState(false)
+
   
   // Project selection modal state
   const [showProjectModal, setShowProjectModal] = useState(false)
@@ -148,10 +144,7 @@ const Billing = () => {
     setUserProjects([])
   }
 
-  const navigateToProjects = () => {
-    // Since document purchases are project-specific, direct users to their projects
-    window.location.href = '/dashboard'
-  }
+
 
   const handleCancelSubscription = async () => {
     // Confirmation dialog
@@ -215,37 +208,7 @@ const Billing = () => {
   // Now guaranteed to be a valid array due to database constraints
   const currentAddOns = userBilling?.billing?.add_ons || []
 
-  // Per-project add-on options (available for Free and Builder plans)
-  const projectAddOns = [
-    {
-      type: "images",
-      name: "Image Pack",
-      price: 5,
-      quantity: 10,
-      description: "10 more AI-generated images/icons for any project",
-      icon: <Image className="w-6 h-6" />,
-      color: "from-green-500 to-emerald-500"
-    },
-    {
-      type: "documents",
-      name: "Document Pack",
-      price: 8,
-      quantity: 5,
-      description: "5 additional documents for a specific project",
-      icon: <FileText className="w-6 h-6" />,
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
-      type: "bundle",
-      name: "Project Booster",
-      price: 12,
-      quantity: "10 images + 5 documents",
-      description: "Complete project enhancement package",
-      savings: "$1 savings",
-      icon: <Zap className="w-6 h-6" />,
-      color: "from-purple-500 to-pink-500"
-    }
-  ]
+
 
   return (
     <div>
@@ -586,111 +549,7 @@ const Billing = () => {
             </div>
           </div>
 
-          {/* Per-Project Purchases Section */}
-          <div className="billing-section">
-            <div className="section-left">
-              <div className="flex items-center gap-3 mb-4">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Per-Project Add-Ons</h2>
-                  <p className="text-sm text-gray-500">Enhance specific projects as needed</p>
-                </div>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Need more documents or images for a specific project? Purchase exactly what you need, when you need it. Each purchase applies to one project of your choice.
-              </p>
-            </div>
-            <div className="section-right">
-              {currentPlan === 'enterprise' ? (
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 border border-emerald-200 p-8">
-                  <div className="absolute top-4 right-4">
-                    <div className="flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">
-                      <Star className="w-4 h-4" />
-                      Premium
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-emerald-100">
-                      <Package className="w-8 h-8 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">All Features Included</h3>
-                      <p className="text-gray-600 mb-4">
-                        Your Enterprise plan includes unlimited access to all documents and images. No additional purchases needed.
-                      </p>
-                      <div className="flex items-center gap-2 text-emerald-700 font-medium">
-                        <Check className="w-5 h-5" />
-                        <span>Unlimited project enhancements</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 rounded-lg bg-blue-100">
-                        <FileText className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-blue-900">How Project Add-Ons Work</h3>
-                        <p className="text-blue-700 text-sm">Purchase additional resources for specific projects</p>
-                      </div>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-4 mb-4">
-                      <div className="bg-white border border-blue-200 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <FileText className="w-4 h-4 text-blue-600" />
-                          <span className="font-semibold text-blue-900">Document Credits</span>
-                        </div>
-                        <p className="text-2xl font-bold text-blue-600">
-                          {userBilling?.billing?.document_credits || 0}
-                        </p>
-                        <p className="text-sm text-blue-700">Available account-wide</p>
-                      </div>
-                      <div className="bg-white border border-orange-200 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Image className="w-4 h-4 text-orange-600" />
-                          <span className="font-semibold text-orange-900">Image Credits</span>
-                        </div>
-                        <p className="text-2xl font-bold text-orange-600">
-                          {userBilling?.billing?.image_credits || 0}
-                        </p>
-                        <p className="text-sm text-orange-700">Available account-wide</p>
-                      </div>
-                    </div>
-                    <ul className="space-y-2 text-sm text-blue-800">
-                      <li className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                        <span>Document and image credits can be used across all projects</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                        <span>Go to any project to purchase additional credits</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                        <span>Credits are shared across your entire account</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="text-center">
-                    <button
-                      onClick={navigateToProjects}
-                      className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-8 rounded-xl font-medium transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer"
-                    >
-                      <Package className="w-5 h-5" />
-                      <span>View My Projects</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                    <p className="text-gray-500 text-sm mt-3">
-                      Purchase additional document and image credits from any project page
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+
         </div>
 
       {/* Project Selection Modal */}
@@ -775,14 +634,14 @@ const Billing = () => {
               <div className="flex items-center justify-between gap-3 p-6 border-t border-gray-200">
                 <button
                   onClick={handleCloseModal}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleConfirmPurchase}
                   disabled={!selectedProject || isPurchasing}
-                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
                 >
                   {isPurchasing ? (
                     <>

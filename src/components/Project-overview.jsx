@@ -1,49 +1,12 @@
 import React, { useState } from 'react'
-import { 
-  ShoppingCart,
-  Image,
-  Code,
-  Database,
-  Star,
-  Check
-} from 'lucide-react'
 import { TYPOGRAPHY } from '../lib/constants'
 import { useNavigate } from 'react-router-dom'
-
-// API Base URL
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 
 // Project Overview Component
 const ProjectOverview = ({ project }) => {
   const navigate = useNavigate()
-  const [isPurchasing, setIsPurchasing] = useState(false)
-  const [isPurchasingImages, setIsPurchasingImages] = useState(false)
-  const [imageCredits, setImageCredits] = useState(0)
   const [documentCredits, setDocumentCredits] = useState(0)
   
-  // Fetch user's credits on component mount
-  React.useEffect(() => {
-    const fetchUserCredits = async () => {
-      try {
-        const token = localStorage.getItem('token')
-        const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-        
-        const data = await response.json()
-        if (response.ok && data.success) {
-          setImageCredits(data.user.billing?.image_credits || 0)
-          setDocumentCredits(data.user.billing?.document_credits || 0)
-        }
-      } catch (error) {
-        console.error('Error fetching user credits:', error)
-      }
-    }
-    
-    fetchUserCredits()
-  }, [])
   
   if (!project) {
     return (
@@ -61,7 +24,7 @@ const ProjectOverview = ({ project }) => {
   const baseDocs = project?.baseDocuments || 6
   const usedDocs = project?.usedDocuments || 0
   // Total available = base documents + document credits from billing
-  const totalAvailable = baseDocs + documentCredits
+  const totalAvailable = baseDocs 
   const usedPercent = Math.min(100, Math.round((usedDocs / totalAvailable) * 100))
   
   // For progress bar visualization
@@ -76,72 +39,6 @@ const ProjectOverview = ({ project }) => {
   //Handle upgrade plan
   const handleUpgradePlan = () => {
     navigate('/upgrade-plan')
-  }
-
-  // Handle document credit purchase (account-wide)
-  const handlePurchaseDocuments = async (quantity = 5) => {
-    setIsPurchasing(true)
-    try {
-      const token = localStorage.getItem('token')
-      const response = await fetch(`${API_BASE_URL}/api/user/projects/${project.id}/purchase-documents`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ quantity })
-      })
-
-      const data = await response.json()
-      
-      if (response.ok && data.success) {
-        alert(`Successfully purchased ${quantity} document credits for your account!`)
-        // Update document credits locally
-        setDocumentCredits(data.purchase.new_document_credits)
-        // Refresh the page to update all data
-        window.location.reload()
-      } else {
-        alert(data.message || 'Failed to purchase documents')
-      }
-    } catch (error) {
-      console.error('Error purchasing documents:', error)
-      alert('Connection error. Please try again.')
-    } finally {
-      setIsPurchasing(false)
-    }
-  }
-
-  // Handle image purchase for account (account-wide)
-  const handlePurchaseImages = async (quantity = 10) => {
-    setIsPurchasingImages(true)
-    try {
-      const token = localStorage.getItem('token')
-      const response = await fetch(`${API_BASE_URL}/api/user/purchase-images`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ quantity })
-      })
-
-      const data = await response.json()
-      
-      if (response.ok && data.success) {
-        alert(`Successfully purchased ${quantity} additional images for your account!`)
-        // Update image credits locally
-        setImageCredits(data.purchase.new_credits)
-        // Refresh the page to update all data
-        window.location.reload()
-      } else {
-        alert(data.message || 'Failed to purchase images')
-      }
-    } catch (error) {
-      console.error('Error purchasing images:', error)
-      alert('Connection error. Please try again.')
-    } finally {
-      setIsPurchasingImages(false)
-    }
   }
 
   return (
@@ -161,59 +58,19 @@ const ProjectOverview = ({ project }) => {
             <h3 className={`${TYPOGRAPHY.sizes.body.large} ${TYPOGRAPHY.weights.semibold} text-slate-900`}>
               {subscription === 'enterprise' ? 'Complete Business Plan Access' : 'Expand your business plan'}
             </h3>
-            <div className={`text-slate-500 ${TYPOGRAPHY.sizes.caption}`}>
+            <div className={`text-slate-500 pt-2 ${TYPOGRAPHY.sizes.caption}`}>
               {usedDocs}/{totalAvailable} documents available
               {documentCredits > 0 && (
                 <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
                   +{documentCredits} credits
                 </span>
               )}
-              <br />
-              <span className="flex items-center gap-1 mt-1">
-                <Image className="w-3 h-3" />
-                {imageCredits} image credits available
-              </span>
             </div>
           </div>
           <div className="mt-2 sm:mt-0 flex flex-wrap gap-2">
             {subscription !== 'enterprise' && (
               <>
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-green-600 to-emerald-600 px-4 py-2 text-white shadow-md hover:shadow-lg hover:brightness-110 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                  onClick={() => handlePurchaseDocuments(5)}
-                  disabled={isPurchasing}
-                >
-                  {isPurchasing ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Purchasing...
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingCart className="w-4 h-4" />
-                      +5 Documents ($8)
-                    </>
-                  )}
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 text-white shadow-md hover:shadow-lg hover:brightness-110 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                  onClick={() => handlePurchaseImages(10)}
-                  disabled={isPurchasingImages}
-                >
-                  {isPurchasingImages ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Purchasing...
-                    </>
-                  ) : (
-                    <>
-                      <Image className="w-4 h-4" />
-                      +10 Images ($5)
-                    </>
-                  )}
-                </button>
+               
               </>
             )}
             <button
@@ -228,16 +85,20 @@ const ProjectOverview = ({ project }) => {
 
         <div className="mt-5">
           <div className="relative h-3 w-full overflow-hidden rounded-full bg-slate-100">
+
             {/* plan segments (background) */}
             <div className="absolute inset-y-0 left-0 bg-emerald-500/70" style={{ width: `${freeWidth}%` }}></div>
-            <div className="absolute inset-y-0" style={{ left: `${freeWidth}%`, width: `${builderWidth}%`, background: 'rgba(168, 85, 247, 0.25)' }}></div>
-            <div className="absolute inset-y-0" style={{ left: `${freeWidth + builderWidth}%`, width: `${enterpriseWidth}%`, background: 'rgba(168, 85, 247, 0.35)' }}></div>
+            <div className="absolute inset-y-0" style={{ left: `${freeWidth}%`, width: `${builderWidth}%`, background: 'rgba(247, 117, 85, 0.25)' }}></div>
+            <div className="absolute inset-y-0" style={{ left: `${freeWidth + builderWidth}%`, width: `${enterpriseWidth}%`, background: 'rgba(117, 85, 247, 0.35)' }}></div>
+
             {/* free breakpoint divider */}
             <div className="absolute top-0 bottom-0" style={{ left: `${freeWidth}%` }}>
               <div className="h-full w-px border-l border-dashed border-slate-300"></div>
             </div>
+
             {/* usage fill */}
             <div className="relative z-10 h-full bg-gradient-to-r from-emerald-500 to-emerald-400" style={{ width: `${usedPercent}%` }}></div>
+            
             {/* document credits indicator */}
             {documentCredits > 0 && (
               <div className="absolute top-0 h-full bg-blue-500/30 border-l-2 border-blue-500" 
@@ -256,7 +117,7 @@ const ProjectOverview = ({ project }) => {
               <span className={`${TYPOGRAPHY.sizes.tiny}`}>Free ({DOC_LIMITS.free} docs)</span>
             </div>
             <div className="inline-flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-purple-400/70"></span>
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400/70"></span>
               <span className={`${TYPOGRAPHY.sizes.tiny}`}>Builder ({DOC_LIMITS.builder} docs)</span>
             </div>
             <div className="inline-flex items-center gap-2">
@@ -274,7 +135,7 @@ const ProjectOverview = ({ project }) => {
       </div>
 
       {/* Active Add-on Packages Section */}
-      {project?.projectAddOns && project.projectAddOns.length > 0 && (
+      {/* {project?.projectAddOns && project.projectAddOns.length > 0 && (
         <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <Star className="w-5 h-5 text-yellow-500" />
@@ -349,7 +210,7 @@ const ProjectOverview = ({ project }) => {
             })}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Documents Section - Overview */}
       <h3 className="status-header-title">Overview</h3> 
